@@ -9,7 +9,7 @@
     
     <title>
         
-            IOS APP 电商平台项目架构重构-架构演进(一) |
+            IOS APP 电商平台项目架构重构-Swift语言(二) |
         
         Madman 疯子
     </title>
@@ -176,7 +176,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">IOS APP 电商平台项目架构重构-架构演进(一)</span>
+            <span class="title-hover-animation">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
         </div>
 
         
@@ -194,7 +194,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-07-20 11:25:38
+        <i class="fas fa-edit"></i>&nbsp;2021-07-21 10:56:04
     </span>
     
         <span class="article-categories article-meta-item">
@@ -236,12 +236,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>1.2k 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.8k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>6 分钟</span>
         </span>
     
     
@@ -257,40 +257,51 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>过去两年对电商平台的web端项目进行了2次重大重构</p>
-<ol>
-<li>php-Laravel前后端混合开发项目架构改为前后端分离，后端php,前端vue框架单页面应用—解决前后端研发配合的高耦合度问题。</li>
-<li>vue框架升级，利用vue-cli3构建SSR服务端渲染项目，Node服务框架Express—解决了SEO优化局限性问题，以及移动端首屏渲染性能问题。</li>
-</ol>
-<p>以上两次重构都一定程度上提升了项目代码的可扩展性和可维护性，提升了研发团队的开发效率，提升了系统稳定性。<br>那接下来如果要对IOS APP做重构，我们先聊聊架构的演进的本质。</p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进几年新语言的浪潮都比较猛烈，服务端的的<a class="link"   target="_blank" rel="noopener" href="https://golang.org/doc/" >Golang<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://deno.land/" >Deno<i class="fas fa-external-link-alt"></i></a>。安卓的<a class="link"   target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/" >Kotlin<i class="fas fa-external-link-alt"></i></a>，IOS的<a class="link"   target="_blank" rel="noopener" href="https://swift.org/documentation/" >Swift<i class="fas fa-external-link-alt"></i></a>。<br>这些新语言共同的优势都是运算性能更高，代码更简洁。让人难以抗拒，弱点是新语言技术社区不成熟，开源库较少，但是经过这几年的沉淀，这些问题也渐渐不再明显。由 Apple 创建，Swift 是当今发展最快的编程语言。作为著名的 Objective-C 的替代品，Swift 拥有大量优势，使其在iOS 开发中处于领先地位。</p>
 <span id="more"></span>
 
 
-<h1 id="工程架构演进本质"><a href="#工程架构演进本质" class="headerlink" title="工程架构演进本质"></a>工程架构演进本质</h1><p>快速的业务发展对技术支撑提出了更高的要求，为了保障敏捷的业务开发，提升跨团队的协同合作效率，提高本地研发和 CI/CD 效率，iOS App工程架构在不同的阶段需要进行不同的技术方案的改进，满足合理的架构演化，同时又不影响正常的业务迭代速度。</p>
-<p>架构演进的本质是为了提高研发效率，提高代码稳定性和保证代码质量。架构要解决的问题是如何组织代码。</p>
-<p>合理的架构设计可以解决大型项目跨团队协作分工和多业务线并行开发的效率问题。抖音工程代码从一开始就采用了组件化思路，依赖管理工具是定制版的 Cocoapods。</p>
-<p>什么时候重构？很多时候，研发会因为各种原因，推迟重构，直到这件事情被一拖再拖，从重要而不紧急的事情变成了既重要也紧急的事情。重构需要提前计划，不要赶时间。大部分重构都是代码债务的偿清的过程，赶时间容易积累新的债务。而对于一个突发的重构需求，其实已经错过了解决问题的最佳时机。小步慢跑，尽可能保证肉眼可见的正确性。大多数时候，我们很难找到整块时间重构，这往往意味着你可能会相对分散地修改到正常需求开发不会触碰的逻辑，这种情形对于 QA 同学来说是非常容易发生误判的——即使和对方同步过，但双方仍然可能对问题的影响面判断不一致。</p>
-<h1 id="单兵收敛重点"><a href="#单兵收敛重点" class="headerlink" title="单兵收敛重点"></a>单兵收敛重点</h1><p>有些复杂的事情必须要有单点管控，人越多越乱，因为很多重构必须要有全局观，才能抽象出比较符合项目实际情况的方案。<br>可能的场景：</p>
-<ul>
-<li>组件化：接口打沉，代码规范</li>
-<li>代码逻辑收敛：大量散装代码的封箱</li>
-<li>不易切分的大块修改：复杂模块线程模型更新</li>
+<h1 id="App项目重构语言选择"><a href="#App项目重构语言选择" class="headerlink" title="App项目重构语言选择"></a>App项目重构语言选择</h1><ul>
+<li><input disabled="" type="checkbox"> Objective-C</li>
+<li><input checked="" disabled="" type="checkbox"> Swift<br>先说我的结论，我选Swift。<br>为什么？下面是我的理由。</li>
 </ul>
-<p>这可能是重构里面最棘手情况了，解法需要看实际情况来决定，没有定式。所以需要把握节奏<br>重构往往影响比较大，需要综合考虑和 QA 同学的协作。</p>
-<h1 id="团队杠杆"><a href="#团队杠杆" class="headerlink" title="团队杠杆"></a>团队杠杆</h1><p>在实际工作中，劣币逐良币是非常常见的：一旦烂代码成为普遍现象，写好的模块的成本就会变得非常高——这好比在浮沙筑高台。<br>这里涉及到两个关键问题：</p>
-<ul>
-<li>治理已经比较乱的模块</li>
-<li>保持重构的结果不滑坡</li>
-</ul>
-<p>从治理的角度来说，一个足够有经验的研发，如果被给予充裕的处理时间，往往是能够比较好的完成任务的</p>
-<p>但是这里仍然有几个关键因素可能会影响最终结果，按重要性：</p>
-<ul>
-<li>人——这个人必须足够了解过去的需求，以及用来填坑的代码，需要确保重构完的代码必须能够等效达到之前的体验。</li>
-<li>时间——如果要项目停下来等重构完成，是一个过于奢侈的要求。</li>
-<li>务实——重构容易过于理想化，比如为了代码的整洁，某些回调会被提前或者压后，类似的场景还有网络请求等。</li>
-</ul>
-<p>上面这些问题需要执行重构的人和使用方达成共识，才不会产生过于理想主义的问题；不过，这里没有标准答案，下面这条建议是很多即便很优秀的研发也容易弄反的东西。</p>
-<p>如果模块内部设计优雅和模块外部使用简洁发生冲突的时候，优先保证模块外部使用简洁——对复杂度的封装既是模块本身存在的意义，也是代码治理的目的。</p>
+<h2 id="Swift和Objective-C的联系"><a href="#Swift和Objective-C的联系" class="headerlink" title="Swift和Objective-C的联系"></a>Swift和Objective-C的联系</h2><p>Swift和Objective-C共用一套运行时环境，Swift的类型可以桥接到Objective-C</p>
+<h2 id="Swift比Objective-C有什么优势？"><a href="#Swift比Objective-C有什么优势？" class="headerlink" title="Swift比Objective-C有什么优势？"></a>Swift比Objective-C有什么优势？</h2><ol>
+<li>Swift容易阅读和编写，语法和文件结构简易化。</li>
+<li>Swift更易于维护，文件分离后结构更清晰。</li>
+<li>Swift更加安全，它是类型安全的语言。</li>
+<li>Swift代码更少，简洁的语法，可以省去大量冗余代码。</li>
+<li>Swift速度更快，运算性能更高。</li>
+<li>Swift构建速度更快，且打包资源大小更小。</li>
+<li>Swift是一个开源项目，拥有庞大的开发社区。</li>
+<li>Swift有更好的内存管理。</li>
+<li>Swift支持动态库。</li>
+</ol>
+<h3 id="Swift更快"><a href="#Swift更快" class="headerlink" title="Swift更快"></a>Swift更快</h3><p>现代技术需要高速的性能，而Swift完全满足了这种需求。根据大量测试，它在 FFT 和 Mandelbrot 算法方面显示出与 C++ 几乎相同的性能。早在 2015 年就发现 Xcode 6.3 beta 提高了 GEMM 算法的性能。</p>
+<p>考虑到 Swift 仍然是一门年轻的编程语言，越来越多的增强功能即将推出。每个人都在谈论这个工具的未来的原因很简单，因为 Swift 正在快速开发语言。它的潜力是不可否认的，而 Objective-C 显示出更糟糕的结果。</p>
+<p>根据 Apple 的研究，Objective-C 与 Swift 的速度比较：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16268399371021.png"
+                      alt="根据 Apple 的研究，Objective-C 与 Swift 的速度比较"
+                ></p>
+<h3 id="Swift更安全"><a href="#Swift更安全" class="headerlink" title="Swift更安全"></a>Swift更安全</h3><p>还记得 Objective-C 中的 nil 指针变量（未初始化）将表达式变为无操作并导致应用程序崩溃吗？使用 Swift 时您可以忘记这个问题。它的设计考虑了安全性，并且每次编写错误代码时都会产生编译器错误。这意味着可以在开发阶段修复所有错误，而无需随后查看整个代码。不会给客户带来不好的惊喜。</p>
+<h3 id="Swift更易于阅读和编写"><a href="#Swift更易于阅读和编写" class="headerlink" title="Swift更易于阅读和编写"></a>Swift更易于阅读和编写</h3><p>Swift 变得如此流行的原因之一是这种编程语言的简单语法。这一事实使代码更易于阅读和编写。另一方面，Objective-C 需要大量符号、分号来结束行、“if”或“else”语句中的条件表达式周围的括号等。Swift 没有这些。相反，它在括号内使用逗号分隔的参数列表。</p>
+<p>此外，实现任何选项是 Swift 需要编写比 Objective-C 语言更少的代码字符串，从而避免额外的错误，从而使代码更简洁。因此，与 Objective-C 相比，开发人员完成任务所需的时间更少。 </p>
+<p>Swift 类似于自然英语，对于使用 Java、JavaScript、Python、C# 和 C++ 的编码人员来说更容易理解。他们可以轻松地将用 Swift 编写的代码片段应用到您拥有的现有工具链中。  </p>
+<h3 id="Swift-有更好的内存管理"><a href="#Swift-有更好的内存管理" class="headerlink" title="Swift 有更好的内存管理"></a>Swift 有更好的内存管理</h3><p>Objective-C 的问题之一是 ARC（自动引用计数），它在 Cocoa API 和面向对象的代码中得到支持。但是，该代码不适用于过程 C 代码和诸如 Core Graphics 之类的 API。这导致了巨大的内存泄漏。</p>
+<p>Swift 通过使用过程和面向对象的代码路径使 ARK 完整，从而解决了这个问题。现在编码人员可以专注于应用程序逻辑及其功能，而不是管理应用程序内的内存。</p>
+<h3 id="Swift-支持动态库"><a href="#Swift-支持动态库" class="headerlink" title="Swift 支持动态库"></a>Swift 支持动态库</h3><p>正如我们上面提到的，Swift 是一种开发速度非常快的语言，但它也允许您在新的 Swift 版本到来时立即更新您的应用程序。这是可能的，因为使用了与 iOS 8 一起提供的动态库。以前，静态库更新是与新 iOS 版本等重大更新一起进行的。</p>
+<p>就其而言，动态库允许将代码段直接连接到应用程序。此功能有助于使您的项目保持最新状态，减少应用程序的初始大小，加快外部库的加载速度并最大限度地减少加载新内容所需的时间。</p>
+<p>在 Swift 中实现动态库是 Apple 如何专注于使 iOS 生态系统响应更快并为其用户提供扩展性能的另一个例子。  </p>
+<h3 id="Swift-是一个开源项目"><a href="#Swift-是一个开源项目" class="headerlink" title="Swift 是一个开源项目"></a>Swift 是一个开源项目</h3><p>作为一个开源项目，Swift 为其用户提供了额外的优势，其中之一是减少了 Objective-C 中常见的名称冲突。</p>
+<p>Swift 的另一个制胜点是庞大的开发社区，随时准备增强 iOS 开发语言。Apple 成功地为使用 Swift 作为iOS 开发主要语言的开发人员带来了最佳的客户体验，并提供了影响其未来的可能性。</p>
+<h2 id="Swift目前存在的缺点"><a href="#Swift目前存在的缺点" class="headerlink" title="Swift目前存在的缺点"></a>Swift目前存在的缺点</h2><p>社区的开源项目比OC相对偏少，但是经过这几年的沉淀也绝对不算少。<br>对ios低于ios11以下版本不兼容，对于还有兼容4年前的ios系统的项目就不建议使用。</p>
+<h2 id="那么Objective-C呢？"><a href="#那么Objective-C呢？" class="headerlink" title="那么Objective-C呢？"></a>那么Objective-C呢？</h2><p>在 2014 年 Swift 发布之前，Objective-C 是一种广泛使用的编程语言。可悲但真实，现在它无处可去，专家预测它不会收到任何重大更新。原因很简单：Swift 语言已经包含了 Objective-C 的所有解决方案。此外，还有许多 Objective-C 缺乏的进步。尽管 Objective-C 可能会借用 Swifts 的一些新特性，但它永远不会那么前沿。</p>
+<p>Objective-C 的另一个弱点是它的安全级别。如前所述，Swift 被认为更安全。由于数据保护是大多数用户最关心的问题，开发人员也不能忽视这一点。</p>
+<p>最重要的是，与 Swift 不同，不可能使用 Objective-C 以交互方式开发应用程序。这对每个软件工程师来说都是一个很大的缺点，它会对开发过程产生相当负面的影响。</p>
+<p>自从 Apple 发布 Xcode 6.3 以来，修复了 Apple Bug Report 实用程序中的许多恼人的错误，Objective-C 没有机会追赶 Swift。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>虽然大多数现有的 iOS 应用程序都是用 Objective-C 编写的，但现在是时候考虑将它们转移到 Swift 上了。在更新方面，Swift 允许 iOS 开发人员在短时间内处理任何更改。这一切都归功于它更平易近人和负责任的性质。</p>
 
         </div>
 
@@ -298,11 +309,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：IOS APP 电商平台项目架构重构-架构演进(一)</li>
+        <li>本文标题：IOS APP 电商平台项目架构重构-Swift语言(二)</li>
         <li>本文作者：Madman</li>
-        <li>创建时间：2021-07-20 11:25:38</li>
+        <li>创建时间：2021-07-21 10:56:04</li>
         <li>
-            本文链接：https://www.patpat.site/开发/前端/App/IOS-APP-电商平台项目架构-架构演进的本质-一.html
+            本文链接：https://www.patpat.site/开发/前端/App/IOS-APP-电商平台项目架构重构-Swift语言-二.html
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -316,29 +327,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84-Swift%E8%AF%AD%E8%A8%80-%E4%BA%8C.html"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/React-Native%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%8E%92%E6%9F%A5%E8%A7%A3%E5%86%B3.html"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%B8%80.html"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">React Native项目初始化问题记录及排查解决</span>
+                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-架构演进(一)</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -545,7 +541,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E6%9C%AC%E8%B4%A8"><span class="nav-text">工程架构演进本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E5%85%B5%E6%94%B6%E6%95%9B%E9%87%8D%E7%82%B9"><span class="nav-text">单兵收敛重点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%A2%E9%98%9F%E6%9D%A0%E6%9D%86"><span class="nav-text">团队杠杆</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#App%E9%A1%B9%E7%9B%AE%E9%87%8D%E6%9E%84%E8%AF%AD%E8%A8%80%E9%80%89%E6%8B%A9"><span class="nav-text">App项目重构语言选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E5%92%8CObjective-C%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-text">Swift和Objective-C的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E6%AF%94Objective-C%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF%EF%BC%9F"><span class="nav-text">Swift比Objective-C有什么优势？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%BF%AB"><span class="nav-text">Swift更快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%AE%89%E5%85%A8"><span class="nav-text">Swift更安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E6%98%93%E4%BA%8E%E9%98%85%E8%AF%BB%E5%92%8C%E7%BC%96%E5%86%99"><span class="nav-text">Swift更易于阅读和编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%9C%89%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-text">Swift 有更好的内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E5%BA%93"><span class="nav-text">Swift 支持动态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-text">Swift 是一个开源项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E7%9B%AE%E5%89%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-text">Swift目前存在的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3%E4%B9%88Objective-C%E5%91%A2%EF%BC%9F"><span class="nav-text">那么Objective-C呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol>
     </div>
 </div>
         </aside>
