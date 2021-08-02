@@ -9,7 +9,7 @@
     
     <title>
         
-            IOS APP 电商平台项目架构重构-Swift语言(二) |
+            记一次超级大坑-Vue对象在SSR服务端为单例状态 |
         
         Madman 疯子
     </title>
@@ -176,7 +176,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
+            <span class="title-hover-animation">记一次超级大坑-Vue对象在SSR服务端为单例状态</span>
         </div>
 
         
@@ -194,7 +194,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-07-21 10:56:04
+        <i class="fas fa-edit"></i>&nbsp;2021-08-02 10:34:01
     </span>
     
         <span class="article-categories article-meta-item">
@@ -209,10 +209,6 @@
                         &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
                     </li>
                 
-                    <li>
-                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/">App</a>&nbsp;
-                    </li>
-                
             </ul>
         </span>
     
@@ -222,11 +218,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/ios/">ios</a>&nbsp;
+                        <a href="/tags/vue/">vue</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/swift/">swift</a>&nbsp;
+                        | <a href="/tags/ssr/">ssr</a>&nbsp;
                     </li>
                 
             </ul>
@@ -236,12 +232,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>1.8k 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.2k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>6 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>4 分钟</span>
         </span>
     
     
@@ -257,51 +253,31 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进几年新语言的浪潮都比较猛烈，服务端的的<a class="link"   target="_blank" rel="noopener" href="https://golang.org/doc/" >Golang<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://deno.land/" >Deno<i class="fas fa-external-link-alt"></i></a>。安卓的<a class="link"   target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/" >Kotlin<i class="fas fa-external-link-alt"></i></a>，IOS的<a class="link"   target="_blank" rel="noopener" href="https://swift.org/documentation/" >Swift<i class="fas fa-external-link-alt"></i></a>。<br>这些新语言共同的优势都是运算性能更高，代码更简洁。让人难以抗拒，弱点是新语言技术社区不成熟，开源库较少，但是经过这几年的沉淀，这些问题也渐渐不再明显。由 Apple 创建，Swift 是当今发展最快的编程语言。作为著名的 Objective-C 的替代品，Swift 拥有大量优势，使其在iOS 开发中处于领先地位。</p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是一个让我一天两夜没安宁过的严重线上bug. 一开始测试跟我反馈说：”测试脚本有几率跑出H5页面无头部脚部左侧菜单栏组件的情况，并且页面无法点击部分图片资源无法加载。“我当时在忙其他的，随后去线上测试了一下，重现不了！我就继续忙其他的没在意。到了周六在家在家有空的时候想起测试反馈的这个问题。我想着重现不了，我就去分析一下转化数据吧，看看有没什么问题。一看数据吓我一跳，自测试跟我反馈问题的那天的时间节点起H5页面转化数据掉了近一半，整体平均浏览深度降了1/3。我立马召集小伙伴去公司加班排查，测试配合只能在线上环境测出问题，测试环境和alpha环境怎么都测不出来问题。重现不了的问题最难排查。耗费了我们前端团队一天的时间，最终终于在本地环境重现bug。</p>
 <span id="more"></span>
 
-
-<h1 id="App项目重构语言选择"><a href="#App项目重构语言选择" class="headerlink" title="App项目重构语言选择"></a>App项目重构语言选择</h1><ul>
-<li><input disabled="" type="checkbox"> Objective-C</li>
-<li><input checked="" disabled="" type="checkbox"> Swift<br>先说我的结论，我选Swift。<br>为什么？下面是我的理由。</li>
-</ul>
-<h2 id="Swift和Objective-C的联系"><a href="#Swift和Objective-C的联系" class="headerlink" title="Swift和Objective-C的联系"></a>Swift和Objective-C的联系</h2><p>Swift和Objective-C共用一套运行时环境，Swift的类型可以桥接到Objective-C</p>
-<h2 id="Swift比Objective-C有什么优势？"><a href="#Swift比Objective-C有什么优势？" class="headerlink" title="Swift比Objective-C有什么优势？"></a>Swift比Objective-C有什么优势？</h2><ol>
-<li>Swift容易阅读和编写，语法和文件结构简易化。</li>
-<li>Swift更易于维护，文件分离后结构更清晰。</li>
-<li>Swift更加安全，它是类型安全的语言。</li>
-<li>Swift代码更少，简洁的语法，可以省去大量冗余代码。</li>
-<li>Swift速度更快，运算性能更高。</li>
-<li>Swift构建速度更快，且打包资源大小更小。</li>
-<li>Swift是一个开源项目，拥有庞大的开发社区。</li>
-<li>Swift有更好的内存管理。</li>
-<li>Swift支持动态库。</li>
+<h1 id="找问题步骤"><a href="#找问题步骤" class="headerlink" title="找问题步骤"></a>找问题步骤</h1><ol>
+<li>对问题开始当天天上线的代码进行深度code review（并没到什么可疑代码）</li>
+<li>想办法在测试环境重现（想要重现线上环境的问题，那就要找出测试环境和生产环境的区别）</li>
+<li>尝试在测试环境跑高并发压测（然后也并没重现问题）</li>
+<li>尝试在测试环境嵌入较多的H5页面，因为H5只有在App内才会隐藏头部脚部</li>
+<li>检查SSR服务端渲染缓存策略。（能确认如果某个页面渲染的错误页面在服务端有短时间缓存，但是缓存策略也有做细分维度区分，站点级/地区级/页面级/AB测试级）</li>
+<li>锁定我们用的Vue.prototype.$isFromApp（我们所有地方判断页面是否内嵌App都是通过这个状态判断）</li>
 </ol>
-<h3 id="Swift更快"><a href="#Swift更快" class="headerlink" title="Swift更快"></a>Swift更快</h3><p>现代技术需要高速的性能，而Swift完全满足了这种需求。根据大量测试，它在 FFT 和 Mandelbrot 算法方面显示出与 C++ 几乎相同的性能。早在 2015 年就发现 Xcode 6.3 beta 提高了 GEMM 算法的性能。</p>
-<p>考虑到 Swift 仍然是一门年轻的编程语言，越来越多的增强功能即将推出。每个人都在谈论这个工具的未来的原因很简单，因为 Swift 正在快速开发语言。它的潜力是不可否认的，而 Objective-C 显示出更糟糕的结果。</p>
-<p>根据 Apple 的研究，Objective-C 与 Swift 的速度比较：<br><img  
+<h1 id="大概率锁定是-Vue-prototype-isFromApp-这个状态的问题"><a href="#大概率锁定是-Vue-prototype-isFromApp-这个状态的问题" class="headerlink" title="大概率锁定是 Vue.prototype.$isFromApp 这个状态的问题"></a>大概率锁定是 Vue.prototype.$isFromApp 这个状态的问题</h1><p>由于之前看官方的<code>Vue.prototype.$isServer</code> 就想着参考官方的思路维护一个判断是否是App内嵌的状态。所有页面根据这个状态判断页面App内嵌的特殊渲染逻辑。这个时候就埋下了这个坑（注意！！一定不要忘记Vue在服务端是单例状态，所有用户PV在服务端都是公用一个初始化好的Vue对象）。<br>我们内嵌App的链接跟App约定好的链接会带<code>platform=app</code>参数。H5会根据这个参数和其他一些js注入的信息计算维护<code>Vue.prototype.$isFromApp</code>这个状态。其实这个问题在很久前就是个问题，只是之前App内嵌H5的页面少，App并发请求进H5跟浏览器端请求抢更新<code>Vue.prototype.$isFromApp</code>状态的时机就少。而Vue官方<code>Vue.prototype.$isServer</code>不会有问题，因为每个用户请求在服务端的时候状态都是true。在客户端每个用户请求状态都是false。（所以不能再用$isServer的状态在mounted生命周期之前来判断做出不一样的内容渲染，不然也是会被浏览器接管失败并报错<code>_frame.js:7 Uncaught (in promise) DOMException: Failed to execute &#39;appendChild&#39; on &#39;Node&#39;: This node type does not support this method.     at Object.appendChild</code>）</p>
+<p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://cdn.patpat.site/mweb/16268399371021.png"
-                      alt="根据 Apple 的研究，Objective-C 与 Swift 的速度比较"
+                     data-src="https://cdn.patpat.site/mweb/16278966875249.jpg"
+                     
                 ></p>
-<h3 id="Swift更安全"><a href="#Swift更安全" class="headerlink" title="Swift更安全"></a>Swift更安全</h3><p>还记得 Objective-C 中的 nil 指针变量（未初始化）将表达式变为无操作并导致应用程序崩溃吗？使用 Swift 时您可以忘记这个问题。它的设计考虑了安全性，并且每次编写错误代码时都会产生编译器错误。这意味着可以在开发阶段修复所有错误，而无需随后查看整个代码。不会给客户带来不好的惊喜。</p>
-<h3 id="Swift更易于阅读和编写"><a href="#Swift更易于阅读和编写" class="headerlink" title="Swift更易于阅读和编写"></a>Swift更易于阅读和编写</h3><p>Swift 变得如此流行的原因之一是这种编程语言的简单语法。这一事实使代码更易于阅读和编写。另一方面，Objective-C 需要大量符号、分号来结束行、“if”或“else”语句中的条件表达式周围的括号等。Swift 没有这些。相反，它在括号内使用逗号分隔的参数列表。</p>
-<p>此外，实现任何选项是 Swift 需要编写比 Objective-C 语言更少的代码字符串，从而避免额外的错误，从而使代码更简洁。因此，与 Objective-C 相比，开发人员完成任务所需的时间更少。 </p>
-<p>Swift 类似于自然英语，对于使用 Java、JavaScript、Python、C# 和 C++ 的编码人员来说更容易理解。他们可以轻松地将用 Swift 编写的代码片段应用到您拥有的现有工具链中。  </p>
-<h3 id="Swift-有更好的内存管理"><a href="#Swift-有更好的内存管理" class="headerlink" title="Swift 有更好的内存管理"></a>Swift 有更好的内存管理</h3><p>Objective-C 的问题之一是 ARC（自动引用计数），它在 Cocoa API 和面向对象的代码中得到支持。但是，该代码不适用于过程 C 代码和诸如 Core Graphics 之类的 API。这导致了巨大的内存泄漏。</p>
-<p>Swift 通过使用过程和面向对象的代码路径使 ARK 完整，从而解决了这个问题。现在编码人员可以专注于应用程序逻辑及其功能，而不是管理应用程序内的内存。</p>
-<h3 id="Swift-支持动态库"><a href="#Swift-支持动态库" class="headerlink" title="Swift 支持动态库"></a>Swift 支持动态库</h3><p>正如我们上面提到的，Swift 是一种开发速度非常快的语言，但它也允许您在新的 Swift 版本到来时立即更新您的应用程序。这是可能的，因为使用了与 iOS 8 一起提供的动态库。以前，静态库更新是与新 iOS 版本等重大更新一起进行的。</p>
-<p>就其而言，动态库允许将代码段直接连接到应用程序。此功能有助于使您的项目保持最新状态，减少应用程序的初始大小，加快外部库的加载速度并最大限度地减少加载新内容所需的时间。</p>
-<p>在 Swift 中实现动态库是 Apple 如何专注于使 iOS 生态系统响应更快并为其用户提供扩展性能的另一个例子。  </p>
-<h3 id="Swift-是一个开源项目"><a href="#Swift-是一个开源项目" class="headerlink" title="Swift 是一个开源项目"></a>Swift 是一个开源项目</h3><p>作为一个开源项目，Swift 为其用户提供了额外的优势，其中之一是减少了 Objective-C 中常见的名称冲突。</p>
-<p>Swift 的另一个制胜点是庞大的开发社区，随时准备增强 iOS 开发语言。Apple 成功地为使用 Swift 作为iOS 开发主要语言的开发人员带来了最佳的客户体验，并提供了影响其未来的可能性。</p>
-<h2 id="Swift目前存在的缺点"><a href="#Swift目前存在的缺点" class="headerlink" title="Swift目前存在的缺点"></a>Swift目前存在的缺点</h2><p>社区的开源项目比OC相对偏少，但是经过这几年的沉淀也绝对不算少。<br>对ios低于ios11以下版本不兼容，对于还有兼容4年前的ios系统的项目就不建议使用。</p>
-<h2 id="那么Objective-C呢？"><a href="#那么Objective-C呢？" class="headerlink" title="那么Objective-C呢？"></a>那么Objective-C呢？</h2><p>在 2014 年 Swift 发布之前，Objective-C 是一种广泛使用的编程语言。可悲但真实，现在它无处可去，专家预测它不会收到任何重大更新。原因很简单：Swift 语言已经包含了 Objective-C 的所有解决方案。此外，还有许多 Objective-C 缺乏的进步。尽管 Objective-C 可能会借用 Swifts 的一些新特性，但它永远不会那么前沿。</p>
-<p>Objective-C 的另一个弱点是它的安全级别。如前所述，Swift 被认为更安全。由于数据保护是大多数用户最关心的问题，开发人员也不能忽视这一点。</p>
-<p>最重要的是，与 Swift 不同，不可能使用 Objective-C 以交互方式开发应用程序。这对每个软件工程师来说都是一个很大的缺点，它会对开发过程产生相当负面的影响。</p>
-<p>自从 Apple 发布 Xcode 6.3 以来，修复了 Apple Bug Report 实用程序中的许多恼人的错误，Objective-C 没有机会追赶 Swift。</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>虽然大多数现有的 iOS 应用程序都是用 Objective-C 编写的，但现在是时候考虑将它们转移到 Swift 上了。在更新方面，Swift 允许 iOS 开发人员在短时间内处理任何更改。这一切都归功于它更平易近人和负责任的性质。</p>
+<h1 id="实测确认Vue单例状态导致-isFromApp状态在多个请求间错乱问题"><a href="#实测确认Vue单例状态导致-isFromApp状态在多个请求间错乱问题" class="headerlink" title="实测确认Vue单例状态导致$isFromApp状态在多个请求间错乱问题"></a>实测确认Vue单例状态导致$isFromApp状态在多个请求间错乱问题</h1><p>为了在测试环境和本地环境重现线上的bug情况，我们就需要造出测试环境和本地环境模拟内嵌App内高并发访问H5页面。我们清楚业务上是通过url里面的<code>platform=app</code>参数来判断App内嵌的。所以我就用 <a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903477643051016" >ab 压测命令<i class="fas fa-external-link-alt"></i></a></p>
+<p>在终端用ab跑60000次请求，并发100。跑的链接带<code>platform=app</code> 让这些请求把<code>Vue.prototype.$isFromApp</code>高速的刷成<code>true</code>状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ab -n 60000 -c 100 -C &quot;dynamicCdnCacheKey&#x3D;wap:test&quot; -H &quot;User-Agent:Mozilla&#x2F;5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit&#x2F;605.1.15 (KHTML, like Gecko) Version&#x2F;13.0.3 Mobile&#x2F;15E148 Safari&#x2F;604.1&quot; https:&#x2F;&#x2F;hk-m.patpat.site&#x2F;zh&#x2F;article&#x2F;sizechart\?category_name_app\&#x3D;\&amp;sizeUnit\&#x3D;cm\&amp;product_id\&#x3D;441607\&amp;platform\&#x3D;app\&amp;visit_from\&#x3D;embedded\&amp;timezone\&#x3D;GMT%208\&amp;version\&#x3D;6.3.2\&amp;user_token\&#x3D;abdfgijmprtuzBCDEFHIMNQSVXYZ4569\&amp;currency\&#x3D;EUR\&amp;position\&#x3D;home-1823_hotarea_4-61054415430226c07204fafc_001</span><br></pre></td></tr></table></figure>
+
+<p>这个时候去浏览器放访问不带<code>platform=app</code>的链接，也会大概率按照<code>Vue.prototype.$isFromApp=true</code>的状态渲染无头脚页面。</p>
+<p>在测试环境和本地环境重现了就好解决问题了，当确认这个问题的时候我内心”WOCAO“。</p>
+<p>最后把这个<code>Vue.prototype.$isServer</code>状态删掉，把状态记录到了Vuex全局状态，因为我们Vuex是每次请求都创建的<a class="link"   target="_blank" rel="noopener" href="https://ssr.vuejs.org/zh/guide/structure.html#%E9%81%BF%E5%85%8D%E7%8A%B6%E6%80%81%E5%8D%95%E4%BE%8B" >避免了Node端的单例状态问题<i class="fas fa-external-link-alt"></i></a>。</p>
 
         </div>
 
@@ -309,11 +285,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：IOS APP 电商平台项目架构重构-Swift语言(二)</li>
+        <li>本文标题：记一次超级大坑-Vue对象在SSR服务端为单例状态</li>
         <li>本文作者：Madman</li>
-        <li>创建时间：2021-07-21 10:56:04</li>
+        <li>创建时间：2021-08-02 10:34:01</li>
         <li>
-            本文链接：https://www.patpat.site/开发/前端/App/IOS-APP-电商平台项目架构重构-Swift语言-二.html
+            本文链接：https://www.patpat.site/开发/前端/记一次超级大坑-Vue对象在SSR服务端为单例状态.html
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -327,29 +303,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B6%85%E7%BA%A7%E5%A4%A7%E5%9D%91-Vue%E5%AF%B9%E8%B1%A1%E5%9C%A8SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81.html"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">记一次超级大坑-Vue对象在SSR服务端为单例状态</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%B8%80.html"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84-Swift%E8%AF%AD%E8%A8%80-%E4%BA%8C.html"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-架构演进(一)</span>
+                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -556,7 +517,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#App%E9%A1%B9%E7%9B%AE%E9%87%8D%E6%9E%84%E8%AF%AD%E8%A8%80%E9%80%89%E6%8B%A9"><span class="nav-text">App项目重构语言选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E5%92%8CObjective-C%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-text">Swift和Objective-C的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E6%AF%94Objective-C%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF%EF%BC%9F"><span class="nav-text">Swift比Objective-C有什么优势？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%BF%AB"><span class="nav-text">Swift更快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%AE%89%E5%85%A8"><span class="nav-text">Swift更安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E6%98%93%E4%BA%8E%E9%98%85%E8%AF%BB%E5%92%8C%E7%BC%96%E5%86%99"><span class="nav-text">Swift更易于阅读和编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%9C%89%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-text">Swift 有更好的内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E5%BA%93"><span class="nav-text">Swift 支持动态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-text">Swift 是一个开源项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E7%9B%AE%E5%89%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-text">Swift目前存在的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3%E4%B9%88Objective-C%E5%91%A2%EF%BC%9F"><span class="nav-text">那么Objective-C呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%BE%E9%97%AE%E9%A2%98%E6%AD%A5%E9%AA%A4"><span class="nav-text">找问题步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E6%A6%82%E7%8E%87%E9%94%81%E5%AE%9A%E6%98%AF-Vue-prototype-isFromApp-%E8%BF%99%E4%B8%AA%E7%8A%B6%E6%80%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">大概率锁定是 Vue.prototype.$isFromApp 这个状态的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%B5%8B%E7%A1%AE%E8%AE%A4Vue%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81%E5%AF%BC%E8%87%B4-isFromApp%E7%8A%B6%E6%80%81%E5%9C%A8%E5%A4%9A%E4%B8%AA%E8%AF%B7%E6%B1%82%E9%97%B4%E9%94%99%E4%B9%B1%E9%97%AE%E9%A2%98"><span class="nav-text">实测确认Vue单例状态导致$isFromApp状态在多个请求间错乱问题</span></a></li></ol>
     </div>
 </div>
         </aside>

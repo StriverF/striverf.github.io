@@ -178,6 +178,68 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Ubuntu-Nginx-%E9%85%8D%E7%BD%AE%E5%85%8D%E8%B4%B9https-SSL-%E5%AE%89%E5%85%A8%E7%8E%AF%E5%A2%83.html">
+                        Ubuntu Nginx 配置https免费SSL证书安全环境
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有时候在某些开发场景必须需要用到https安全环境来测试，比如FB的登录sdk调试，FB的<a class="link"   target="_blank" rel="noopener" href="https://developers.facebook.com/docs/applinks" >App Links<i class="fas fa-external-link-alt"></i></a>，<a class="link"   target="_blank" rel="noopener" href="https://developers.google.com/web/ilt/pwa" >PWA<i class="fas fa-external-link-alt"></i></a>的调试等等。那我们就需要搭建一个https安全环境,这种情况我有两种解决方案。</p>
+<ol>
+<li>用<a class="link"   target="_blank" rel="noopener" href="https://github.com/FiloSottile/mkcert" >mkcert<i class="fas fa-external-link-alt"></i></a>本地生成免费安全证书</li>
+<li>去<a class="link"   target="_blank" rel="noopener" href="https://s.qiniu.com/ZfumU3" >七牛云<i class="fas fa-external-link-alt"></i></a>或者阿里云白嫖免费安全证书</li>
+</ol>
+<p>第1种本地生成的证书只能在自己电脑上信任证书来确保https安全环境为绿色，在其他设备上会显示https不安全。<br>要使用公网认证的https就用第2种方式，去白嫖SSL安全证书，第2钟方式要有几个前提条件</p>
+<ul>
+<li>自己拥有ECS云服务器（这个阿里与好像也有能白嫖的低配机器）</li>
+<li>自己拥有一个域名（去阿里云购买非特殊域名也不贵几块钱一年）</li>
+<li>注册七牛云账户去0元购买SSL免费证书</li>
+<li>还有就是你需要基本熟悉Linux操作命令</li>
+</ul>
+<p>我下面主要介绍第2种方案，想要实现第1种方案的可以去查看<a class="link"   target="_blank" rel="noopener" href="https://github.com/FiloSottile/mkcert" >mkcert<i class="fas fa-external-link-alt"></i></a>的文档</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Fri Feb 19 2021 11:38:42 GMT+0800">2021-02-19</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/nginx/">nginx</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/ssl/">ssl</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/ECS/">ECS</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Ubuntu-Nginx-%E9%85%8D%E7%BD%AE%E5%85%8D%E8%B4%B9https-SSL-%E5%AE%89%E5%85%A8%E7%8E%AF%E5%A2%83.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/React-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E9%87%8D%E7%82%B9%E7%AC%94%E8%AE%B0.html">
                         React 核心概念重点笔记
                     </a>
@@ -351,12 +413,12 @@
                     
                         <li>
                             | 
-                            <a href="/tags/node/">node</a>&nbsp;
+                            <a href="/tags/express/">express</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/express/">express</a>&nbsp;
+                            <a href="/tags/node/">node</a>&nbsp;
                         </li>
                     
                         <li>
@@ -463,12 +525,12 @@
                     
                         <li>
                             | 
-                            <a href="/tags/js/">js</a>&nbsp;
+                            <a href="/tags/vue-cli3/">vue-cli3</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/vue-cli3/">vue-cli3</a>&nbsp;
+                            <a href="/tags/js/">js</a>&nbsp;
                         </li>
                     
                         <li>
@@ -529,17 +591,17 @@
                     
                         <li>
                             | 
+                            <a href="/tags/vue-cli3/">vue-cli3</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
                             <a href="/tags/js/">js</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
                             <a href="/tags/css/">css</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/vue-cli3/">vue-cli3</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -671,56 +733,6 @@
     </div>
 
     <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-CLI3-%E4%BB%BFios-NavigationBar-TabBar%E5%B8%83%E5%B1%80.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Xcode10-1-iPhone-has-denied-the-launch-request.html">
-                        Xcode10.1 iPhone has denied the launch request
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>测试环境<br>Xcode10.1<br>iPhone8 ios12.1.4<br>真机调试的时出现下图报错<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://cdn.patpat.site/15525532058593.jpg"
-                     
-                ></p>
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Mar 14 2019 16:37:21 GMT+0800">2019-03-14</span></span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/ios/">ios</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Xcode/">Xcode</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Xcode10-1-iPhone-has-denied-the-launch-request.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>
