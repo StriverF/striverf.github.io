@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Single-spa 成熟的微前端架构方案 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Single-spa 成熟的微前端架构方案</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-12 11:55:26
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/singleSPA/">singleSPA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>837 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>3 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于多个中后台系统做前后端分离，各个业务模块集合在一个项目里面开发会造成后期不好维护且容易出问题，也不方便独立部署。<br>所以需要设计一套高度解耦又聚合在一个平台方便管理的系统架构。</p>
+<p>微前端是一种多个团队通过独立发布功能的方式来共同构建现代化 web 应用的技术手段及方法策略。</p>
+<span id="more"></span>
+
+<h1 id="方案选项"><a href="#方案选项" class="headerlink" title="方案选项"></a>方案选项</h1><p>首先，我们整理了核心诉求，按优先级排序如下：</p>
+<ul>
+<li>希望异地开发时不同的模块能够独立开发、独立部署。</li>
+<li>各个子系统独立运行，互不影响，但允许我们在开发阶段与其他子系统进行联调。</li>
+<li>保持单页应用的体验。</li>
+<li>由于现有项目都是基于Vue技术栈开发，因此，我们的框架并不需要做到技术栈无关，只要满足Vue的项目即可。</li>
+</ul>
+<p>基于以上这些诉求，我们调研了目前市面上常用的微前端方案，最常见的方案有：</p>
+<ul>
+<li>基于Nginx的路由分发。</li>
+<li>使用Iframe将页面嵌入。</li>
+<li>single-spa成熟落地的框架。</li>
+</ul>
+<p>这些方案的优劣整理如下：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16182001002838.png"
+                     
+                ></p>
+<h1 id="微前端概念理解"><a href="#微前端概念理解" class="headerlink" title="微前端概念理解"></a>微前端概念理解</h1><h2 id="微前端对比微服务"><a href="#微前端对比微服务" class="headerlink" title="微前端对比微服务"></a>微前端对比微服务</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16182001571570.png"
+                     
+                ></p>
+<h2 id="微前端整体架构"><a href="#微前端整体架构" class="headerlink" title="微前端整体架构"></a>微前端整体架构</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16182002461297.png"
+                     
+                ></p>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="安装single-spa-CLI"><a href="#安装single-spa-CLI" class="headerlink" title="安装single-spa CLI"></a>安装single-spa CLI</h2><p>官方文档 <a class="link"   target="_blank" rel="noopener" href="https://zh-hans.single-spa.js.org/docs/create-single-spa" >single-spa CLI <i class="fas fa-external-link-alt"></i></a><br>安装single-spa CLI 执行如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --global create-single-spa</span><br><span class="line"># or</span><br><span class="line">yarn global add create-single-spa</span><br></pre></td></tr></table></figure>
+
+<h2 id="Single-spa-CLI创建主应用"><a href="#Single-spa-CLI创建主应用" class="headerlink" title="Single-spa CLI创建主应用"></a>Single-spa CLI创建主应用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create-single-spa</span><br></pre></td></tr></table></figure>
+<p>出现可选项选择<br>? Directory for new project (.)   // 输入项目名字<br>? Select type to generate 方向键上下选择❯ single-spa root config<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16182115311305.jpg"
+                     
+                ><br>后续按自己需求选择</p>
+<h2 id="Single-spa-CLI创建微应用"><a href="#Single-spa-CLI创建微应用" class="headerlink" title="Single-spa CLI创建微应用"></a>Single-spa CLI创建微应用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create-single-spa --framework vue</span><br></pre></td></tr></table></figure>
+<p>要创建其他前端框架的微项目只要修改 vue 参数为 react, angular 即可<br>创建vue框架微项目前确保你的环境已经安装了 Vue-CLI, 执行命令 vue -V 确认是否安装， 如没有安装过，可点击链接查看<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/installation.html" >Vue-CLI官方文档<i class="fas fa-external-link-alt"></i></a>自行安装</p>
+<p>执行以上命令后会有一系列选项填写，按照如下填写<br>? Directory for new project （项目名称按照这样命名方式填写 f2e-xxx）f2e-util<br>? Organization name (can use letters, numbers, dash or underscore) f2e<br>Vue CLI v4.5.11<br>┌───────────────────────────────────────────┐<br>│                                           │<br>│   New version available 4.5.11 → 4.5.12   │<br>│     Run npm i -g @vue/cli to update!      │<br>│                                           │<br>└───────────────────────────────────────────┘</p>
+<p>? Please pick a preset:（选择预设，如果有存过构建预设可以选，不确定用什么构建配置就选Manually select features。上下键控制键选择，回车确认）<br>? Check the features needed for your project:（选要用的vue框架配置，上下键控制选择，空格键勾选，回车键确认）<br>? Choose a version of Vue.js that you want to start the project with 2.x</p>
+<p>? Use history mode for router? Y<br>? Pick a CSS pre-processor (现在css预编译器，less)<br>? Pick a linter / formatter config:（为了代码规范ESLing 配置建议选 ❯ESLint + Standard config）<br>? Pick additional lint features: （为了避免提交错误代码，勾选Lint and fix on commit）<br>? Where do you prefer placing config for Babel, ESLint, etc.? （❯ In dedicated config files）<br>? Save this as a preset for future projects? （保存预设？为了方便下次新建同样配置微项目，可以选择保存预设 Y）<br>? Save preset as: （为预设取个名字方便下次选取）</p>
+<h2 id="demo源码地址"><a href="#demo源码地址" class="headerlink" title="demo源码地址"></a>demo源码地址</h2><p><a class="link"   target="_blank" rel="noopener" href="https://github.com/microWebApp" >https://github.com/microWebApp<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Single-spa 成熟的微前端架构方案</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2021-04-12 11:55:26</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/Single-spa-成熟的微前端架构方案.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E7%A4%BE%E4%BC%9A/%E6%96%B0%E5%AA%92%E4%BD%93/%E5%85%B3%E4%BA%8E%E6%96%B0%E5%AA%92%E4%BD%93%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">关于新媒体的一些个人看法</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SRR%E6%8C%87%E5%8D%97%E6%9E%84%E5%BB%BA.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Vue SSR服务端渲染-SRR指南构建</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E9%80%89%E9%A1%B9"><span class="nav-text">方案选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3"><span class="nav-text">微前端概念理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%AF%B9%E6%AF%94%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-text">微前端对比微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-text">微前端整体架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85single-spa-CLI"><span class="nav-text">安装single-spa CLI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-spa-CLI%E5%88%9B%E5%BB%BA%E4%B8%BB%E5%BA%94%E7%94%A8"><span class="nav-text">Single-spa CLI创建主应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-spa-CLI%E5%88%9B%E5%BB%BA%E5%BE%AE%E5%BA%94%E7%94%A8"><span class="nav-text">Single-spa CLI创建微应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#demo%E6%BA%90%E7%A0%81%E5%9C%B0%E5%9D%80"><span class="nav-text">demo源码地址</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

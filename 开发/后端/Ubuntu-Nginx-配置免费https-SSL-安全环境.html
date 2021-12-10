@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Ubuntu Nginx 配置https免费SSL证书安全环境 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Ubuntu Nginx 配置https免费SSL证书安全环境</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-02-19 11:38:42
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/nginx/">nginx</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ssl/">ssl</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ECS/">ECS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>987 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>3 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有时候在某些开发场景必须需要用到https安全环境来测试，比如FB的登录sdk调试，FB的<a class="link"   target="_blank" rel="noopener" href="https://developers.facebook.com/docs/applinks" >App Links<i class="fas fa-external-link-alt"></i></a>，<a class="link"   target="_blank" rel="noopener" href="https://developers.google.com/web/ilt/pwa" >PWA<i class="fas fa-external-link-alt"></i></a>的调试等等。那我们就需要搭建一个https安全环境,这种情况我有两种解决方案。</p>
+<ol>
+<li>用<a class="link"   target="_blank" rel="noopener" href="https://github.com/FiloSottile/mkcert" >mkcert<i class="fas fa-external-link-alt"></i></a>本地生成免费安全证书</li>
+<li>去<a class="link"   target="_blank" rel="noopener" href="https://s.qiniu.com/ZfumU3" >七牛云<i class="fas fa-external-link-alt"></i></a>或者阿里云白嫖免费安全证书</li>
+</ol>
+<p>第1种本地生成的证书只能在自己电脑上信任证书来确保https安全环境为绿色，在其他设备上会显示https不安全。<br>要使用公网认证的https就用第2种方式，去白嫖SSL安全证书，第2钟方式要有几个前提条件</p>
+<ul>
+<li>自己拥有ECS云服务器（这个阿里与好像也有能白嫖的低配机器）</li>
+<li>自己拥有一个域名（去阿里云购买非特殊域名也不贵几块钱一年）</li>
+<li>注册七牛云账户去0元购买SSL免费证书</li>
+<li>还有就是你需要基本熟悉Linux操作命令</li>
+</ul>
+<p>我下面主要介绍第2种方案，想要实现第1种方案的可以去查看<a class="link"   target="_blank" rel="noopener" href="https://github.com/FiloSottile/mkcert" >mkcert<i class="fas fa-external-link-alt"></i></a>的文档</p>
+<span id="more"></span>
+
+<h1 id="七牛云购买免费证书"><a href="#七牛云购买免费证书" class="headerlink" title="七牛云购买免费证书"></a>七牛云购买免费证书</h1><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137146697268.jpg"
+                      alt="购买免费证书"
+                ></p>
+<p>没有七牛云的朋友我推荐大家去注册一下，特别接地气的云服务商。<br><a class="link"   target="_blank" rel="noopener" href="https://s.qiniu.com/ZfumU3" >https://s.qiniu.com/ZfumU3<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="登录注册七牛云购买免费SSL证书"><a href="#登录注册七牛云购买免费SSL证书" class="headerlink" title="登录注册七牛云购买免费SSL证书"></a>登录注册七牛云购买免费SSL证书</h2><p>注册登录后点击左上角菜单栏 &gt; SSL证书 &gt; 购买证书 &gt; 选择证书品牌（TrustAsia）&gt; DV域名型</p>
+<h2 id="购买成功后补全信息"><a href="#购买成功后补全信息" class="headerlink" title="购买成功后补全信息"></a>购买成功后补全信息</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137158019193.jpg"
+                      alt="补全信息"
+                ></p>
+<h2 id="DNS验证域名"><a href="#DNS验证域名" class="headerlink" title="DNS验证域名"></a>DNS验证域名</h2><p>因为不能随便填别人的域名添加SSL证书配置，所以需要验证域名所有权确认域名是你的。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137168050786.jpg"
+                      alt="DNS验证域名"
+                ></p>
+<p>按照SSL订单详情给的TXT记录值，去添加TXT域名解析用来验证域名所有权<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137174974979.jpg"
+                      alt="DNS验证域名"
+                ></p>
+<p>在阿里云控制台域名解析添加完TXT记录值，再回来七牛云的SSL订单详情页 点击检测验证结果，一般1分钟都不要就通过了。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137176683041.jpg"
+                      alt="DNS验证域名"
+                ></p>
+<h1 id="下载证书并导入阿里云ECS服务器"><a href="#下载证书并导入阿里云ECS服务器" class="headerlink" title="下载证书并导入阿里云ECS服务器"></a>下载证书并导入阿里云ECS服务器</h1><p>在七牛云SSL证书服务/证书管理列表 下载刚刚验证完的证书文件。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137178060785.jpg"
+                      alt="下载证书"
+                ></p>
+<h2 id="使用scp命令把证书文件上传到ECS服务器"><a href="#使用scp命令把证书文件上传到ECS服务器" class="headerlink" title="使用scp命令把证书文件上传到ECS服务器"></a>使用scp命令把证书文件上传到ECS服务器</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp ~user/ssl/xxx.com.zip root@<span class="number">47.244</span><span class="number">.10</span><span class="number">.110</span>:<span class="regexp">/usr/</span>local/cert</span><br><span class="line">scp 要上传的文件名 ECS主机用户@ECS主机公网ip:要上传到ECS主机的目录</span><br></pre></td></tr></table></figure>
+
+<h1 id="新增Nginx配置"><a href="#新增Nginx配置" class="headerlink" title="新增Nginx配置"></a>新增Nginx配置</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">80</span>;</span><br><span class="line">    server_name app.patpat.link;</span><br><span class="line">	 # 80端口重定向到 https 443</span><br><span class="line">    location / &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">301</span> https:<span class="comment">//$server_name$request_uri;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">443</span> ssl;</span><br><span class="line">    server_name  app.patpat.link;</span><br><span class="line"></span><br><span class="line">    error_log             /<span class="keyword">var</span>/log/nginx/app_link_error.log;</span><br><span class="line">    access_log            /<span class="keyword">var</span>/log/nginx/app_link_access.log;</span><br><span class="line"></span><br><span class="line">    # ssl验证相关配置</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate /usr/local/cert/app.patpat.link.crt; # 证书路径配置</span><br><span class="line">    ssl_certificate_key /usr/local/cert/app.patpat.link.key; # 证书key路径配置</span><br><span class="line">    </span><br><span class="line">    #ssl_session_timeout  5m;    #缓存有效期</span><br><span class="line">    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2; #安全链接可选的加密协议</span><br><span class="line">    ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP; #加密算法</span><br><span class="line">    ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">    root /var/www/app-link/dist; # 网站根目录配置</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        #vue router configure</span><br><span class="line">        try_files $uri $uri/ /index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置阿里云ECS安全组端口443规则"><a href="#配置阿里云ECS安全组端口443规则" class="headerlink" title="配置阿里云ECS安全组端口443规则"></a>配置阿里云ECS安全组端口443规则</h1><p>上面的配置往访问域名你会发现http能正常重定向到https了，但是到了https的请求，请求一直没响应。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137187528909.jpg"
+                      alt="请求一直没响应"
+                ></p>
+<p>然后用curl命令访问发现报错 port 443: Connection timed out<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137187737030.jpg"
+                      alt="curl命令访问发现报错"
+                ></p>
+<p>这个时候就是最后一步配置了。ECS云服务器安全组端口规则配置，可参考下面这篇文章。<br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/Alen_xiaoxin/article/details/104853828" >https://blog.csdn.net/Alen_xiaoxin/article/details/104853828<i class="fas fa-external-link-alt"></i></a><br>阿里云ECS允许公网通过HTTP、HTTPS等服务访问实例如何配置？<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137188659798.jpg"
+                      alt="ECS允许443"
+                ></p>
+<p>阿里云ECS安全组规则入口：云服务器 ECS  &gt;  网络云安全 &gt; 安全组 &gt; 创建安全组 或者 在现有安全组配置规则 配置入方向</p>
+<p>添加安全组规则<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16137191499796.jpg"
+                      alt="ECS允许443"
+                ></p>
+<p>OK 现在去访问你的域名就是绿色的https安全环境了，可以愉快的开发调试了。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Ubuntu Nginx 配置https免费SSL证书安全环境</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2021-02-19 11:38:42</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/后端/Ubuntu-Nginx-配置免费https-SSL-安全环境.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E6%AF%94Vue-Cli-%E6%9B%B4%E9%AB%98%E7%BA%AC%E5%BA%A6%E7%9A%84%E4%B8%8B%E4%B8%80%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7-%E5%B0%A4%E9%9B%A8%E6%BA%AA%E6%96%B0%E5%93%81Vite%E7%9A%84%E9%AD%94%E5%8A%9B.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">比&#39;Vue Cli&#39;更高纬度的下一代前端工具|尤雨溪新品Vite的魔力</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/React-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E9%87%8D%E7%82%B9%E7%AC%94%E8%AE%B0.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">React 核心概念重点笔记</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E7%89%9B%E4%BA%91%E8%B4%AD%E4%B9%B0%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6"><span class="nav-text">七牛云购买免费证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E4%B8%83%E7%89%9B%E4%BA%91%E8%B4%AD%E4%B9%B0%E5%85%8D%E8%B4%B9SSL%E8%AF%81%E4%B9%A6"><span class="nav-text">登录注册七牛云购买免费SSL证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AD%E4%B9%B0%E6%88%90%E5%8A%9F%E5%90%8E%E8%A1%A5%E5%85%A8%E4%BF%A1%E6%81%AF"><span class="nav-text">购买成功后补全信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E9%AA%8C%E8%AF%81%E5%9F%9F%E5%90%8D"><span class="nav-text">DNS验证域名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E8%AF%81%E4%B9%A6%E5%B9%B6%E5%AF%BC%E5%85%A5%E9%98%BF%E9%87%8C%E4%BA%91ECS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">下载证书并导入阿里云ECS服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8scp%E5%91%BD%E4%BB%A4%E6%8A%8A%E8%AF%81%E4%B9%A6%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0ECS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">使用scp命令把证书文件上传到ECS服务器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%A2%9ENginx%E9%85%8D%E7%BD%AE"><span class="nav-text">新增Nginx配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91ECS%E5%AE%89%E5%85%A8%E7%BB%84%E7%AB%AF%E5%8F%A3443%E8%A7%84%E5%88%99"><span class="nav-text">配置阿里云ECS安全组端口443规则</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

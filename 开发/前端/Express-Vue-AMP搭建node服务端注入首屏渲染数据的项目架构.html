@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Express+Vue+AMP+PWA的项目架构 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Express+Vue+AMP+PWA的项目架构</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2019-09-19 11:04:28
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/express/">express</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/node/">node</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue-cli3/">vue-cli3</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>6 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Express+Vue+AMP搭建node服务端注入首屏渲染数据, Express+ejs组装<a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>组件的项目架构<br>我做过的某个项目经历过以下5个项目架构形态</p>
+<ol>
+<li>Vue+PHP CI</li>
+<li>Vue+Nginx</li>
+<li>Vue+PHP</li>
+<li>Vue+Express</li>
+<li>Express+Vue+AMP+PWA</li>
+</ol>
+<p>具体架构变动看下面的思维导图</p>
+<span id="more"></span>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/%E7%BD%91%E7%AB%99%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E8%B0%83%E6%95%B4.png"
+                      alt="网站项目架构调整"
+                ></p>
+<h2 id="最终版项目架构（Express-Vue-AMP-PWA）介绍"><a href="#最终版项目架构（Express-Vue-AMP-PWA）介绍" class="headerlink" title="最终版项目架构（Express+Vue+AMP+PWA）介绍"></a>最终版项目架构（Express+Vue+AMP+PWA）介绍</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>为什么我把Express放在前面,而不是Vue+AMP+Express? 因为项目架构发展到这里，其实<a class="link"   target="_blank" rel="noopener" href="http://expressjs.com/" >Express<i class="fas fa-external-link-alt"></i></a>服务端框架已经占了主体，他可以分发管理部署Vue的静态资源以及AMP页面，以后也还有跟多可扩展性的可能。</p>
+<h3 id="Vue多页面应用"><a href="#Vue多页面应用" class="headerlink" title="Vue多页面应用"></a>Vue多页面应用</h3><p>Vue-Cli3配置多页面入口只需要配置vue.config.js文件里面的<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/" >全局CLI配置<i class="fas fa-external-link-alt"></i></a>里面的<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/#pages" >pages参数<i class="fas fa-external-link-alt"></i></a></p>
+<p>我们项目的多页面经历了多次调整</p>
+<ul>
+<li>第零阶段：最开始担心单页面首屏资源过大，使用了每个页面新建一个page入口，导致VueRouter基本不能用，完全没利用上路由懒加载。</li>
+<li>第一阶段：后面为了方便用<code>&lt;router-link to=&quot;/&quot;&gt;</code>逐渐改为一个单页面应用。</li>
+<li>第二阶段：后面觉得业务功能太多，怕影响单页面首屏加载的资源大小。后面按照业务功能模块分了8个页面入口。</li>
+<li>第三阶段：业务功能间业务关联密切，且交互需求上希望页面跳转加动画且最求更平滑的过渡，那多页面入口就不能较好的支持这些需求，经常遇到需要强制刷新页面切换入口的情况，而且入口匹配错误容易导致404bug。改为按照站点分多页面入口：商城站点入口、App原生及第三方落地页入口、社区站点入口。目前就还是这三个入口，三个入口不会任何的业务性关联，完全独立。这样商城网站的任何单页面交互就可以较好的支持，并且App落地页的入口总资源也相对更小。</li>
+</ul>
+<h3 id="Vue-Cli3项目架构"><a href="#Vue-Cli3项目架构" class="headerlink" title="Vue-Cli3项目架构"></a>Vue-Cli3项目架构</h3><p>最开始我们也是用Vue-cli2，后面发现Vue-cli3项目的结构更清晰合理，配置更简单，并且也可选择深度配置。所有选择从Vue-cli2升级到Vue-cli3，请参考我的另一篇博客<a href="https://www.patpat.site/%E5%BC%80%E5%8F%91/Vue-Cli2%E5%88%B0Vue-Cli3-Vue%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7/cjzeb0o7900135ifyjg2fpe4u/">Vue-Cli2到Vue-Cli3 Vue项目架构升级</a><br>Vue-CLI3的几个优势点</p>
+<ol>
+<li>目录结构更清晰.</li>
+<li>弃用之前的的build文件夹的build.js和webpack.prod.conf.js</li>
+<li>使用新的<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/" >vue.config.js配置<i class="fas fa-external-link-alt"></i></a>文件包含了之前的wepack配置项。</li>
+<li>支持插件集成和插件开发。（比如<a class="link"   target="_blank" rel="noopener" href="https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli-plugin-typescript/README.md" >typeScript<i class="fas fa-external-link-alt"></i></a> 、<a class="link"   target="_blank" rel="noopener" href="https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli-plugin-unit-mocha/README.md" >mocha<i class="fas fa-external-link-alt"></i></a>）</li>
+<li>可以通过 vue ui 命令运行图形化界面，在图形化界面上创建和管理项目</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli-plugin-pwa/README.md" >@vue/cli-plugin-pwa<i class="fas fa-external-link-alt"></i></a>插件方式快速<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/#pwa" >配置<i class="fas fa-external-link-alt"></i></a>PWA应用,这样<a class="link"   target="_blank" rel="noopener" href="https://developers.google.com/web/tools/workbox" >PWA<i class="fas fa-external-link-alt"></i></a>的功能可以通过插件一键集成</li>
+</ol>
+<h3 id="Express-Node服务端路由"><a href="#Express-Node服务端路由" class="headerlink" title="Express Node服务端路由"></a>Express Node服务端路由</h3><p>为什么需要服务端路由？</p>
+<ol>
+<li>根据不同路由输出不同的预取数据</li>
+<li>不同路由模块使用不同业务中间件</li>
+<li>根据不同路由配置不同Vue多页面入口或AMP资源</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15697440334352.jpg"
+                     
+                ></p>
+<h3 id="Express-Node服务端中间件"><a href="#Express-Node服务端中间件" class="headerlink" title="Express Node服务端中间件"></a>Express Node服务端中间件</h3><p>服务端中间件能做什么？什么是中间件？<br>用2019杭州·云栖大会上的程序员吐槽大会的一段说明就是<br>“我有个同事是做中间件的，我知道中间件很重要，什么是中间件？无非就是有很多人需要找马老师对接业务，马老师很忙没空跟这么多人对接业务，为了考虑马老师繁忙和安全问题，然后就找了水域去跟那些人对接，而马老师就只跟水域对接。说的好听叫中间件，其实就是个太监”。<br>哈哈！！！大家有啥要吐槽的吗？</p>
+<p>举例：例如需要在进入服务端的每个路由之前做出移动端PC端的判断并重定向到对应的环境域名url上，或者是需要在所有路由匹配之前做出广告链接的重定向等业务逻辑。这个时候就需要一个全局的web中间件，在处理在路由匹配之前的业务。</p>
+<h3 id="Node服务端动态注入SEO相关数据到Html"><a href="#Node服务端动态注入SEO相关数据到Html" class="headerlink" title="Node服务端动态注入SEO相关数据到Html"></a>Node服务端动态注入SEO相关数据到Html</h3><p>大家都知道一个单页面应用的问题，就是不利于SEO搜索引擎的爬虫抓取对应路由页面的内容。因为单页面应用多个路由都是同一个HTML源码，根据前端js路由渲染不同页面内容。所有这个时候要优化ESO其实有多种方案。<br>跟多方案，请参考我之前的博客<a href="https://www.patpat.site/%E5%BC%80%E5%8F%91/VueJs%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8SEO%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/cjzeb0o7c001a5ifyu664lfwk/">VueJs单页面应用SEO解决方案</a><br>目前项目用的是node服务端注入动态SEO相关参数的方案。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/Express+Vue+AMP.png"
+                      alt="Express+Vue+AMP"
+                ></p>
+<p>可以看到上项目架构思维导图的 Express核心控制器及中间—&gt;Vue打包静态资源的部分, 这个关系里面就是在node服务请求到页面内容数据，并把SEO相关参数通过Ejs或其他html模板语法注入到即将to浏览器的HTML(在Vue打包的.html文件的基础上注入)里面。</p>
+<h3 id="Node服务端预取首屏渲染所需业务数据"><a href="#Node服务端预取首屏渲染所需业务数据" class="headerlink" title="Node服务端预取首屏渲染所需业务数据"></a>Node服务端预取首屏渲染所需业务数据</h3><p>单页面应用一般在主静态框架渲染完需要对不同的页面在浏览器端请求API异步拿到数据后再渲染内容到页面上。这个过程用户看到的体验是会有一个API请求Loading的过程。而且这个过程跟用户的网络情况有直接关系，如果页面首屏需要渲染的数据在服务端返回HTML文档的时候就直接包含在HTML源代码里面了，那前端到浏览器可以省掉请求首屏数据的API，整个速度体验可以提升1秒左右。因为在node服务端请求API拿数据不取决于用户的网络，一般服务的网络情况比较稳定，ndoe服务端还可以对请求的相同数据利用Redis或其他缓存工具进行缓存，这样在服务端请求数据的速度可以从之前的平均1000ms降低到平均10ms以内。</p>
+<h3 id="Express架构内增加AMP开发模块"><a href="#Express架构内增加AMP开发模块" class="headerlink" title="Express架构内增加AMP开发模块"></a>Express架构内增加AMP开发模块</h3><p><a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>是什么?<br><a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>是Google主导的一个开源的网页性能优化组件库，我更多的认为AMP其实是为网站性能优化定制的一套规则，它有很多规则限制，不能自定义js代码，要使用组件必须按照规则来使用，避免制造出影响网页性能的代码。</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>为什么要选择<a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>他有什么优势？</p>
+<ol>
+<li><a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>的静态页面会被Google收录并享受免费cdn服务。</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>在Google的搜索结果页具有优先展示优势（虽然Google官方说并没特殊优先级，但是实际效果是确实会带来更多优质自然流量）</li>
+<li>在Google搜索结果页提前预加载你的AMP页面，这样在结果页面点击打开你的<a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>页面能有秒开的体验，因为不需要重新加载页面资源。</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>网页加载速度更快，性能更稳定。</li>
+</ol>
+<h2 id="总结及Demo代码分享"><a href="#总结及Demo代码分享" class="headerlink" title="总结及Demo代码分享"></a>总结及Demo代码分享</h2><p>前端项目架构并不是越复杂越好，并不是用最前沿的框架就是最好，最合适自己的业务的才是最好的，然后在能支持其现在的业务的基础上，再考虑一下明天的业务扩展，考虑怎么样快速高效的支持”明天的扩展业务”。再进一步就是考虑怎么样能够高效开发维护，并提高网站性能，给用户提供极致的用户体验。</p>
+<p>Express+Vue+AMP架构的模板代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/StriverF/express-vue-amp-template" >StriverF/express-vue-amp-template<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Express+Vue+AMP+PWA的项目架构</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2019-09-19 11:04:28</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/Express-Vue-AMP搭建node服务端注入首屏渲染数据的项目架构.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Express-Vue-AMP-PWA%E9%A1%B9%E7%9B%AE%E6%A8%A1%E6%9D%BF%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Express+Vue+AMP+PWA项目模板使用说明</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E7%94%9F%E6%B4%BB/%E9%98%85%E8%AF%BB/%E4%B9%94%E5%B8%83%E6%96%AF%E4%BC%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">史蒂夫·乔布斯传阅读笔记</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%EF%BC%88Express-Vue-AMP-PWA%EF%BC%89%E4%BB%8B%E7%BB%8D"><span class="nav-text">最终版项目架构（Express+Vue+AMP+PWA）介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue%E5%A4%9A%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8"><span class="nav-text">Vue多页面应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Cli3%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84"><span class="nav-text">Vue-Cli3项目架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Express-Node%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B7%AF%E7%94%B1"><span class="nav-text">Express Node服务端路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Express-Node%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-text">Express Node服务端中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8A%A8%E6%80%81%E6%B3%A8%E5%85%A5SEO%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E5%88%B0Html"><span class="nav-text">Node服务端动态注入SEO相关数据到Html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%A2%84%E5%8F%96%E9%A6%96%E5%B1%8F%E6%B8%B2%E6%9F%93%E6%89%80%E9%9C%80%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE"><span class="nav-text">Node服务端预取首屏渲染所需业务数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Express%E6%9E%B6%E6%9E%84%E5%86%85%E5%A2%9E%E5%8A%A0AMP%E5%BC%80%E5%8F%91%E6%A8%A1%E5%9D%97"><span class="nav-text">Express架构内增加AMP开发模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%8F%8ADemo%E4%BB%A3%E7%A0%81%E5%88%86%E4%BA%AB"><span class="nav-text">总结及Demo代码分享</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            IOS APP 电商平台项目架构重构-Swift语言(二) |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-07-21 10:56:04
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/">App</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/ios/">ios</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/swift/">swift</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.8k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>6 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进几年新语言的浪潮都比较猛烈，服务端的的<a class="link"   target="_blank" rel="noopener" href="https://golang.org/doc/" >Golang<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://deno.land/" >Deno<i class="fas fa-external-link-alt"></i></a>。安卓的<a class="link"   target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/" >Kotlin<i class="fas fa-external-link-alt"></i></a>，IOS的<a class="link"   target="_blank" rel="noopener" href="https://swift.org/documentation/" >Swift<i class="fas fa-external-link-alt"></i></a>。<br>这些新语言共同的优势都是运算性能更高，代码更简洁。让人难以抗拒，弱点是新语言技术社区不成熟，开源库较少，但是经过这几年的沉淀，这些问题也渐渐不再明显。由 Apple 创建，Swift 是当今发展最快的编程语言。作为著名的 Objective-C 的替代品，Swift 拥有大量优势，使其在iOS 开发中处于领先地位。</p>
+<span id="more"></span>
+
+
+<h1 id="App项目重构语言选择"><a href="#App项目重构语言选择" class="headerlink" title="App项目重构语言选择"></a>App项目重构语言选择</h1><ul>
+<li><input disabled="" type="checkbox"> Objective-C</li>
+<li><input checked="" disabled="" type="checkbox"> Swift<br>先说我的结论，我选Swift。<br>为什么？下面是我的理由。</li>
+</ul>
+<h2 id="Swift和Objective-C的联系"><a href="#Swift和Objective-C的联系" class="headerlink" title="Swift和Objective-C的联系"></a>Swift和Objective-C的联系</h2><p>Swift和Objective-C共用一套运行时环境，Swift的类型可以桥接到Objective-C</p>
+<h2 id="Swift比Objective-C有什么优势？"><a href="#Swift比Objective-C有什么优势？" class="headerlink" title="Swift比Objective-C有什么优势？"></a>Swift比Objective-C有什么优势？</h2><ol>
+<li>Swift容易阅读和编写，语法和文件结构简易化。</li>
+<li>Swift更易于维护，文件分离后结构更清晰。</li>
+<li>Swift更加安全，它是类型安全的语言。</li>
+<li>Swift代码更少，简洁的语法，可以省去大量冗余代码。</li>
+<li>Swift速度更快，运算性能更高。</li>
+<li>Swift构建速度更快，且打包资源大小更小。</li>
+<li>Swift是一个开源项目，拥有庞大的开发社区。</li>
+<li>Swift有更好的内存管理。</li>
+<li>Swift支持动态库。</li>
+</ol>
+<h3 id="Swift更快"><a href="#Swift更快" class="headerlink" title="Swift更快"></a>Swift更快</h3><p>现代技术需要高速的性能，而Swift完全满足了这种需求。根据大量测试，它在 FFT 和 Mandelbrot 算法方面显示出与 C++ 几乎相同的性能。早在 2015 年就发现 Xcode 6.3 beta 提高了 GEMM 算法的性能。</p>
+<p>考虑到 Swift 仍然是一门年轻的编程语言，越来越多的增强功能即将推出。每个人都在谈论这个工具的未来的原因很简单，因为 Swift 正在快速开发语言。它的潜力是不可否认的，而 Objective-C 显示出更糟糕的结果。</p>
+<p>根据 Apple 的研究，Objective-C 与 Swift 的速度比较：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16268399371021.png"
+                      alt="根据 Apple 的研究，Objective-C 与 Swift 的速度比较"
+                ></p>
+<h3 id="Swift更安全"><a href="#Swift更安全" class="headerlink" title="Swift更安全"></a>Swift更安全</h3><p>还记得 Objective-C 中的 nil 指针变量（未初始化）将表达式变为无操作并导致应用程序崩溃吗？使用 Swift 时您可以忘记这个问题。它的设计考虑了安全性，并且每次编写错误代码时都会产生编译器错误。这意味着可以在开发阶段修复所有错误，而无需随后查看整个代码。不会给客户带来不好的惊喜。</p>
+<h3 id="Swift更易于阅读和编写"><a href="#Swift更易于阅读和编写" class="headerlink" title="Swift更易于阅读和编写"></a>Swift更易于阅读和编写</h3><p>Swift 变得如此流行的原因之一是这种编程语言的简单语法。这一事实使代码更易于阅读和编写。另一方面，Objective-C 需要大量符号、分号来结束行、“if”或“else”语句中的条件表达式周围的括号等。Swift 没有这些。相反，它在括号内使用逗号分隔的参数列表。</p>
+<p>此外，实现任何选项是 Swift 需要编写比 Objective-C 语言更少的代码字符串，从而避免额外的错误，从而使代码更简洁。因此，与 Objective-C 相比，开发人员完成任务所需的时间更少。 </p>
+<p>Swift 类似于自然英语，对于使用 Java、JavaScript、Python、C# 和 C++ 的编码人员来说更容易理解。他们可以轻松地将用 Swift 编写的代码片段应用到您拥有的现有工具链中。  </p>
+<h3 id="Swift-有更好的内存管理"><a href="#Swift-有更好的内存管理" class="headerlink" title="Swift 有更好的内存管理"></a>Swift 有更好的内存管理</h3><p>Objective-C 的问题之一是 ARC（自动引用计数），它在 Cocoa API 和面向对象的代码中得到支持。但是，该代码不适用于过程 C 代码和诸如 Core Graphics 之类的 API。这导致了巨大的内存泄漏。</p>
+<p>Swift 通过使用过程和面向对象的代码路径使 ARK 完整，从而解决了这个问题。现在编码人员可以专注于应用程序逻辑及其功能，而不是管理应用程序内的内存。</p>
+<h3 id="Swift-支持动态库"><a href="#Swift-支持动态库" class="headerlink" title="Swift 支持动态库"></a>Swift 支持动态库</h3><p>正如我们上面提到的，Swift 是一种开发速度非常快的语言，但它也允许您在新的 Swift 版本到来时立即更新您的应用程序。这是可能的，因为使用了与 iOS 8 一起提供的动态库。以前，静态库更新是与新 iOS 版本等重大更新一起进行的。</p>
+<p>就其而言，动态库允许将代码段直接连接到应用程序。此功能有助于使您的项目保持最新状态，减少应用程序的初始大小，加快外部库的加载速度并最大限度地减少加载新内容所需的时间。</p>
+<p>在 Swift 中实现动态库是 Apple 如何专注于使 iOS 生态系统响应更快并为其用户提供扩展性能的另一个例子。  </p>
+<h3 id="Swift-是一个开源项目"><a href="#Swift-是一个开源项目" class="headerlink" title="Swift 是一个开源项目"></a>Swift 是一个开源项目</h3><p>作为一个开源项目，Swift 为其用户提供了额外的优势，其中之一是减少了 Objective-C 中常见的名称冲突。</p>
+<p>Swift 的另一个制胜点是庞大的开发社区，随时准备增强 iOS 开发语言。Apple 成功地为使用 Swift 作为iOS 开发主要语言的开发人员带来了最佳的客户体验，并提供了影响其未来的可能性。</p>
+<h2 id="Swift目前存在的缺点"><a href="#Swift目前存在的缺点" class="headerlink" title="Swift目前存在的缺点"></a>Swift目前存在的缺点</h2><p>社区的开源项目比OC相对偏少，但是经过这几年的沉淀也绝对不算少。<br>对ios低于ios11以下版本不兼容，对于还有兼容4年前的ios系统的项目就不建议使用。</p>
+<h2 id="那么Objective-C呢？"><a href="#那么Objective-C呢？" class="headerlink" title="那么Objective-C呢？"></a>那么Objective-C呢？</h2><p>在 2014 年 Swift 发布之前，Objective-C 是一种广泛使用的编程语言。可悲但真实，现在它无处可去，专家预测它不会收到任何重大更新。原因很简单：Swift 语言已经包含了 Objective-C 的所有解决方案。此外，还有许多 Objective-C 缺乏的进步。尽管 Objective-C 可能会借用 Swifts 的一些新特性，但它永远不会那么前沿。</p>
+<p>Objective-C 的另一个弱点是它的安全级别。如前所述，Swift 被认为更安全。由于数据保护是大多数用户最关心的问题，开发人员也不能忽视这一点。</p>
+<p>最重要的是，与 Swift 不同，不可能使用 Objective-C 以交互方式开发应用程序。这对每个软件工程师来说都是一个很大的缺点，它会对开发过程产生相当负面的影响。</p>
+<p>自从 Apple 发布 Xcode 6.3 以来，修复了 Apple Bug Report 实用程序中的许多恼人的错误，Objective-C 没有机会追赶 Swift。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>虽然大多数现有的 iOS 应用程序都是用 Objective-C 编写的，但现在是时候考虑将它们转移到 Swift 上了。在更新方面，Swift 允许 iOS 开发人员在短时间内处理任何更改。这一切都归功于它更平易近人和负责任的性质。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：IOS APP 电商平台项目架构重构-Swift语言(二)</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2021-07-21 10:56:04</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/App/IOS-APP-电商平台项目架构重构-Swift语言-二.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B6%85%E7%BA%A7%E5%A4%A7%E5%9D%91-Vue%E5%AF%B9%E8%B1%A1%E5%9C%A8SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">记一次超级大坑-Vue对象在SSR服务端为单例状态</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%B8%80.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-架构演进(一)</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#App%E9%A1%B9%E7%9B%AE%E9%87%8D%E6%9E%84%E8%AF%AD%E8%A8%80%E9%80%89%E6%8B%A9"><span class="nav-text">App项目重构语言选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E5%92%8CObjective-C%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-text">Swift和Objective-C的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E6%AF%94Objective-C%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF%EF%BC%9F"><span class="nav-text">Swift比Objective-C有什么优势？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%BF%AB"><span class="nav-text">Swift更快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%AE%89%E5%85%A8"><span class="nav-text">Swift更安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E6%98%93%E4%BA%8E%E9%98%85%E8%AF%BB%E5%92%8C%E7%BC%96%E5%86%99"><span class="nav-text">Swift更易于阅读和编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%9C%89%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-text">Swift 有更好的内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E5%BA%93"><span class="nav-text">Swift 支持动态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-text">Swift 是一个开源项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E7%9B%AE%E5%89%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-text">Swift目前存在的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3%E4%B9%88Objective-C%E5%91%A2%EF%BC%9F"><span class="nav-text">那么Objective-C呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

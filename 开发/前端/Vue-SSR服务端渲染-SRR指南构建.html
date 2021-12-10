@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Vue SSR服务端渲染-SRR指南构建 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Vue SSR服务端渲染-SRR指南构建</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-03-18 11:31:27
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/SSR/">SSR</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue-cli/">vue-cli</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.2k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>9 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>基于Vue-CLI v4版本构建的SPA项目改造成VueSSR服务端渲染项目。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>前段时间对网站项目进行了大的架构重构，上线已经半年了。一直想分享Vue-SSR项目架构，但是一直在忙SSR网站的架构优化迭代。<br>首先说一下做SSR项目重构的项目目的是什么</p>
+<ol>
+<li>更全面的SEO优化</li>
+<li>网站首屏渲染性能优化</li>
+<li>项目可维护性优化</li>
+<li>项目高可用性优化</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>我们这次选用的是Vue SSR指南自定义搭建Vue-SSR项目架构, 为啥不选用Vue开箱即用的SSR框架Nuxt?</p>
+<ol>
+<li>我们需要更多设置和选择的余地，Nuxt是更高级别的抽象，它为开发者做出了很多选择</li>
+<li>我们想更深度的了解SSR的工作原理</li>
+<li>Nuxt根据目录生成动态路由，让人感觉有点不自由（虽然有约束不一定是负面的）</li>
+</ol>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="需要熟悉的技术栈"><a href="#需要熟悉的技术栈" class="headerlink" title="需要熟悉的技术栈"></a>需要熟悉的技术栈</h2><ul>
+<li>Node.js</li>
+<li>Vue</li>
+<li>Webpack</li>
+<li>Nginx</li>
+<li>Redis</li>
+<li>CF动态CDN</li>
+</ul>
+<h2 id="事先阅读一遍相关文档"><a href="#事先阅读一遍相关文档" class="headerlink" title="事先阅读一遍相关文档"></a>事先阅读一遍相关文档</h2><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://ssr.vuejs.org/zh/" >Vue SSR指南<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="http://expressjs.com/en/guide/routing.html" >Node.js框架Express<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://nuxtjs.org/docs/2.x/get-started/installation" >Nuxt的文档<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="http://redisdoc.com/string/get.html" >Redis文档<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ul>
+<li>node v10以上环境</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/installation.html" >Vue-CLI<i class="fas fa-external-link-alt"></i></a>前端工具</li>
+</ul>
+<h1 id="创建SSR架构项目"><a href="#创建SSR架构项目" class="headerlink" title="创建SSR架构项目"></a>创建SSR架构项目</h1><p>下面构建的服务端渲染架构图如下图<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/%E7%BD%91%E7%AB%99SSR%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%9B%BE.png"
+                      alt="网站SSR项目架构图"
+                ></p>
+<h2 id="Vue-CLI创建项目"><a href="#Vue-CLI创建项目" class="headerlink" title="Vue-CLI创建项目"></a>Vue-CLI创建项目</h2><p>使用<code>vue ui</code>(项目管理界面)或者<code>vue create [options] &lt;app-name&gt;</code> Vue命令创建项目（具体Vue命令介绍使用<code>vue -h</code>命令查看）</p>
+<h3 id="Vue-ui-管理界面创建项目"><a href="#Vue-ui-管理界面创建项目" class="headerlink" title="Vue ui 管理界面创建项目"></a>Vue ui 管理界面创建项目</h3><p>执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue ui</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16160806486175.jpg"
+                     
+                ><br>进入<a class="link"   target="_blank" rel="noopener" href="http://localhost:8000/project/create" >http://localhost:8000/project/create<i class="fas fa-external-link-alt"></i></a> 图形界面按步骤创建项目<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16160807691660.jpg"
+                     
+                ><br>选择Vue版本&amp;选择路由模式等<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16160809720243.jpg"
+                     
+                ></p>
+<h3 id="Vue-命令创建项目"><a href="#Vue-命令创建项目" class="headerlink" title="Vue 命令创建项目"></a>Vue 命令创建项目</h3><p>这里就不详细介绍了，执行<code>vue create [options] &lt;app-name&gt;</code>命令根据提示选项选择需要的配置就好了。或查阅<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create" >Vue-CLI官方文档<i class="fas fa-external-link-alt"></i></a><br>创建项目有哪些可选项可通过<code>vue create --help</code>查看</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create --help</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create hello-world</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="调整项目目录结构"><a href="#调整项目目录结构" class="headerlink" title="调整项目目录结构"></a>调整项目目录结构</h2><p>创建完项目，我们现在得到的是一个Vue单页面应用，要把他改造成服务端渲染项目根据以下步骤调整项目结构</p>
+<h3 id="在根目录下新建server目录"><a href="#在根目录下新建server目录" class="headerlink" title="在根目录下新建server目录"></a>在根目录下新建server目录</h3><h4 id="server目录功能概述"><a href="#server目录功能概述" class="headerlink" title="server目录功能概述"></a>server目录功能概述</h4><p>server主要是负责服务端相关代码的配置，包含了之前单页面<code>npm run serve</code>的本地服务器功能。<br>主要包括以下主要功能</p>
+<ol>
+<li>服务端路由分配管理</li>
+<li>服务端控制中心</li>
+<li>服务端中间件，全局参数初始化</li>
+<li>服务端开发环境热更新</li>
+<li>服务端渲染以及缓存等</li>
+</ol>
+<h4 id="在server目录下面新建目录和文件"><a href="#在server目录下面新建目录和文件" class="headerlink" title="在server目录下面新建目录和文件"></a>在server目录下面新建目录和文件</h4><p>在server目录下面新建以下文件夹和文件<br>.<br>├── controllers<br>│   └── appController.js<br>├── middlewares<br>│   └── initMiddleware.js<br>├── routes<br>│   └── index.js<br>├── render<br>│   └── index.js<br>├── tools<br>│   ├── utill.js<br>│   └── cache<br>│       ├── redisCluster.js<br>│       └── constants.js<br>├── app.js<br>└── setup-dev.js</p>
+<p>server目录截图<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16161404797411.jpg"
+                     
+                ></p>
+<h3 id="调整src目录"><a href="#调整src目录" class="headerlink" title="调整src目录"></a>调整src目录</h3><p>src目录还是主要负责前端业务逻辑/页面路由/页面组件/子组件/全局状态store等<br>新增文件夹<code>template</code>,<code>utils</code>。新增文件<code>entry-client.js</code>, <code>entry-server.js</code><br>修改main.js代码，接下来很多之前spa的new Vue/new Vuex等代码都会改为函数式return<br>因为在服务端我们要 <a class="link"   target="_blank" rel="noopener" href="https://ssr.vuejs.org/zh/guide/structure.html#%E9%81%BF%E5%85%8D%E7%8A%B6%E6%80%81%E5%8D%95%E4%BE%8B" >避免状态单例（点击查看VueSSR指南文档了解更多）<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="调整public目录"><a href="#调整public目录" class="headerlink" title="调整public目录"></a>调整public目录</h3><p>public目前其实没啥调整的，把你需要的静态资源放public目录就好了，唯一重要的就是要把public目录下面的index.html删掉。<br>因为服务端渲染的时候用不上这个空壳的index.html，服务端渲染会重新按照对应路由渲染出来对应完整内容的index.html。</p>
+<h2 id="修改vue-config-js配置"><a href="#修改vue-config-js配置" class="headerlink" title="修改vue.config.js配置"></a>修改vue.config.js配置</h2><p>修改vue.config.js 新增vue.config.cilent.js 和 vue.config.server.js 来区分服务端渲染的打包配置，和客户端的打包配置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue.config.js</span></span><br><span class="line"><span class="keyword">const</span> cilentConfig = <span class="built_in">require</span>(<span class="string">&#x27;./vue.config.cilent&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> serverConfig = <span class="built_in">require</span>(<span class="string">&#x27;./vue.config.server&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> lessToJs = <span class="built_in">require</span>(<span class="string">&#x27;less-vars-to-js&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> paletteLess = fs.readFileSync(<span class="string">&#x27;./src/styles/variables.less&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> globalVars = lessToJs(paletteLess, &#123; <span class="attr">resolveVariables</span>: <span class="literal">true</span>, <span class="attr">stripPrefix</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// const isProd = process.env.NODE_ENV === &#x27;production&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  outputDir: <span class="string">&#x27;server/public&#x27;</span>,</span><br><span class="line">  configureWebpack: process.env.TARGET_ENV === <span class="string">&#x27;server&#x27;</span> ? serverConfig : cilentConfig,</span><br><span class="line">  chainWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> lessRule = config.module.rule(<span class="string">&#x27;less&#x27;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(lessRule)</span><br><span class="line">  &#125;,</span><br><span class="line">  css: &#123;</span><br><span class="line">    requireModuleExtension: <span class="literal">true</span>,</span><br><span class="line">    loaderOptions: &#123;</span><br><span class="line">      less: &#123;</span><br><span class="line">        globalVars,</span><br><span class="line">        modules: <span class="literal">false</span>,</span><br><span class="line">        javascriptEnabled: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  pwa: &#123;</span><br><span class="line">    name: <span class="string">&#x27;vue cli4 ssr&#x27;</span>,</span><br><span class="line">    themeColor: <span class="string">&#x27;#ff2556&#x27;</span>,</span><br><span class="line">    appleMobileWebAppStatusBarStyle: <span class="string">&#x27;black-translucent&#x27;</span>,</span><br><span class="line">    workboxOptions: &#123;</span><br><span class="line">      swDest: <span class="string">&#x27;vue-cli4-ssr-sw.js&#x27;</span>,</span><br><span class="line">      skipWaiting: <span class="literal">true</span>,</span><br><span class="line">      clientsClaim: <span class="literal">true</span>,</span><br><span class="line">      include: [</span><br><span class="line">        /js\/main.[<span class="number">0</span>-9A-Za-z]&#123;<span class="number">8</span>,<span class="number">8</span>&#125;.js$/,</span><br><span class="line">        /js\/vendor.[<span class="number">0</span>-9A-Za-z]&#123;<span class="number">8</span>,<span class="number">8</span>&#125;.js$/,</span><br><span class="line">        /css\/main.[<span class="number">0</span>-9A-Za-z]&#123;<span class="number">8</span>,<span class="number">8</span>&#125;.css$/</span><br><span class="line">      ],</span><br><span class="line">      cacheId: <span class="string">&#x27;vue-cli4-ssr-sw-cache&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue.config.cilent.js</span></span><br><span class="line"><span class="keyword">const</span> VueSSRClientPlugin = <span class="built_in">require</span>(<span class="string">&#x27;vue-server-renderer/client-plugin&#x27;</span>)</span><br><span class="line"><span class="comment">// const isProd = process.env.NODE_ENV === &#x27;production&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./src/entry-client.js&#x27;</span>,</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    runtimeChunk: &#123;</span><br><span class="line">      name: <span class="string">&#x27;manifest&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      cacheGroups: &#123;</span><br><span class="line">        vendor: &#123;</span><br><span class="line">          test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">          name: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">          chunks: <span class="string">&#x27;all&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="comment">// This plugins generates `vue-ssr-client-manifest.json` in the</span></span><br><span class="line">    <span class="comment">// output directory.</span></span><br><span class="line">    <span class="keyword">new</span> VueSSRClientPlugin(),</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue.config.server.js</span></span><br><span class="line"><span class="keyword">const</span> nodeExternals = <span class="built_in">require</span>(<span class="string">&#x27;webpack-node-externals&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> VueSSRServerPlugin = <span class="built_in">require</span>(<span class="string">&#x27;vue-server-renderer/server-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./src/entry-server.js&#x27;</span>,</span><br><span class="line">  target: <span class="string">&#x27;node&#x27;</span>,</span><br><span class="line">  devtool: <span class="string">&#x27;source-map&#x27;</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    libraryTarget: <span class="string">&#x27;commonjs2&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  externals: nodeExternals(&#123;</span><br><span class="line">    whitelist: [<span class="regexp">/\.css$/</span>, <span class="regexp">/vant\/lib/</span>, <span class="regexp">/ant-design-vue\/lib/</span>],</span><br><span class="line">  &#125;),</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    splitChunks: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// This is the plugin that turns the entire output of the server build</span></span><br><span class="line">  <span class="comment">// into a single JSON file. The default file name will be</span></span><br><span class="line">  <span class="comment">// `vue-ssr-server-bundle.json`</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> VueSSRServerPlugin(),</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="服务端vue-router客户端router同步"><a href="#服务端vue-router客户端router同步" class="headerlink" title="服务端vue router客户端router同步"></a>服务端vue router客户端router同步</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; sync &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex-router-sync&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> createRouter <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> createStore <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"><span class="comment">// import &#123; Sticky &#125; from &#x27;vant&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Vue.use(Sticky) // 可以在main.js中全局按需引入，也可以在对应子组件中按需引入</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createApp = <span class="function">(<span class="params">context</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// create router and store instances</span></span><br><span class="line">  <span class="keyword">const</span> router = createRouter()</span><br><span class="line">  <span class="keyword">const</span> store = createStore()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// sync so that route state is available as part of the store</span></span><br><span class="line">  sync(store, router)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123; <span class="attr">url</span>: context ? context.url : <span class="string">&#x27;&#x27;</span> &#125;,</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    render: <span class="function">(<span class="params">h</span>) =&gt;</span> h(App),</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; app, router, store &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装依赖库"><a href="#安装依赖库" class="headerlink" title="安装依赖库"></a>安装依赖库</h2><p>最核心就是要选择node服务端的框架 <a class="link"   target="_blank" rel="noopener" href="http://expressjs.com/en/starter/installing.html" >Express<i class="fas fa-external-link-alt"></i></a></p>
+<ul>
+<li>express                // node服务端框架，当然也可以选择其他node框架，例如koa</li>
+<li>register-service-worker// PWA注册service worker的插件</li>
+<li>vue-server-renderer    // vue服务端渲染指南里面介绍的必须要用到的库，用户服务端渲染vue组件</li>
+<li>vuex-router-sync       // 同步服务端和客户端的路由</li>
+<li>webpack-hot-middleware // node端打包排查不必要打包的相关依赖</li>
+</ul>
+<p>其他相关依赖查看<a class="link"   target="_blank" rel="noopener" href="https://github.com/StriverF/vue-cli4-ssr/blob/master/package.json" >demo的package.json<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="Vuex-全局状态"><a href="#Vuex-全局状态" class="headerlink" title="Vuex 全局状态"></a>Vuex 全局状态</h2><h3 id="服务端vuex-store初始化以及挂载"><a href="#服务端vuex-store初始化以及挂载" class="headerlink" title="服务端vuex store初始化以及挂载"></a>服务端vuex store初始化以及挂载</h3><p>服务端注入全局状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; src&#x2F;entry-server.js</span><br><span class="line">	&#x2F;&#x2F; serialized and injected into the HTML as &#96;window.__INITIAL_STATE__&#96;.</span><br><span class="line">  	context.rendered &#x3D; () &#x3D;&gt; context.state &#x3D; store.state</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端接管服务端的vuex-store并动态注册"><a href="#客户端接管服务端的vuex-store并动态注册" class="headerlink" title="客户端接管服务端的vuex store并动态注册"></a>客户端接管服务端的vuex store并动态注册</h3><p>客户端接管状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; src&#x2F;entry-client.js</span><br><span class="line">if (window.__INITIAL_STATE__) &#123;</span><br><span class="line">  &#x2F;&#x2F; We initialize the store state with the data injected from the server</span><br><span class="line">  store.replaceState(window.__INITIAL_STATE__)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h2><p>服务端的.env配置跟Vue CLI里面的前端打包.env配置不一样。服务端的env配置的值是不公开的，一般情况下只有运维知道产生环境的.env配置只。<br>因为服务端的.env配置经常会要配置一些私钥或者一些 Redis集群的链接地址和授权，这些都是不对外公开的。<br>所以项目根目录下面的 .env要被.gitignore忽略，开发可以提交一个.env.example 环境变量名称和变量用途的例子给运维部署的时候参照。开发环境时大家可以在项目根目录本地创建.env单独配置自己本地环境的环境变量，一般都是测试环境的环境变量值。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>服务端渲染主要需要注意以下几点概念</p>
+<ol>
+<li>服务端跟客户端渲染环境不同，容易造成客户端能直接获取的全局变量在服务端获取不到如windows、document</li>
+<li>服务端渲染的数据状态会注入到html的window.<strong>INITIAL_STATE</strong> 客户端接管的时候会用这个状态数据验证客户端虚拟doc的内容是否和服务端一致，不一致会导致重新渲染甚至报错页面交互卡死。需要注意在客户端mounted什么周期前不要轻易对页面渲染的全局状态数据做修改，不然验证容易导致不一致。</li>
+<li>部分重定向逻辑和前置逻辑默认数据，可以在node服务端新建middlewares目录在下面编写服务端前置中间件逻辑</li>
+<li>验证Network里面的Doc请求是否首屏内容是否真的实现了服务端渲染，服务端渲染的数据需要在serverPrefetch生命周期提前加载好渲染页面相关数据，并挂载在全局状态。</li>
+</ol>
+<h1 id="GitHub-demo链接"><a href="#GitHub-demo链接" class="headerlink" title="GitHub demo链接"></a>GitHub demo链接</h1><p><a class="link"   target="_blank" rel="noopener" href="https://github.com/StriverF/vue-cli4-ssr" >vue-cli4-ssr<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Vue SSR服务端渲染-SRR指南构建</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2021-03-18 11:31:27</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/Vue-SSR服务端渲染-SRR指南构建.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Single-spa 成熟的微前端架构方案</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E6%AF%94Vue-Cli-%E6%9B%B4%E9%AB%98%E7%BA%AC%E5%BA%A6%E7%9A%84%E4%B8%8B%E4%B8%80%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7-%E5%B0%A4%E9%9B%A8%E6%BA%AA%E6%96%B0%E5%93%81Vite%E7%9A%84%E9%AD%94%E5%8A%9B.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">比&#39;Vue Cli&#39;更高纬度的下一代前端工具|尤雨溪新品Vite的魔力</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="nav-text">技术选型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E7%86%9F%E6%82%89%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-text">需要熟悉的技术栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%85%88%E9%98%85%E8%AF%BB%E4%B8%80%E9%81%8D%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3"><span class="nav-text">事先阅读一遍相关文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">环境准备</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BASSR%E6%9E%B6%E6%9E%84%E9%A1%B9%E7%9B%AE"><span class="nav-text">创建SSR架构项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-CLI%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-text">Vue-CLI创建项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-ui-%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-text">Vue ui 管理界面创建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-text">Vue 命令创建项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">调整项目目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%96%B0%E5%BB%BAserver%E7%9B%AE%E5%BD%95"><span class="nav-text">在根目录下新建server目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#server%E7%9B%AE%E5%BD%95%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-text">server目录功能概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8server%E7%9B%AE%E5%BD%95%E4%B8%8B%E9%9D%A2%E6%96%B0%E5%BB%BA%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6"><span class="nav-text">在server目录下面新建目录和文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4src%E7%9B%AE%E5%BD%95"><span class="nav-text">调整src目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4public%E7%9B%AE%E5%BD%95"><span class="nav-text">调整public目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9vue-config-js%E9%85%8D%E7%BD%AE"><span class="nav-text">修改vue.config.js配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AFvue-router%E5%AE%A2%E6%88%B7%E7%AB%AFrouter%E5%90%8C%E6%AD%A5"><span class="nav-text">服务端vue router客户端router同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="nav-text">安装依赖库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-%E5%85%A8%E5%B1%80%E7%8A%B6%E6%80%81"><span class="nav-text">Vuex 全局状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AFvuex-store%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%A5%E5%8F%8A%E6%8C%82%E8%BD%BD"><span class="nav-text">服务端vuex store初始化以及挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A5%E7%AE%A1%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84vuex-store%E5%B9%B6%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C"><span class="nav-text">客户端接管服务端的vuex store并动态注册</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE"><span class="nav-text">环境变量配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GitHub-demo%E9%93%BE%E6%8E%A5"><span class="nav-text">GitHub demo链接</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

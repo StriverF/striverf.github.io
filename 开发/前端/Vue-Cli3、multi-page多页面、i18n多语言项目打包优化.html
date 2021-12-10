@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Vue-Cli3、multi-page多页面、i18n多语言项目打包优化 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Vue-Cli3、multi-page多页面、i18n多语言项目打包优化</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2019-06-18 12:59:17
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue-cli3/">vue-cli3</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/js/">js</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/webpack/">webpack</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/i18n/">i18n</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.4k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>5 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次主要是对打包文件 chunk-vendors文件拆包，和 chunk-common提取通用chunk 里面的多语言包进行分语言环境懒加载。<br>要做这这些事情，需要先了解以下内容：</p>
+<ul>
+<li>Webpack打包分析工具 <a class="link"   target="_blank" rel="noopener" href="https://github.com/webpack-contrib/webpack-bundle-analyzer" >webpack-bundle-analyzer<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/zh/guide/lazy-loading.html" >Vue i18n<i class="fas fa-external-link-alt"></i></a> 延迟加载翻译包</li>
+<li>Webpack<a class="link"   target="_blank" rel="noopener" href="https://webpack.js.org/plugins/split-chunks-plugin/" >splitChunks<i class="fas fa-external-link-alt"></i></a> 根据主要常用的npm库拆分</li>
+<li>Vue-cli3<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/#pages" >多页面<i class="fas fa-external-link-alt"></i></a>入口配置</li>
+<li>Webpack<a class="link"   target="_blank" rel="noopener" href="https://webpack.js.org/plugins/dll-plugin/#dllplugin" >dllPlugin<i class="fas fa-external-link-alt"></i></a>预构建配置 </li>
+</ul>
+<span id="more"></span>
+
+<h2 id="i18n多语言包拆分"><a href="#i18n多语言包拆分" class="headerlink" title="i18n多语言包拆分"></a>i18n多语言包拆分</h2><h3 id="1-优化效果对比"><a href="#1-优化效果对比" class="headerlink" title="1.优化效果对比"></a>1.优化效果对比</h3><p>首先看一下优化前后的<a class="link"   target="_blank" rel="noopener" href="https://github.com/webpack-contrib/webpack-bundle-analyzer" >webpack-bundle-analyzer<i class="fas fa-external-link-alt"></i></a>的分析截图<br><strong>优化前</strong><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/15611061213051.jpg"
+                     
+                ><br>从上图可以看到chunk-common.xxx.js 和chunk-vendors.xxx.js文件都特别大。700kb以上。<br>然而chunk-common.xxx.js文件大小主要被lang多语言包占了90%以上，然而网站加载显示的时候其实一次性加载所有语言包是没必要的。<br>下面看我们对多语言包进行拆分后的打包分析截图。<br><strong>多语言拆包优化后</strong><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/15611064529088.jpg"
+                     
+                ><br>从优化后的截图看到vendors.xxx.js文件还是很大（后面我们再细讲vendors.xxx.js文件拆包优化）。再看chunk-common.xxx.js文件大小以及是160kb，这个时候它里面已经没有多语言包了。只有提取的通用代码，不过这通用代码其实我们还可以优化，让它变的更小。再看有多个多语言包的js都是按照语言分包的js。比如ar zh都是单独的语言包。在对应语言环境的时候只需要加载一种语言包就好了。拆分后的语言包js每个都小于200kb，这个状态下还有很大优化空间，我们的语言包还可以分页面以及优化语言包的key命名来减少大小。</p>
+<h3 id="2-多语言拆包实施"><a href="#2-多语言拆包实施" class="headerlink" title="2.多语言拆包实施"></a>2.多语言拆包实施</h3><p>我们优化前使用vue i18n的方式都是直接 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Vue.use(VueI18n)</span><br><span class="line"><span class="keyword">const</span> i18n = <span class="keyword">new</span> VueI18n(&#123;</span><br><span class="line">  locale: store.getters.currentLang,</span><br><span class="line">  messages: &#123;</span><br><span class="line">    ar: &#123;...&#125;,</span><br><span class="line">    zh: &#123;...&#125;,</span><br><span class="line">    en: &#123;...&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样虽然单页面切换语言可以不强制刷新页面就直接切换语言，但是带来的后果是打包资源大量被语言包占用。</p>
+<p>所以我们看看vue-i18n的<a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/zh/guide/lazy-loading.html" >延迟加载翻译<i class="fas fa-external-link-alt"></i></a>的文档</p>
+<p>可以看到，文档最前面就说到：一次加载所有翻译文件是过度和不必要的。使用 Webpack 时，延迟加载或异步加载转换文件非常简单。<br>这就是我们想要的！<br>按照文档搞完后，调整了语言包的结构，通过在router.beforeEach里面来懒加载要切换的语言包，这样不仅语言包打包被拆分。单页面切换语言也可以达到不强制刷新页面的体验。（如果你们网站的路由里面就有多语言参数那就更好处理了）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> lang = to.params.lang</span><br><span class="line">  loadLanguageAsync(lang).then(<span class="function">() =&gt;</span> next())</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>我们可以通过检查 lang 是否实际上是否支持来改进这一点，调用 reject 这样我们就可以在 beforeEach 捕获路由转换。</p>
+<h2 id="弃用占用资源超大并使用价值不打的依赖库"><a href="#弃用占用资源超大并使用价值不打的依赖库" class="headerlink" title="弃用占用资源超大并使用价值不打的依赖库"></a>弃用占用资源超大并使用价值不打的依赖库</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15635179016664.jpg"
+                     
+                ><br>以我们项目为例，从打包分析图看出我们的chunk-vendors.xxx.js目前占用767kb。算是单文件比较大的了，如果用户网速比较慢加载大概需要2秒左右。</p>
+<p>我们在看看分析图chunk-vendors.xxx.js里面主要被moment和swiper.js所占据。<br>去看了项目里面对moment依赖库的使用，主要是用来做时间格式显示的转换。这个小功能完全不用这样的一个依赖库。在看moment里面主要是被多语言资源给占据，因为这个依赖库主要为了适配各个地区国家的时间显示格式。所有决定把moment这个依赖库uninstall。</p>
+<p>去看了一下vue-i18n(多语言国际化依赖库)的文档发现我们用的多语言库就可以帮我们实现时间格式化 <a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/zh/guide/datetime.html" >Vue I18n 日期时间本地化<i class="fas fa-external-link-alt"></i></a></p>
+<p>然后我们就进行了代码替换，使用 vue-i18n 的 $d(Date, ‘YMD’)<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15635195412784.jpg"
+                     
+                ></p>
+<p>然后uninstall moment依赖库后的打包分析图，chunk-vendors.xxx.js减少到502KB<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15635274050674.jpg"
+                     
+                ></p>
+<h2 id="依赖库拆包减少vendors-xxx-js文件大小"><a href="#依赖库拆包减少vendors-xxx-js文件大小" class="headerlink" title="依赖库拆包减少vendors.xxx.js文件大小"></a>依赖库拆包减少vendors.xxx.js文件大小</h2><p>从上面看的我们 chunk-vendors.xxx.js 虽然moment依赖弃用后，在chunk-vendors.xxx.js 中Swiper.js就浮现，目前swiper.js是占了大头，所以枪打出头鸟，我们现在就来想办法把Swiper.js进行拆包出来。<br>修改vue.config.js的configureWebpack配置，配置splitChunks</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    configureWebpack: &#123;</span><br><span class="line">        optimization: &#123;</span><br><span class="line">            splitChunks: &#123;</span><br><span class="line">                cacheGroups: &#123;</span><br><span class="line">                    common: &#123;</span><br><span class="line">                        name: <span class="string">&#x27;chunk-common&#x27;</span>,</span><br><span class="line">                        minChunks: <span class="number">2</span>,</span><br><span class="line">                        priority: -<span class="number">20</span>,</span><br><span class="line">                        chunks: <span class="string">&#x27;initial&#x27;</span>,</span><br><span class="line">                        reuseExistingChunk: <span class="literal">true</span>,</span><br><span class="line">                        enforce: <span class="literal">true</span> <span class="comment">// 加chunk-common的复写配置，主要是设置强制，因为发现加了下面的chunk-swiper，chunk-common就不生成了。资源会被合并到入口页面的js里面。可能是splitChunks有啥机制判断适当情况才生成chunk-common。</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    swiper: &#123;</span><br><span class="line">                        name: <span class="string">&#x27;chunk-swiper&#x27;</span>,</span><br><span class="line">                        test: <span class="regexp">/[\\/]node_modules[\\/]swiper[\\/]/</span>,</span><br><span class="line">                        chunks: <span class="string">&#x27;initial&#x27;</span>,</span><br><span class="line">                        priority: <span class="number">1</span>,</span><br><span class="line">                        reuseExistingChunk: <span class="literal">true</span>,</span><br><span class="line">                        enforce: <span class="literal">true</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在vue.config.js 的<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/#pages" >pages配置<i class="fas fa-external-link-alt"></i></a><br>的chunks属性加上’chunk-swiper’的引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pages:[&#123;</span><br><span class="line">    entry: path,</span><br><span class="line">    template: &#39;.&#x2F;src&#x2F;public&#x2F;index.html&#39;,</span><br><span class="line">    filename: &#39;index.html&#39;,</span><br><span class="line">    &#x2F;&#x2F;   title: &#39;title&#39;,</span><br><span class="line">    chunks: [&#39;chunk-vendors&#39;, &#39;chunk-common&#39;, &#39;chunk-swiper&#39;, index]</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>然后再执行打包，看的打包分析图，vendors.xxx.js减少到375KB🤩</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15635304045741.jpg"
+                     
+                ></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>优化打包的方法有很多种，选择适合自己的就好了。<br>比如还可以把vue相关的js<a class="link"   target="_blank" rel="noopener" href="https://juejin.im/post/5c3c544c6fb9a049d37f5903#heading-13" >用cdn减少文件打包体积等<i class="fas fa-external-link-alt"></i></a>。<br>利用Webpack dllPlugin提示打包热编译速度，减少打包文件大小。<br>只要你想去做，意愿够强，看似很难完成的事情其实有千万中方式可以解决。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Vue-Cli3、multi-page多页面、i18n多语言项目打包优化</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2019-06-18 12:59:17</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/Vue-Cli3、multi-page多页面、i18n多语言项目打包优化.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/Vue-l10n-%E8%B4%A7%E5%B8%81%E6%9C%AC%E5%9C%B0%E5%8C%96Vue%E6%8F%92%E4%BB%B6.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Vue-l10n 货币本地化Vue插件</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-Cli2%E5%88%B0Vue-Cli3-Vue%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Vue-Cli2到Vue-Cli3 Vue项目架构升级</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#i18n%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%8C%85%E6%8B%86%E5%88%86"><span class="nav-text">i18n多语言包拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="nav-text">1.优化效果对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%8B%86%E5%8C%85%E5%AE%9E%E6%96%BD"><span class="nav-text">2.多语言拆包实施</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%83%E7%94%A8%E5%8D%A0%E7%94%A8%E8%B5%84%E6%BA%90%E8%B6%85%E5%A4%A7%E5%B9%B6%E4%BD%BF%E7%94%A8%E4%BB%B7%E5%80%BC%E4%B8%8D%E6%89%93%E7%9A%84%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="nav-text">弃用占用资源超大并使用价值不打的依赖库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%BA%93%E6%8B%86%E5%8C%85%E5%87%8F%E5%B0%91vendors-xxx-js%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-text">依赖库拆包减少vendors.xxx.js文件大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

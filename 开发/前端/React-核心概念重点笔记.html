@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            React 核心概念重点笔记 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">React 核心概念重点笔记</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-04-15 16:24:05
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/react/">react</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.6k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>9 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>把之前阅读React官方文档，重点笔记做一下归纳。以及会提及到React和Vue的共同点和核心概念差异。<br>提示：此篇文章纯属作者的一个学习笔记，对其他人可能没有实际上的学习帮助，只是为了作者自己日后翻看能快速回顾之前学习时的思想碰撞点。</p>
+<span id="more"></span>
+
+<h1 id="React重点笔记归纳"><a href="#React重点笔记归纳" class="headerlink" title="React重点笔记归纳"></a>React重点笔记归纳</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>react支持多种接入方式：</p>
+<ol>
+<li>在网站中按需添加React部分功能，基于老项目渐进式适配。</li>
+<li>使用前端工程化CLI脚本创建功能完整，且能支撑起大型项目React应用。</li>
+<li>CDN链接引入，支持开发版本和生产版本。</li>
+</ol>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><ol>
+<li>React的起点函数 <code>ReactDOM.render()</code>，也能理解是终点函数。</li>
+<li>React认为渲染逻辑本质上与其他UI逻辑内在耦合，所以不采取人为的分离方式，而是放在“组件”的松散耦合单元之中来实现关注点分离。</li>
+<li>JSX 语法上更接近 <code>JavaScript</code> 而不是 <code>HTML</code>，所以 <code>React DOM</code> 使用 camelCase（小驼峰命名）来定义属性的名称，而不使用 <code>HTML</code> 属性名称的命名约定</li>
+<li>明确子元素和组件的区别：元素是构成 React 应用的最小砖块，组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。</li>
+<li>React 会将以小写字母开头的组件视为原生 DOM 标签元素，所以所有组件都以大写开头。</li>
+<li>React组件中的数据流是’单向’的数据流，并且是自上而下的。</li>
+<li>State作为局部状态只能通过setState()函数更新，并且setState更新时异步的，可能会合并同时的多个更新。</li>
+<li>在React的事件函数中不能通过返回<code>false</code>来阻止默认行为，需要显示的使用<code>preventDefault</code></li>
+<li>class的函数默认不会绑定JSX回调函数中的<code>this</code>,如果你忘记使用<code>this</code>.去绑定函数，当调用这个函数的时候，函数里面的<code>this</code>为<code>undefined</code></li>
+<li>与运算符 &amp;&amp;判断渲染逻辑时，React只会忽略false, 如果是0不会跳过，不会渲染逻辑&amp;&amp;后面的组件，会直接渲染0</li>
+<li>key 会传递信息给 React ，但不会传递给你的组件</li>
+<li>表单受控组件的value使 React 的 <code>state</code> 成为“唯一数据源”，<code>value</code>可以传入数组以支持在 select 标签中选择多个选项。</li>
+<li>为了不打破局部状态自上而下的单向流规则，React建议将共享状态提升到最近的共同父组件中去。</li>
+<li>如果你想要在组件间复用非 UI 的功能，我们建议将其提取为一个单独的 JavaScript 模块，如函数、对象或者类。组件可以直接引入（import）而无需通过 extend 继承它们</li>
+</ol>
+<h2 id="高级指引"><a href="#高级指引" class="headerlink" title="高级指引"></a>高级指引</h2><ol>
+<li>代码分割<code>import()</code>语法，代码分割并懒加载 <code>React.lazy()</code>, 利用父级组件的fallback属性做优雅降级（如 loading 指示器等）</li>
+<li>Context 主要应用场景在于很多不同层级的组件需要访问同样一些的数据。请谨慎使用，因为这会使得组件的复用性变差。</li>
+<li>一个处理错误的优雅方式 Error Boundaries，<code>try / catch</code> 很棒但它仅能用于命令式代码</li>
+<li>错误边界无法捕获事件处理器内部的错误，如果你需要在事件处理器内部捕获错误，使用普通的 <code>JavaScript try / catch</code> </li>
+<li>高阶组件（HOC）它是一种基于 React 的组合特性而形成的设计模式, 高阶组件是参数为组件，返回值为新组件的函数。</li>
+<li>Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案，适合弹窗等脱离父节点的组件。</li>
+<li>Profiler 测量渲染一个 React 应用多久渲染一次以及渲染一次的“代价”</li>
+<li>避免使用 <code>refs</code> 来做任何可以通过声明式实现来完成的事情，勿过度使用 Refs</li>
+<li>React强烈建议不要创建自己的组件基类。 在 React 组件中，代码重用的主要方式是组合而不是继承.</li>
+</ol>
+<h2 id="API-Reference"><a href="#API-Reference" class="headerlink" title="API Reference"></a>API Reference</h2><h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactcomponent" >React.Component<i class="fas fa-external-link-alt"></i></a>：定义 React 组件的基类</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactpurecomponent" >React.PureComponent<i class="fas fa-external-link-alt"></i></a>：与React.Component相似，但是他并未实现<a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-component.html#shouldcomponentupdate" >shouldComponentUpdate()<i class="fas fa-external-link-alt"></i></a> 某些情况下可提高性能</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactmemo" >React.memo()<i class="fas fa-external-link-alt"></i></a>：React 组件也可以被定义为可被包装的函数的<a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/higher-order-components.html" >高阶组件<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#createelement" >React.createElement()<i class="fas fa-external-link-alt"></i></a>：创建React元素，一般来说如果你使用了JSX就不再需要调用</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#createfactory" >React.createFactory()<i class="fas fa-external-link-alt"></i></a>：创建React元素，返回用于生成指定类型React 元素的函数</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#cloneelement" >React.cloneElement()<i class="fas fa-external-link-alt"></i></a>：以<code>element</code>元素为样板克隆并返回新的React元素</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#createfactory" >React.createFactory()<i class="fas fa-external-link-alt"></i></a>：返回用于生成指定类型 React 元素的函数</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#isvalidelement" >React.isValidElement()<i class="fas fa-external-link-alt"></i></a>：验证对象是否为 React 元素</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactchildren" >React.Children<i class="fas fa-external-link-alt"></i></a>：提供了用于处理<code>this.props.children</code>不透明数据结构的实用方法 <code>.map</code> <code>.forEach</code> <code>.count</code> <code>.only</code> <code>.toArray</code></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactfragment" >React.Fragment<i class="fas fa-external-link-alt"></i></a>：在不额外创建<code>DOM</code>元素的情况下，让<code>render()</code>方法中返回多个元素</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactcreateref" >React.createRef<i class="fas fa-external-link-alt"></i></a>：创建一个能够通过 ref 属性附加到 React 元素的 <a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/refs-and-the-dom.html" >ref<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactforwardref" >React.forwardRef<i class="fas fa-external-link-alt"></i></a>：创建一个React组件，这个组件能够将其接受的<code>ref</code>属性转发到其组件树下的另一个组件中</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactlazy" >React.lazy<i class="fas fa-external-link-alt"></i></a>：import一个动态懒加载的组件</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-api.html#reactsuspense" >React.Suspense<i class="fas fa-external-link-alt"></i></a>：指定加载指示器，以防其组件树中的某些子组件尚未具备渲染条件</li>
+</ul>
+<h3 id="ReactDOM"><a href="#ReactDOM" class="headerlink" title="ReactDOM"></a>ReactDOM</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom.html#render" >ReactDOM.render()<i class="fas fa-external-link-alt"></i></a>：在提供的 container 里渲染一个 React 元素，并返回对该组件的引用</li>
+<li><a href="">ReactDOM.hydrate()</a>：用于在 <code>ReactDOMServer</code> 渲染的容器中对 HTML 的内容进行 <code>hydrate</code> 操作</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom.html#unmountcomponentatnode" >ReactDOM.unmountComponentAtNode()<i class="fas fa-external-link-alt"></i></a>：从 DOM 中卸载组件，会将其事件处理器（event handlers）和 state 一并清除</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom.html#finddomnode" >ReactDOM.findDOMNode()<i class="fas fa-external-link-alt"></i></a>：如果组件已经被挂载到 DOM 上，此方法会返回浏览器中相应的原生 DOM 元素</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom.html#createportal" >ReactDOM.createPortal()<i class="fas fa-external-link-alt"></i></a>：创建 portal。Portal 将提供一种将子节点渲染到 DOM 节点中的方式</li>
+</ul>
+<h3 id="ReactDOMServer"><a href="#ReactDOMServer" class="headerlink" title="ReactDOMServer"></a>ReactDOMServer</h3><p><em>ReactDOMServer 对象允许你将组件渲染成静态标记。通常，它被使用在 Node 服务端上</em></p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom-server.html#rendertostring" >ReactDOMServer.renderToString()<i class="fas fa-external-link-alt"></i></a>：将 React 元素渲染为初始 HTML。React 将返回一个 HTML 字符串</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom-server.html#rendertostaticmarkup" >ReactDOMServer.renderToStaticMarkup()<i class="fas fa-external-link-alt"></i></a>：此方法与<code>renderToString</code>相似，但它不会在<code>React</code>内部创建的额外<code>DOM</code>属性，如果你需要的是静态页面生成器那它非常适合。</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom-server.html#rendertonodestream" >ReactDOMServer.renderToNodeStream()<i class="fas fa-external-link-alt"></i></a>：将一个 React 元素渲染成其初始 HTM。这个 API 仅允许在服务端使用。不允许在浏览器使用。</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/react-dom-server.html#rendertostaticnodestream" >ReactDOMServer.renderToStaticNodeStream()<i class="fas fa-external-link-alt"></i></a>：此方法与 renderToNodeStream 相似，但此方法不会在 React 内部创建的额外 DOM 属性，例如 data-reactroot。如果你希望把 React 当作静态页面生成器来使用，此 API 仅限于服务端使用</li>
+</ul>
+<h3 id="DOM-元素"><a href="#DOM-元素" class="headerlink" title="DOM 元素"></a>DOM 元素</h3><ul>
+<li>React 与 HTML 之间有很多属性存在差异，具体参考<a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/dom-elements.html#differences-in-attributes" >文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>在 React 16 中，任何标准的或自定义的 DOM 属性都是完全支持的。具体参考<a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/dom-elements.html#all-supported-html-attributes" >All Supported HTML Attributes<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<h3 id="合成事件"><a href="#合成事件" class="headerlink" title="合成事件"></a>合成事件</h3><p><code>SyntheticEvent</code> 实例将被传递给你的事件处理函数，它是浏览器的原生事件的跨浏览器包装器。除兼容所有浏览器外，它还拥有和浏览器原生事件相同的接口，包括 <code>stopPropagation()</code> 和 <code>preventDefault()</code></p>
+<p>React 通过将事件 normalize 以让他们在不同浏览器中拥有一致的属性，<a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/events.html#supported-events" >支持的事件<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="JavaScript-环境要求"><a href="#JavaScript-环境要求" class="headerlink" title="JavaScript 环境要求"></a>JavaScript 环境要求</h3><p>React 16 依赖集合类型 Map 和 Set 。如果你要支持无法原生提供这些能力（例如 IE &lt; 11）或实现不规范（例如 IE 11）的旧浏览器与设备，考虑在你的应用库中包含一个全局的 polyfill ，例如 core-js。React 16 跟<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/browser-compatibility.html#polyfill" >Vue-cli v3 浏览器兼容性<i class="fas fa-external-link-alt"></i></a>一样使用 core-js 支持老版本浏览器</p>
+<h2 id="HOOK"><a href="#HOOK" class="headerlink" title="HOOK"></a>HOOK</h2><p>Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。</p>
+<ul>
+<li>HOOK没有破坏性改动，完全可选，100%向后兼容</li>
+<li>虽然HOOK可以解决组件开发很多似曾相识的问题，但是React采用<strong>渐进策略</strong>：没有计划从 React 中移除 class</li>
+<li>使用<code>useState</code>和<code>useEffect</code>可以体验到HOOK的奇妙，可以参考这两个思路去自定义自己的HOOK,反正HOOK能根据你的使用情况明显的放大价值</li>
+<li>Hook API 索引参考<a class="link"   target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/hooks-reference.html" >文档<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<h1 id="Vue和React的共同点"><a href="#Vue和React的共同点" class="headerlink" title="Vue和React的共同点"></a>Vue和React的共同点</h1><ol>
+<li>都是虚拟doc，虚拟doc的性能开销都很小，通过虚拟doc计算完再去操作具体对应的真实doc。</li>
+<li>循环列表都需要给子节点指定key，不然会报警告。</li>
+<li>都支持路由懒加载，Webpack分割代码块。</li>
+<li>都支持SSR，并都有各自的服务端渲染框架 Vue(Nuxt), React(Next)</li>
+<li>React 和 Vue运行时性能都是非常快</li>
+<li>Vue 和 React 都提供了强大的路由来应对大型应用</li>
+</ol>
+<h1 id="Vue和React的核心概念差异"><a href="#Vue和React的核心概念差异" class="headerlink" title="Vue和React的核心概念差异"></a>Vue和React的核心概念差异</h1><ol>
+<li>vue局部状态支持双向绑定，React局部状态是’单向’的数据流，并且是自上而下的。</li>
+<li>Vue局部状态支持直接=’value’等于号赋值更新状态，React必须通过setState()函数（有点类似<a class="link"   target="_blank" rel="noopener" href="https://vuex.vuejs.org/api/#mutations" >Vuex<i class="fas fa-external-link-alt"></i></a>的<code>mutations</code>）</li>
+<li>Vue模板语法更贴合像<code>Html</code>, React的<code>jsx</code>语法更贴合js，并且vue也支持让你选择jsx的语法来编写组件。</li>
+<li>条件渲染的差别: Vue直接在模板中<code>v-if</code>(更直观), React还是真正的通过js语法<code>if</code>来判断接收组件变量插入到对应位置（更具逻辑性）</li>
+<li>Vue子组件需要声明props有哪些属性，React不需要，除了特殊的<code>key</code>关键属性不能在子组件props中获取。</li>
+<li>在 React 应用中，当某个组件的状态发生变化时，它会以该组件为根，重新渲染整个组件子树。如要避免不必要的子组件的重渲染，你需要在所有可能的地方使用 PureComponent，或是手动实现 shouldComponentUpdate 方法。在 Vue 应用中，组件的依赖是在渲染过程中自动追踪的，所以系统能精确知晓哪个组件确实需要被重渲染。Vue 的这个特点使得开发者不再需要考虑此类优化，从而能够更好地专注于应用本身。</li>
+<li>React Native原生渲染生态比Vue好</li>
+</ol>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：React 核心概念重点笔记</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2020-04-15 16:24:05</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/React-核心概念重点笔记.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Ubuntu-Nginx-%E9%85%8D%E7%BD%AE%E5%85%8D%E8%B4%B9https-SSL-%E5%AE%89%E5%85%A8%E7%8E%AF%E5%A2%83.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Ubuntu Nginx 配置https免费SSL证书安全环境</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E6%9C%8D%E5%8A%A1%E7%AB%AF/node-rsa-%E7%94%9F%E6%88%90%E7%A7%81%E9%92%A5-%E5%85%AC%E9%92%A5-%E5%8A%A0%E5%AF%86-%E8%A7%A3%E5%AF%86-%E7%AD%BE%E5%90%8D-%E9%AA%8C%E8%AF%81.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">node-rsa 生成私钥/公钥 加密/解密 签名/验证</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#React%E9%87%8D%E7%82%B9%E7%AC%94%E8%AE%B0%E5%BD%92%E7%BA%B3"><span class="nav-text">React重点笔记归纳</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%8C%87%E5%BC%95"><span class="nav-text">高级指引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-Reference"><span class="nav-text">API Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-text">React</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactDOM"><span class="nav-text">ReactDOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactDOMServer"><span class="nav-text">ReactDOMServer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM-%E5%85%83%E7%B4%A0"><span class="nav-text">DOM 元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6"><span class="nav-text">合成事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82"><span class="nav-text">JavaScript 环境要求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOOK"><span class="nav-text">HOOK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue%E5%92%8CReact%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9"><span class="nav-text">Vue和React的共同点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue%E5%92%8CReact%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%B7%AE%E5%BC%82"><span class="nav-text">Vue和React的核心概念差异</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

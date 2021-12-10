@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            记一次超级大坑-Vue对象在SSR服务端为单例状态 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">记一次超级大坑-Vue对象在SSR服务端为单例状态</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-08-02 10:34:01
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ssr/">ssr</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.2k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是一个让我一天两夜没安宁过的严重线上bug. 一开始测试跟我反馈说：”测试脚本有几率跑出H5页面无头部脚部左侧菜单栏组件的情况，并且页面无法点击部分图片资源无法加载。“我当时在忙其他的，随后去线上测试了一下，重现不了！我就继续忙其他的没在意。到了周六在家在家有空的时候想起测试反馈的这个问题。我想着重现不了，我就去分析一下转化数据吧，看看有没什么问题。一看数据吓我一跳，自测试跟我反馈问题的那天的时间节点起H5页面转化数据掉了近一半，整体平均浏览深度降了1/3。我立马召集小伙伴去公司加班排查，测试配合只能在线上环境测出问题，测试环境和alpha环境怎么都测不出来问题。重现不了的问题最难排查。耗费了我们前端团队一天的时间，最终终于在本地环境重现bug。</p>
+<span id="more"></span>
+
+<h1 id="找问题步骤"><a href="#找问题步骤" class="headerlink" title="找问题步骤"></a>找问题步骤</h1><ol>
+<li>对问题开始当天天上线的代码进行深度code review（并没到什么可疑代码）</li>
+<li>想办法在测试环境重现（想要重现线上环境的问题，那就要找出测试环境和生产环境的区别）</li>
+<li>尝试在测试环境跑高并发压测（然后也并没重现问题）</li>
+<li>尝试在测试环境嵌入较多的H5页面，因为H5只有在App内才会隐藏头部脚部</li>
+<li>检查SSR服务端渲染缓存策略。（能确认如果某个页面渲染的错误页面在服务端有短时间缓存，但是缓存策略也有做细分维度区分，站点级/地区级/页面级/AB测试级）</li>
+<li>锁定我们用的Vue.prototype.$isFromApp（我们所有地方判断页面是否内嵌App都是通过这个状态判断）</li>
+</ol>
+<h1 id="大概率锁定是-Vue-prototype-isFromApp-这个状态的问题"><a href="#大概率锁定是-Vue-prototype-isFromApp-这个状态的问题" class="headerlink" title="大概率锁定是 Vue.prototype.$isFromApp 这个状态的问题"></a>大概率锁定是 Vue.prototype.$isFromApp 这个状态的问题</h1><p>由于之前看官方的<code>Vue.prototype.$isServer</code> 就想着参考官方的思路维护一个判断是否是App内嵌的状态。所有页面根据这个状态判断页面App内嵌的特殊渲染逻辑。这个时候就埋下了这个坑（注意！！一定不要忘记Vue在服务端是单例状态，所有用户PV在服务端都是公用一个初始化好的Vue对象）。<br>我们内嵌App的链接跟App约定好的链接会带<code>platform=app</code>参数。H5会根据这个参数和其他一些js注入的信息计算维护<code>Vue.prototype.$isFromApp</code>这个状态。其实这个问题在很久前就是个问题，只是之前App内嵌H5的页面少，App并发请求进H5跟浏览器端请求抢更新<code>Vue.prototype.$isFromApp</code>状态的时机就少。而Vue官方<code>Vue.prototype.$isServer</code>不会有问题，因为每个用户请求在服务端的时候状态都是true。在客户端每个用户请求状态都是false。（所以不能再用$isServer的状态在mounted生命周期之前来判断做出不一样的内容渲染，不然也是会被浏览器接管失败并报错<code>_frame.js:7 Uncaught (in promise) DOMException: Failed to execute &#39;appendChild&#39; on &#39;Node&#39;: This node type does not support this method.     at Object.appendChild</code>）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/16278966875249.jpg"
+                     
+                ></p>
+<h1 id="实测确认Vue单例状态导致-isFromApp状态在多个请求间错乱问题"><a href="#实测确认Vue单例状态导致-isFromApp状态在多个请求间错乱问题" class="headerlink" title="实测确认Vue单例状态导致$isFromApp状态在多个请求间错乱问题"></a>实测确认Vue单例状态导致$isFromApp状态在多个请求间错乱问题</h1><p>为了在测试环境和本地环境重现线上的bug情况，我们就需要造出测试环境和本地环境模拟内嵌App内高并发访问H5页面。我们清楚业务上是通过url里面的<code>platform=app</code>参数来判断App内嵌的。所以我就用 <a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903477643051016" >ab 压测命令<i class="fas fa-external-link-alt"></i></a></p>
+<p>在终端用ab跑60000次请求，并发100。跑的链接带<code>platform=app</code> 让这些请求把<code>Vue.prototype.$isFromApp</code>高速的刷成<code>true</code>状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ab -n 60000 -c 100 -C &quot;dynamicCdnCacheKey&#x3D;wap:test&quot; -H &quot;User-Agent:Mozilla&#x2F;5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit&#x2F;605.1.15 (KHTML, like Gecko) Version&#x2F;13.0.3 Mobile&#x2F;15E148 Safari&#x2F;604.1&quot; https:&#x2F;&#x2F;hk-m.patpat.site&#x2F;zh&#x2F;article&#x2F;sizechart\?category_name_app\&#x3D;\&amp;sizeUnit\&#x3D;cm\&amp;product_id\&#x3D;441607\&amp;platform\&#x3D;app\&amp;visit_from\&#x3D;embedded\&amp;timezone\&#x3D;GMT%208\&amp;version\&#x3D;6.3.2\&amp;user_token\&#x3D;abdfgijmprtuzBCDEFHIMNQSVXYZ4569\&amp;currency\&#x3D;EUR\&amp;position\&#x3D;home-1823_hotarea_4-61054415430226c07204fafc_001</span><br></pre></td></tr></table></figure>
+
+<p>这个时候去浏览器放访问不带<code>platform=app</code>的链接，也会大概率按照<code>Vue.prototype.$isFromApp=true</code>的状态渲染无头脚页面。</p>
+<p>在测试环境和本地环境重现了就好解决问题了，当确认这个问题的时候我内心”WOCAO“。</p>
+<p>最后把这个<code>Vue.prototype.$isServer</code>状态删掉，把状态记录到了Vuex全局状态，因为我们Vuex是每次请求都创建的<a class="link"   target="_blank" rel="noopener" href="https://ssr.vuejs.org/zh/guide/structure.html#%E9%81%BF%E5%85%8D%E7%8A%B6%E6%80%81%E5%8D%95%E4%BE%8B" >避免了Node端的单例状态问题<i class="fas fa-external-link-alt"></i></a>。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：记一次超级大坑-Vue对象在SSR服务端为单例状态</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2021-08-02 10:34:01</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/记一次超级大坑-Vue对象在SSR服务端为单例状态.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">前端开发学习路径</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84-Swift%E8%AF%AD%E8%A8%80-%E4%BA%8C.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%BE%E9%97%AE%E9%A2%98%E6%AD%A5%E9%AA%A4"><span class="nav-text">找问题步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E6%A6%82%E7%8E%87%E9%94%81%E5%AE%9A%E6%98%AF-Vue-prototype-isFromApp-%E8%BF%99%E4%B8%AA%E7%8A%B6%E6%80%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">大概率锁定是 Vue.prototype.$isFromApp 这个状态的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%B5%8B%E7%A1%AE%E8%AE%A4Vue%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81%E5%AF%BC%E8%87%B4-isFromApp%E7%8A%B6%E6%80%81%E5%9C%A8%E5%A4%9A%E4%B8%AA%E8%AF%B7%E6%B1%82%E9%97%B4%E9%94%99%E4%B9%B1%E9%97%AE%E9%A2%98"><span class="nav-text">实测确认Vue单例状态导致$isFromApp状态在多个请求间错乱问题</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

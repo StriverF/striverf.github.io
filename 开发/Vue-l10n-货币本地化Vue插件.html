@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Vue-l10n 货币本地化Vue插件 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Vue-l10n 货币本地化Vue插件</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2019-07-23 11:03:53
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/js/">js</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/plugin/">plugin</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>918 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>3 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前段时间看到项目里面的货币符号和金额转换的Vue 全局过滤器，感觉这样实现一点都不优雅，而且存在不完善，不统一的问题。比如每次都需要实时算，每次切换货币要强刷页面重新加载。然后就想到了<a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/guide/number.html" >vue-i18n<i class="fas fa-external-link-alt"></i></a>这个vue官方插件，多语言国际化，他是怎么做到不刷新页面切换语言的？于是就去观摩<a class="link"   target="_blank" rel="noopener" href="https://github.com/kazupon/vue-i18n" >vue-i18n的源码<i class="fas fa-external-link-alt"></i></a>，然后我就参考<a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/guide/number.html" >vue-i18n<i class="fas fa-external-link-alt"></i></a>写了一个<a class="link"   target="_blank" rel="noopener" href="https://docs.patpat.site/doc" >vue-l10n<i class="fas fa-external-link-alt"></i></a>的货币转换本地化的Vue插件。</p>
+<span id="more"></span>
+
+<h1 id="vue-l10n-一个货币显示本地化的Vue插件"><a href="#vue-l10n-一个货币显示本地化的Vue插件" class="headerlink" title="vue-l10n 一个货币显示本地化的Vue插件"></a>vue-l10n 一个货币显示本地化的Vue插件</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>vue-l10n-currency 是参照vue-i18n 的vue插件方式实现的一个 货币本地化转换Vue插件。<br>Dmoe预览和文档 <a class="link"   target="_blank" rel="noopener" href="http://docs.patpat.site/" >vue-l10n example<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-l10n -D</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="在Vue项目的main-js中"><a href="#在Vue项目的main-js中" class="headerlink" title="在Vue项目的main.js中"></a>在Vue项目的main.js中</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> VueL10nCurrency <span class="keyword">from</span> <span class="string">&#x27;vue-l10n&#x27;</span></span><br><span class="line">Vue.use(VueL10nCurrency)</span><br><span class="line"><span class="keyword">const</span> l10nCurrency = <span class="keyword">new</span> VueL10nCurrency(&#123;</span><br><span class="line">  isoCode: <span class="string">&#x27;USD&#x27;</span>,</span><br><span class="line">  stuExchangeRate: <span class="number">1</span>,</span><br><span class="line">  utsExchangeRate: <span class="number">1</span>,</span><br><span class="line">  symbolDisplay: <span class="string">&#x27;$&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  l10nCurrency,</span><br><span class="line">  router,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="在Vue项目的模板中"><a href="#在Vue项目的模板中" class="headerlink" title="在Vue项目的模板中"></a>在Vue项目的模板中</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;&#123;$uts(<span class="number">34.62</span>)&#125;&#125;&lt;<span class="regexp">/p&gt; /</span><span class="regexp">/ 按照汇率从USD(美元)转换为Self(本地货币)，保留两位小数四舍五入</span></span><br><span class="line"><span class="regexp">&lt;p&gt;&#123;&#123;$utsc(34.62)&#125;&#125;&lt;/</span>p&gt; <span class="comment">// 按照汇率从USD(美元)转换为Self(本地货币)，保留两位小数,两位小数后值大于0就进位</span></span><br><span class="line">&lt;p&gt;&#123;&#123;$utst(<span class="number">34.62</span>)&#125;&#125;&lt;<span class="regexp">/p&gt; /</span><span class="regexp">/ 按照汇率从USD(美元)转换为Self(本地货币)，保留两位小数,舍去两位小数后的值不进位</span></span><br><span class="line"><span class="regexp">&lt;p&gt;&#123;&#123;$stu(237.41)&#125;&#125;&lt;/</span>p&gt; <span class="comment">// 按照汇率从Self(本地货币)转换为USD(美元)保留两位小数四舍五入</span></span><br><span class="line">&lt;p&gt;&#123;&#123;$textUts(<span class="string">&quot;这个金额是$23.5,那个金额是$18.99&quot;</span>)&#125;&#125;&lt;<span class="regexp">/p&gt; /</span><span class="regexp">/ 将一段字符串中的$符号的金额，按照汇率从USD(美元)转换为Self(本地货币)，保留两位小数四舍五入</span></span><br><span class="line"><span class="regexp">&lt;p&gt;&#123;&#123;$textUtsi(&quot;这个金额是$23.5,那个金额是$18.99&quot;)&#125;&#125;&lt;/</span>p&gt; <span class="comment">// 将一段字符串中的$符号的金额，按照汇率从USD(美元)转换为Self(本地货币)，保留整数四舍五入</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="在js中切换货币"><a href="#在js中切换货币" class="headerlink" title="在js中切换货币"></a>在js中切换货币</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isoCode = <span class="string">&#x27;CNY&#x27;</span></span><br><span class="line"><span class="keyword">const</span> utsExchangeRate = <span class="number">6.85765</span></span><br><span class="line"><span class="keyword">const</span> stuExchangeRate = <span class="number">0.14582</span></span><br><span class="line"><span class="keyword">const</span> symbolDisplay = <span class="string">&#x27;￥&#x27;</span></span><br><span class="line"><span class="built_in">this</span>.$l10nCurrency.currency = &#123;</span><br><span class="line">  isoCode,</span><br><span class="line">  stuExchangeRate,</span><br><span class="line">  utsExchangeRate,</span><br><span class="line">  symbolDisplay</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h3><p><strong>Vue全局对象</strong></p>
+<p>l10nCurrency</p>
+<p><code>this.$l10nCurrency </code></p>
+<p>对象属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">currency: &#123;</span><br><span class="line">    isoCode:&#39;USD&#39;,</span><br><span class="line">    stuExchangeRate: 1,</span><br><span class="line">    utsExchangeRate: 1,</span><br><span class="line">    symbolDisplay: ‘$’</span><br><span class="line">&#125;</span><br><span class="line">_computeTypeEnum: &#123;</span><br><span class="line">    ROUNDING: &#39;rounding&#39;, &#x2F;&#x2F; 保留两位小数，四舍五入</span><br><span class="line">    CARRY: &#39;carry&#39;, &#x2F;&#x2F; 保留两位小数，后面有值就进位</span><br><span class="line">    TRUNCATION: &#39;truncation&#39;, &#x2F;&#x2F; 保留两位小数，直接舍去后面的小数</span><br><span class="line">    INT: &#39;int&#39;, &#x2F;&#x2F; 保留整数，四舍五入</span><br><span class="line">    ORIGINAL: &#39;original&#39; &#x2F;&#x2F; 保留原始计算结果</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Vue全局函数</th>
+<th>使用</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>uts</td>
+<td>$uts(34.62)</td>
+<td>美元转当地货币金额（保留两位小数，四舍五入）</td>
+</tr>
+<tr>
+<td>utsc</td>
+<td>$utsc(34.62)</td>
+<td>美元转当地货币金额（保留两位小数，后面有值就进位）</td>
+</tr>
+<tr>
+<td>utst</td>
+<td>$utst(34.62)</td>
+<td>美元转当地货币金额（保留两位小数，直接舍去后面的小数）</td>
+</tr>
+<tr>
+<td>stu</td>
+<td>$stu(237.41)</td>
+<td>当地货币美元金额（保留两位小数，四舍五入）</td>
+</tr>
+<tr>
+<td>stuo</td>
+<td>$stuo(237.41)</td>
+<td>当地货币美元金额（保留原始计算结果）</td>
+</tr>
+<tr>
+<td>textUts</td>
+<td>$textUts(“这个金额是$23.5,那个金额是$18.99”)</td>
+<td>美元字符串转当地货币字符串（保留两位小数，四舍五入）</td>
+</tr>
+<tr>
+<td>textUtsi</td>
+<td>$textUtsi(“这个金额是$23.5,那个金额是$18.99”)</td>
+<td>美元字符串转当地货币字符串（保留整数，四舍五入）</td>
+</tr>
+</tbody></table>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Vue-l10n 货币本地化Vue插件</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2019-07-23 11:03:53</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/Vue-l10n-货币本地化Vue插件.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E7%94%9F%E6%B4%BB/%E9%98%85%E8%AF%BB/%E4%B9%94%E5%B8%83%E6%96%AF%E4%BC%A0%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">史蒂夫·乔布斯传阅读笔记</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-Cli3%E3%80%81multi-page%E5%A4%9A%E9%A1%B5%E9%9D%A2%E3%80%81i18n%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Vue-Cli3、multi-page多页面、i18n多语言项目打包优化</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-l10n-%E4%B8%80%E4%B8%AA%E8%B4%A7%E5%B8%81%E6%98%BE%E7%A4%BA%E6%9C%AC%E5%9C%B0%E5%8C%96%E7%9A%84Vue%E6%8F%92%E4%BB%B6"><span class="nav-text">vue-l10n 一个货币显示本地化的Vue插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8Vue%E9%A1%B9%E7%9B%AE%E7%9A%84main-js%E4%B8%AD"><span class="nav-text">在Vue项目的main.js中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8Vue%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A8%A1%E6%9D%BF%E4%B8%AD"><span class="nav-text">在Vue项目的模板中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8js%E4%B8%AD%E5%88%87%E6%8D%A2%E8%B4%A7%E5%B8%81"><span class="nav-text">在js中切换货币</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API%E6%96%87%E6%A1%A3"><span class="nav-text">API文档</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

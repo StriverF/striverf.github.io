@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            微前端qiankun+AntDesign组件库实现业务模块彻底解耦 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">微前端qiankun+AntDesign组件库实现业务模块彻底解耦</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-22 16:31:31
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/singleSPA/">singleSPA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/qiankun/">qiankun</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.5k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>11 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面一篇文章<a href="https://www.patpat.site/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html">Single-spa 成熟的微前端架构方案</a>介绍了要用微前端架构的背景和目的，简单对比了微前端架构方案的技术选型，以及分享了一些微前端的概念图和简单的架构图。</p>
+<p>这篇文章属于项目实战，利用<a class="link"   target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/guide" >qiankun<i class="fas fa-external-link-alt"></i></a>（一个基于 <a class="link"   target="_blank" rel="noopener" href="https://github.com/single-spa/single-spa" >single-spa<i class="fas fa-external-link-alt"></i></a> 的微前端实现库）加<a class="link"   target="_blank" rel="noopener" href="https://www.antdv.com/docs/vue/getting-started-cn/" >Ant Design<i class="fas fa-external-link-alt"></i></a>组件库实现微前端主应用和微应用的路由交互、状态通信等，并且微应用按需加载组件库，微应用支持独立运行模式。</p>
+<span id="more"></span>
+
+<h1 id="主应用构建"><a href="#主应用构建" class="headerlink" title="主应用构建"></a>主应用构建</h1><p>从大部分业务需求上来看，主应用里面需要包括以下能力</p>
+<ul>
+<li>网站头部信息或头部导航菜单</li>
+<li>网站左侧菜单功能</li>
+<li>系统登录页面和页面权限信息分发</li>
+<li>能接入不同前端框架的微应用（Vue、React）</li>
+</ul>
+<h2 id="创建主应用"><a href="#创建主应用" class="headerlink" title="创建主应用"></a>创建主应用</h2><p>微前端解决方案，我们选择<a class="link"   target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/guide" >qiankun<i class="fas fa-external-link-alt"></i></a>（一个基于 <a class="link"   target="_blank" rel="noopener" href="https://github.com/single-spa/single-spa" >single-spa<i class="fas fa-external-link-alt"></i></a> 的微前端实现库）, 系统UI我们选用一个开箱即用的中台前端设计解决方案 <a class="link"   target="_blank" rel="noopener" href="https://iczer.gitee.io/vue-antd-admin-docs/start/use.html" >Vue Antd Admin<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;iczer&#x2F;vue-antd-admin.git</span><br></pre></td></tr></table></figure>
+
+<p>admin项目拉下来安装依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn # or npm install</span><br><span class="line"></span><br><span class="line">yarn add qiankun # 或者 npm i qiankun -S</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="把Vue-Antd-Admin改造为qiankun主应用"><a href="#把Vue-Antd-Admin改造为qiankun主应用" class="headerlink" title="把Vue Antd Admin改造为qiankun主应用"></a>把<a class="link"   target="_blank" rel="noopener" href="https://iczer.gitee.io/vue-antd-admin-docs/start/use.html" >Vue Antd Admin<i class="fas fa-external-link-alt"></i></a>改造为qiankun主应用</h2><h3 id="主应用qiankun注册微应用逻辑"><a href="#主应用qiankun注册微应用逻辑" class="headerlink" title="主应用qiankun注册微应用逻辑"></a>主应用qiankun注册微应用逻辑</h3><p>安装qiankun依赖后在src目录下面新增microAppRegister.js文件，用户注册微应用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; registerMicroApps, start, setDefaultMountApp, runAfterFirstMounted, initGlobalState &#125; <span class="keyword">from</span> <span class="string">&#x27;qiankun&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">microAppRegister</span> (<span class="params">vm</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">window</span>.isQiankunStart) &#123;</span><br><span class="line">    <span class="built_in">window</span>.isQiankunStart = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> langInfo = vm.$store.state.setting.lang</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *主应用的生命周期</span></span><br><span class="line"><span class="comment">     * (这不是必须的，可以省略)</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    <span class="keyword">const</span> mainLifeCycles = &#123;</span><br><span class="line">      beforeLoad: [</span><br><span class="line">        app =&gt; &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">&#x27;[LifeCycle] before load %c%s&#x27;</span>, <span class="string">&#x27;color: green;&#x27;</span>, app.name)</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      beforeMount: [</span><br><span class="line">        app =&gt; &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">&#x27;[LifeCycle] before mount %c%s&#x27;</span>, <span class="string">&#x27;color: green;&#x27;</span>, app.name)</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      afterMount : [</span><br><span class="line">        app =&gt; &#123;</span><br><span class="line">          <span class="comment">// 处理微应用切换，公共数据没更新</span></span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">&#x27;[LifeCycle] after mount %c%s&#x27;</span>, <span class="string">&#x27;color: red;&#x27;</span>, app.name)</span><br><span class="line">          <span class="keyword">let</span> newLangInfo = vm.$store.state.setting.lang</span><br><span class="line">          <span class="keyword">if</span>(newLangInfo !== langInfo) &#123;</span><br><span class="line">            langInfo = newLangInfo</span><br><span class="line">            actions.setGlobalState(&#123;</span><br><span class="line">              langInfo: newLangInfo</span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      afterUnmount: [</span><br><span class="line">        app =&gt; &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(</span><br><span class="line">            <span class="string">&#x27;[LifeCycle] after unmount %c%s&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;color: green;&#x27;</span>,</span><br><span class="line">            app.name</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * registerMicroApps(apps, lifeCycles?)</span></span><br><span class="line"><span class="comment">     *  @param apps  &#123;Array&lt;RegistrableApp&gt;&#125;   - 必选，微应用的一些注册信息</span></span><br><span class="line"><span class="comment">     *  @param lifeCycles &#123;LifeCycles&#125;         - 可选，全局的微应用生命周期钩子</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 当微应用信息注册完后</span></span><br><span class="line"><span class="comment">     * 一旦浏览器url发生变化</span></span><br><span class="line"><span class="comment">     * 便会自动触发qiankun的匹配逻辑</span></span><br><span class="line"><span class="comment">     * 所有activeRule规则匹配上的微应用就会被插入到主应用指定的container中</span></span><br><span class="line"><span class="comment">     * 同时以此调用微应用暴露出的生命周期钩子函数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    <span class="keyword">const</span> loader = <span class="function"><span class="params">loading</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;LOADER %c%s&#x27;</span>, <span class="string">&#x27;color:yellow&#x27;</span>, loading)</span><br><span class="line">      vm.$store.commit(<span class="string">&#x27;microApp/loadingToggle&#x27;</span>, loading)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> apps = vm.$store.getters[<span class="string">&#x27;microApp/microApps&#x27;</span>]</span><br><span class="line">    <span class="comment">// 用户信息</span></span><br><span class="line">    <span class="keyword">let</span> userInfo = vm.$store.getters[<span class="string">&#x27;account/user&#x27;</span>]</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;registerMicroApps&#x27;</span>, apps)</span><br><span class="line">    registerMicroApps(</span><br><span class="line">      apps.map(<span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> appInfo = &#123;...app&#125;</span><br><span class="line">        appInfo.props = <span class="built_in">Object</span>.assign(&#123;&#125;, appInfo.props || &#123;&#125;, &#123;</span><br><span class="line">          userInfo: userInfo,</span><br><span class="line">          langInfo: langInfo</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> &#123; ...appInfo, loader &#125;</span><br><span class="line">      &#125;),</span><br><span class="line">      mainLifeCycles</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * setDefaultMountApp(appLink)</span></span><br><span class="line"><span class="comment">     * @param &#123;string&#125; appLink 必选，设置默认加载的微应用相匹配的URL（注意与apps中的activeRule保持一致）</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * BTW, 如果设置了默认加载的微应用URL，则主应用中就不要设置‘/’的默认路由了，后者会被前者覆盖</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    setDefaultMountApp(apps[<span class="number">0</span>].activeRule)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 启动 qiankun</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *  start(opts?)</span></span><br><span class="line"><span class="comment">     *  @param &#123;Options&#125; opts</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *  Options</span></span><br><span class="line"><span class="comment">     *  @param &#123;boolean | &#x27;all&#x27; | string[] | (( apps: RegistrableApp[] ) =&gt; &#123; criticalAppNames: string[]; minorAppsName: string[] &#125;)&#125; prefetch 可选，是否开启预加载，默认为 true</span></span><br><span class="line"><span class="comment">     *  @param &#123;boolean | &#123; strictStyleIsolation?: boolean, experimentalStyleIsolation?: boolean &#125;&#125; sandbox  可选，是否开启沙箱，默认为 true</span></span><br><span class="line"><span class="comment">     *  @param &#123;boolean | ((app: RegistrableApp&lt;any&gt;) =&gt; Promise&lt;boolean&gt;)&#125; singular 可选，是否为单实例场景，单实例指的是同一时间只会渲染一个微应用。默认为 true</span></span><br><span class="line"><span class="comment">     *  @param &#123;Function&#125; fetch 可选，自定义的 fetch 方法</span></span><br><span class="line"><span class="comment">     *  @param &#123;(url: string) =&gt; string &#125; getPublicPath 可选</span></span><br><span class="line"><span class="comment">     *  @param &#123;(url: string) =&gt; string &#125; getTemplate  可选</span></span><br><span class="line"><span class="comment">     *  @param &#123;(url: string) =&gt; string &#125; excludeAssetFilter  可选，指定部分特殊的动态加载的微应用资源（css/js) 不被qiankun 劫持处理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    start(&#123;</span><br><span class="line">      prefetch: <span class="literal">true</span>,</span><br><span class="line">      <span class="comment">// 开启严格模式会造成一些有全局作用的插件或组件异常，比如antd的Modal组件</span></span><br><span class="line">      <span class="comment">// sandbox: &#123; strictStyleIsolation: true &#125;,</span></span><br><span class="line">      singular: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  runAfterFirstMounted(effect)</span></span><br><span class="line"><span class="comment">     *  第一个微应用 mount 后需要调用的方法，比如开启一些监控或者埋点脚本。</span></span><br><span class="line"><span class="comment">     *  这个方法不是必须的，可以不调用。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *  @param &#123;() =&gt; void&#125; 必选</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    runAfterFirstMounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;[MainApp] first app mounted&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 state</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> state = &#123;</span><br><span class="line">  testAttr: <span class="string">&#x27;Hi Channing&#x27;</span>,</span><br><span class="line">  scrollToBottom: <span class="literal">false</span>,</span><br><span class="line">  microAppsRouterMap: [],</span><br><span class="line">  isLoadingMicro: <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;initGlobalState...&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> actions = initGlobalState(state)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 暴露三个全局通信方法给主应用的子组件 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123;</span><br><span class="line">  onGlobalStateChange,</span><br><span class="line">  setGlobalState,</span><br><span class="line">  offGlobalStateChange</span><br><span class="line">&#125; = actions</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 全局通信方法的使用demo */</span></span><br><span class="line">actions.onGlobalStateChange(<span class="function">(<span class="params">state, prev</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// state: 变更后的状态; prev 变更前的状态</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;主应用全局监听到state发生变化!!!!!!!!!!!!!!!!!!!!!!!!!!&#x27;</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;state&#x27;</span>, state)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;prev&#x27;</span>, prev)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// state.testAttr = &#x27;Hi Channing again!!!!!!!&#x27;</span></span><br><span class="line"><span class="comment">// state.isLoadingMicro = true</span></span><br><span class="line"><span class="comment">// actions.setGlobalState(state)</span></span><br><span class="line"></span><br><span class="line">actions.getGlobalState = <span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> key ? state[key] : state</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// actions.offGlobalStateChange()</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在src/store/modules下面添加microApp.js，用户管理微应用参数状态，动态加载微应用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  namespaced: <span class="literal">true</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    apps: []</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    setApps (state, apps) &#123;</span><br><span class="line">      state.apps = apps</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>修改src/config/config.js, 新增配置 <code>asyncRoutes: true</code> 设置路由为异步路由，因为我们需要用异步动态路由来控制权限。</p>
+<h3 id="主应用动态路由配置"><a href="#主应用动态路由配置" class="headerlink" title="主应用动态路由配置"></a>主应用动态路由配置</h3><p>需要修改部分模拟数据和路由注册逻辑，兼容一级目录为微应用入口的逻辑</p>
+<ol>
+<li>把mock数据的root.children的一级目录添加部分属性，如 <code>appName: &#39;micro-vue&#39;</code>，<code>path: &#39;micro-vue&#39;</code>，<code>entry: &#39;http://localhost:9000&#39;</code>，这些属性是为了注册微应用用的。</li>
+<li>在src/store/modules下面新增microApp.js</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  namespaced: <span class="literal">true</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    isLoading: <span class="literal">false</span>,</span><br><span class="line">    apps: []</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    microApps: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> state.apps</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    loadingToggle: <span class="function">(<span class="params">state, loading</span>) =&gt;</span> &#123;</span><br><span class="line">      state.isLoading = loading</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;loadingToggle~~~~~~~~~~~~~~~~~~&quot;</span>,loading)</span><br><span class="line">    &#125;,</span><br><span class="line">    setApps (state, apps) &#123;</span><br><span class="line">      state.apps = apps</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改src/utils/routerUtil.js里面的路由加载逻辑</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从动态路由配置提取微应用注册信息。</span></span><br><span class="line">    <span class="keyword">let</span> apps = rootRouterConfig.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (item.router === <span class="string">&#x27;microApp&#x27;</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(item)</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          name: item.appName,</span><br><span class="line">          entry: item.entry,</span><br><span class="line">          container: <span class="string">&#x27;#micro-page&#x27;</span>,</span><br><span class="line">          activeRule: <span class="string">`/<span class="subst">$&#123;item.path&#125;</span>`</span>,</span><br><span class="line">          $meta: &#123;</span><br><span class="line">            title: item.name</span><br><span class="line">          &#125;,</span><br><span class="line">          props: &#123;</span><br><span class="line">            asyncRouterConfig: item.children</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    apps = apps.filter(<span class="function"><span class="params">res</span> =&gt;</span> res !== <span class="literal">undefined</span>)</span><br><span class="line">    store.commit(<span class="string">&#x27;microApp/setApps&#x27;</span>, apps)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主应用把微应用路由只保留 微应用的前缀路由加/*，因为微应用的路由配置在对应微应用解析。</span></span><br><span class="line">routes = routes.map(<span class="function"><span class="params">r</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (r.path === <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">        r.children.map(<span class="function"><span class="params">rc</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (rc.meta.microApp) &#123;</span><br><span class="line">            rc.children = []</span><br><span class="line">            rc.path = <span class="string">`<span class="subst">$&#123;rc.path&#125;</span>/*`</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> r</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重新解析一份完全版的菜单路由给渲染导航菜单用</span></span><br><span class="line"><span class="keyword">const</span> menuFinalRoutes = mergeRoutes(basicOptions.routes, allRoutes)</span><br><span class="line">   	formatRoutes(menuFinalRoutes)</span><br><span class="line">   	menuRouter = initRouter(store.state.setting.asyncRoutes)</span><br><span class="line">   	menuRouter.options = &#123;...menuRouter.options, <span class="attr">routes</span>: menuFinalRoutes&#125;</span><br><span class="line">   	menuRouter.matcher = <span class="keyword">new</span> Router(&#123;...menuRouter.options, <span class="attr">routes</span>:[]&#125;).matcher</span><br><span class="line">   	menuRouter.addRoutes(menuFinalRoutes)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="微应用构建"><a href="#微应用构建" class="headerlink" title="微应用构建"></a>微应用构建</h1><p>微应用可以用Vue的<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/installation.html" >Vue cli<i class="fas fa-external-link-alt"></i></a> 或 React的<a class="link"   target="_blank" rel="noopener" href="https://create-react-app.dev/docs/getting-started/" >Create React App<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="Vue微应用创建"><a href="#Vue微应用创建" class="headerlink" title="Vue微应用创建"></a>Vue微应用创建</h2><p>Vue的微应用用vue-cli创建好项目后，可以参照<a class="link"   target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/guide/tutorial#vue-%E5%BE%AE%E5%BA%94%E7%94%A8" >qiankun的vue微应用实践文档<i class="fas fa-external-link-alt"></i></a></p>
+<p>在适配<a class="link"   target="_blank" rel="noopener" href="https://iczer.gitee.io/vue-antd-admin-docs/start/use.html" >Vue Antd Admin<i class="fas fa-external-link-alt"></i></a> 的动态路由解析需要做一定的代码修改，可以参考我的实现<a class="link"   target="_blank" rel="noopener" href="https://github.com/micro-antd-admin/micro-vue/blob/master/src/main.js" >demo<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="React微应用创建"><a href="#React微应用创建" class="headerlink" title="React微应用创建"></a>React微应用创建</h2><p>可以用React官方的<a class="link"   target="_blank" rel="noopener" href="https://create-react-app.dev/docs/getting-started/" >Create React App<i class="fas fa-external-link-alt"></i></a>， 也可以尝试<a class="link"   target="_blank" rel="noopener" href="https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project" >Vite构建项目<i class="fas fa-external-link-alt"></i></a>，我前面有一篇文章介绍了<a href="https://www.patpat.site/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E6%AF%94Vue-Cli-%E6%9B%B4%E9%AB%98%E7%BA%AC%E5%BA%A6%E7%9A%84%E4%B8%8B%E4%B8%80%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7-%E5%B0%A4%E9%9B%A8%E6%BA%AA%E6%96%B0%E5%93%81Vite%E7%9A%84%E9%AD%94%E5%8A%9B.html">Vite的魔力</a></p>
+<ol>
+<li><p>在 src 目录新增 <code>public-path.js</code>：<br><em>注意：运行时的 publicPath 和构建时的 publicPath 是不同的，两者不能等价替代。</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">window</span>.__POWERED_BY_QIANKUN__) &#123;</span><br><span class="line">  __webpack_public_path__ = <span class="built_in">window</span>.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>设置 <code>history</code> 模式路由的 base：</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">BrowserRouter</span> <span class="attr">basename</span>=<span class="string">&#123;window.__POWERED_BY_QIANKUN__</span> ? &#x27;/<span class="attr">app-react</span>&#x27; <span class="attr">:</span> &#x27;/&#x27;&#125;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>入口文件 <code>index.js</code> 修改，为了避免根 id <code>#root</code> 与其他的 DOM 冲突，需要限制查找范围。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./public-path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; container &#125; = props;</span><br><span class="line">  ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, container ? container.querySelector(<span class="string">&#x27;#root&#x27;</span>) : <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#root&#x27;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">window</span>.__POWERED_BY_QIANKUN__) &#123;</span><br><span class="line">  render(&#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">bootstrap</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;[react16] react app bootstraped&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">mount</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;[react16] props from main framework&#x27;</span>, props);</span><br><span class="line">  render(props);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">unmount</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; container &#125; = props;</span><br><span class="line">  ReactDOM.unmountComponentAtNode(container ? container.querySelector(<span class="string">&#x27;#root&#x27;</span>) : <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#root&#x27;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>修改 <code>webpack</code> 配置<br>安装插件 <code>@rescripts/cli</code>，当然也可以选择其他的插件，例如 <code>react-app-rewired</code>。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D @rescripts&#x2F;cli</span><br></pre></td></tr></table></figure>
+<p>根目录新增 <code>.rescriptsrc.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; name &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./package&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  webpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    config.output.library = <span class="string">`<span class="subst">$&#123;name&#125;</span>-[name]`</span>;</span><br><span class="line">    config.output.libraryTarget = <span class="string">&#x27;umd&#x27;</span>;</span><br><span class="line">    config.output.jsonpFunction = <span class="string">`webpackJsonp_<span class="subst">$&#123;name&#125;</span>`</span>;</span><br><span class="line">    config.output.globalObject = <span class="string">&#x27;window&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  devServer: <span class="function">(<span class="params">_</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> config = _;</span><br><span class="line"></span><br><span class="line">    config.headers = &#123;</span><br><span class="line">      <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">    config.historyApiFallback = <span class="literal">true</span>;</span><br><span class="line">    config.hot = <span class="literal">false</span>;</span><br><span class="line">    config.watchContentBase = <span class="literal">false</span>;</span><br><span class="line">    config.liveReload = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 <code>package.json</code> 添加脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">&quot;dev&quot;</span>: <span class="string">&quot;rescripts start&quot;</span>,</span><br><span class="line"> 	<span class="string">&quot;build:micro&quot;</span>: <span class="string">&quot;rescripts build&quot;</span>,</span><br><span class="line"> 	<span class="string">&quot;test:micro&quot;</span>: <span class="string">&quot;rescripts test&quot;</span>,</span><br></pre></td></tr></table></figure>
+
+<p>详细的API可以参考<a class="link"   target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/api" >qiankun的官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<p>我的React的微应用<a class="link"   target="_blank" rel="noopener" href="https://github.com/micro-antd-admin/micro-react" >demo<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="微应用接入主应用"><a href="#微应用接入主应用" class="headerlink" title="微应用接入主应用"></a>微应用接入主应用</h1><p>首先微前端项目肯定是一个项目群，我的demo项目群地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/micro-antd-admin" >https://github.com/micro-antd-admin<i class="fas fa-external-link-alt"></i></a><br>这个群组里面有3个项目，一个基于Antd Admin集成qiankun的<a class="link"   target="_blank" rel="noopener" href="https://github.com/micro-antd-admin/micro-main" >主应用<i class="fas fa-external-link-alt"></i></a>，一个<a class="link"   target="_blank" rel="noopener" href="https://github.com/micro-antd-admin/micro-vue" >Vue微应用<i class="fas fa-external-link-alt"></i></a>，一个<a class="link"   target="_blank" rel="noopener" href="https://github.com/micro-antd-admin/micro-react" >React微应用<i class="fas fa-external-link-alt"></i></a>。</p>
+<p>更新demo项目后，运行两个微应用 <code>npm run dev</code> 会有两个本地服务端口。</p>
+<p>然后去主应用的 <code>src/mock/user/routes.js</code> 模拟数据添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  router: <span class="string">&#x27;microApp&#x27;</span>,</span><br><span class="line">  name: <span class="string">&#x27;Vue 微应用&#x27;</span>,</span><br><span class="line">  appName: <span class="string">&#x27;micro-vue&#x27;</span>,</span><br><span class="line">  path: <span class="string">&#x27;micro-vue&#x27;</span>,</span><br><span class="line">  entry: <span class="string">&#x27;http://localhost:9000&#x27;</span>,</span><br><span class="line">  icon: <span class="string">&#x27;appstore&#x27;</span>,</span><br><span class="line">  children: [</span><br><span class="line">    &#123;</span><br><span class="line">      router: <span class="string">&#x27;parent&#x27;</span>,</span><br><span class="line">      name: <span class="string">&#x27;二级目录&#x27;</span>,</span><br><span class="line">      icon: <span class="string">&#x27;ant-design&#x27;</span>,</span><br><span class="line">      children: [<span class="string">&#x27;test&#x27;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      router: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">      icon: <span class="string">&#x27;calendar&#x27;</span>,</span><br><span class="line">      name: <span class="string">&#x27;首页&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      router: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">      icon: <span class="string">&#x27;bulb&#x27;</span>,</span><br><span class="line">      name: <span class="string">&#x27;关于&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">  router: <span class="string">&#x27;microApp&#x27;</span>,</span><br><span class="line">  name: <span class="string">&#x27;React 微应用&#x27;</span>,</span><br><span class="line">  appName: <span class="string">&#x27;micro-react&#x27;</span>,</span><br><span class="line">  path: <span class="string">&#x27;micro-react&#x27;</span>,</span><br><span class="line">  entry: <span class="string">&#x27;http://localhost:3000&#x27;</span>,</span><br><span class="line">  children: [<span class="string">&#x27;home&#x27;</span>, <span class="string">&#x27;about&#x27;</span>, <span class="string">&#x27;test&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上demo如果有问题欢迎留言沟通😺</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：微前端qiankun+AntDesign组件库实现业务模块彻底解耦</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2021-04-22 16:31:31</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/微前端qiankun-AntDesign组件库实现业务模彻底解耦.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/React-Native%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%8E%92%E6%9F%A5%E8%A7%A3%E5%86%B3.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">React Native项目初始化问题记录及排查解决</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E7%A4%BE%E4%BC%9A/%E6%96%B0%E5%AA%92%E4%BD%93/%E5%85%B3%E4%BA%8E%E6%96%B0%E5%AA%92%E4%BD%93%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">关于新媒体的一些个人看法</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA"><span class="nav-text">主应用构建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%BB%E5%BA%94%E7%94%A8"><span class="nav-text">创建主应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8AVue-Antd-Admin%E6%94%B9%E9%80%A0%E4%B8%BAqiankun%E4%B8%BB%E5%BA%94%E7%94%A8"><span class="nav-text">把Vue Antd Admin改造为qiankun主应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E5%BA%94%E7%94%A8qiankun%E6%B3%A8%E5%86%8C%E5%BE%AE%E5%BA%94%E7%94%A8%E9%80%BB%E8%BE%91"><span class="nav-text">主应用qiankun注册微应用逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E5%BA%94%E7%94%A8%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="nav-text">主应用动态路由配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA"><span class="nav-text">微应用构建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue%E5%BE%AE%E5%BA%94%E7%94%A8%E5%88%9B%E5%BB%BA"><span class="nav-text">Vue微应用创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React%E5%BE%AE%E5%BA%94%E7%94%A8%E5%88%9B%E5%BB%BA"><span class="nav-text">React微应用创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E5%BA%94%E7%94%A8%E6%8E%A5%E5%85%A5%E4%B8%BB%E5%BA%94%E7%94%A8"><span class="nav-text">微应用接入主应用</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

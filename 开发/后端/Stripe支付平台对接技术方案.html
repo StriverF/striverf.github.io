@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Stripe支付平台对接技术方案 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Stripe支付平台对接技术方案</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2018-05-28 16:01:49
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/ios/">ios</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/js/">js</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/payment/">payment</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/php/">php</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/android/">android</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>3.7k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>15 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="我接触过的几个支付管理平台-Adyen、Braintree、PayPal、Stripe。"><a href="#我接触过的几个支付管理平台-Adyen、Braintree、PayPal、Stripe。" class="headerlink" title="我接触过的几个支付管理平台 Adyen、Braintree、PayPal、Stripe。"></a>我接触过的几个支付管理平台 <a class="link"   target="_blank" rel="noopener" href="https://docs.adyen.com/developers" >Adyen<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developers.braintreepayments.com/" >Braintree<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developer.paypal.com/" >PayPal<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/development" >Stripe<i class="fas fa-external-link-alt"></i></a>。</h1><p>最近新接触的Stripe支付平台，相比前几个我感觉Stripe更专业一些，后台管理功能清晰，操作方便，体验好。<br>开发文档也很清晰，相对前之前接触的支付平台开发文档,Stripe这个我觉得更容易快速了解其所有API,以及功能。API参数及参数说明很清晰，返回数据结构很合理，对应的API返回对应对象属性很容易理解。不像PayPal返回结果特别不好用，夹着各种键值对，结构凌乱。</p>
+<p>下面记录我集成Stripe支付平台过程。</p>
+<span id="more"></span>
+
+<h1 id="前端SDK集成-Android、IOS、JS"><a href="#前端SDK集成-Android、IOS、JS" class="headerlink" title="前端SDK集成: Android、IOS、JS"></a><font size=5>前端SDK集成: <a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/mobile/android/standard" >Android<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/mobile/ios/custom" >IOS<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/stripe-js/elements/quickstart" >JS<i class="fas fa-external-link-alt"></i></a></font></h1><h2 id="IOS-SDK集成-前端相关这里只做粗略讲解，PHP后端再详细讲解。"><a href="#IOS-SDK集成-前端相关这里只做粗略讲解，PHP后端再详细讲解。" class="headerlink" title="IOS SDK集成(前端相关这里只做粗略讲解，PHP后端再详细讲解。"></a><font size=4>IOS SDK集成(前端相关这里只做粗略讲解，PHP后端再详细讲解。</font></h2><p>建议用pods 安装SDK，如果不了解Pods 请前往<a class="link"   target="_blank" rel="noopener" href="https://guides.cocoapods.org/using/getting-started.html" >CocoaPods<i class="fas fa-external-link-alt"></i></a> 了解更多。<br>在Pods/Podfile文件下添加如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod <span class="string">&#x27;Stripe&#x27;</span>, <span class="string">&#x27;13.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>然后终端执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod update</span><br></pre></td></tr></table></figure>
+
+<p>之后就根据 <a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/mobile/ios/custom" >Stripe IOS相关文档<i class="fas fa-external-link-alt"></i></a>编写相关代码</p>
+<p>在集成过程中前端SDK会需要一个Publishable key ,这个Publishable key需要注册Stripe账户后登陆到Stripe管理后台，进入到 <a class="link"   target="_blank" rel="noopener" href="https://dashboard.stripe.com/account/apikeys" >Dashboard<i class="fas fa-external-link-alt"></i></a> Developers-&gt;API keys模块页面上获取。</p>
+<p>Stripe 的API keys有 Publishable key(公钥) 和 Secret key(私钥)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Publishable key 大概格式</span></span><br><span class="line">测试环境：pk_test_***********************</span><br><span class="line">正式环境：pk_live_***********************</span><br><span class="line"><span class="comment">//Secret key 大概格式</span></span><br><span class="line">测试环境：sk_test_***********************</span><br><span class="line">正式环境：sk_live_***********************</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Publishable key 可以公开在前端代码里面，就是给前端SDK用的，在前端输入银行卡信息后，前端需要用Publishable key和卡信息生成一个token传给后端，由于我们公司的<a class="link"   target="_blank" rel="noopener" href="https://www.pcisecuritystandards.org/" >PCI<i class="fas fa-external-link-alt"></i></a>认证还在办理中，所以用户的卡信息是不能直接传到我们后台服务器，<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/security#validating-pci-compliance" >Stripe的SDK是符合PCI规范的<i class="fas fa-external-link-alt"></i></a>我们主要通过Stripe的SDK来生成一个token,后端拿这个token可以调用Stripe的API去添加卡或者付款，前端用银行卡信息生成的这个token只能使用一次并且两个小时内有效。</li>
+<li>Secret key 相当于拥有你Secret账户的数据的新增、修改、删除权限。所以这个是要严格秘密的保存在服务端配置文件里面。</li>
+</ul>
+<h2 id="Android-SDK集成也简单讲一下"><a href="#Android-SDK集成也简单讲一下" class="headerlink" title="Android SDK集成也简单讲一下"></a><font size=4>Android SDK集成也简单讲一下</font></h2><p>使用<a class="link"   target="_blank" rel="noopener" href="https://developer.android.com/studio/intro/" >Android Studio<i class="fas fa-external-link-alt"></i></a>和<a class="link"   target="_blank" rel="noopener" href="https://www.jetbrains.com/help/idea/2016.3/getting-started-with-android-development.html" >IntelliJ<i class="fas fa-external-link-alt"></i></a>来安装Stripe Android库类似。您不需要克隆回购站或下载任何文件。只需将以下内容添加到项目build.gradle文件中，位于依赖项部分。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">&#x27;com.stripe:stripe-android:6.1.2&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Android 的前端代码集成逻辑也基本是一致的。都是最后通过用户输入的卡信息和Publishable key生成一个token传给后台。</p>
+<h2 id="网站-js-SDK集成也简单讲一下"><a href="#网站-js-SDK集成也简单讲一下" class="headerlink" title="网站 js SDK集成也简单讲一下"></a><font size=4>网站 js SDK集成也简单讲一下</font></h2><p>Card Element Quickstart<br>使用我们预先构建的UI组件的<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/elements" >Elements<i class="fas fa-external-link-alt"></i></a>，安全地收集敏感卡的详细信息。<br>Elements是Stripe.js的一部分。要开始，请在您的页面上包含此脚本 - 它应始终直接从<a href="https://js.stripe.com加载：">https://js.stripe.com加载：</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://js.stripe.com/v3/&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>js SDK的集成跟App有比较大的差别，具体细节查阅 <a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/stripe-js/elements/quickstart" >Stripe.js &amp; Elements<i class="fas fa-external-link-alt"></i></a><br>不过最后都是前端 用 卡信息和Publishable key生成一个token传给后台。</p>
+<h1 id="Stripe-PHP后台集成详细说明（编辑中）"><a href="#Stripe-PHP后台集成详细说明（编辑中）" class="headerlink" title="Stripe PHP后台集成详细说明（编辑中）"></a><font size=5>Stripe PHP后台集成详细说明（编辑中）</font></h1><h2 id="1-安装Stripe-PHP-Composer包"><a href="#1-安装Stripe-PHP-Composer包" class="headerlink" title="1. 安装Stripe PHP Composer包"></a><font size=4>1. 安装Stripe PHP Composer包</font></h2><p>首先说明下后台环境：nginx服务器，PHP+Laravel5.2, mySql5.6<br>其次对Composer包有疑问的请前往<a class="link"   target="_blank" rel="noopener" href="https://packagist.org/" >Packagist<i class="fas fa-external-link-alt"></i></a>了解更多。<br>在PHP项目根目录下的composer.json 的 require下面添加：</p>
+<pre><code>&quot;stripe/stripe-php&quot;: &quot;^6.7.1&quot;
+</code></pre>
+<p>然后执行命令：</p>
+<pre><code>composer update --no-scripts
+</code></pre>
+<p>安装完后，PHP项目的Vendor下面会有Stripe的源码, 在使用一个代码库之前简单阅读以下他的源码是有必要的，看源码，你会更清楚这个代码库有什么，你需要什么。</p>
+<h2 id="2-配置Stripe-API业务及异常处理类"><a href="#2-配置Stripe-API业务及异常处理类" class="headerlink" title="2. 配置Stripe API业务及异常处理类"></a><font size=4>2. 配置Stripe API业务及异常处理类</font></h2><p>在项目中新建一个XXStripe.php，这个类专门处理Stripe API调用前后相关业务逻辑，以及API错误异常catch</p>
+<p>PHP环境变量配置 .env<br>在 .env下配置Secret key, 就是前面说到的秘密的保存在服务端的私钥。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">;STRIPE payment</span><br><span class="line">STRIPE_API_KEY=sk_test_***********************</span><br></pre></td></tr></table></figure>
+<p>配置PHP支付相关config文件 payment.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">&#x27;PAYMENT_ENV&#x27;</span> =&gt; env(<span class="string">&#x27;PAYMENT_ENV&#x27;</span>, <span class="string">&#x27;sandbox&#x27;</span>),</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;braintree&#x27;</span> =&gt; [</span><br><span class="line">        <span class="string">&#x27;merchantId&#x27;</span> =&gt; env(<span class="string">&#x27;BRAINTREE_MERCHANT_ID&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;publicKey&#x27;</span> =&gt; env(<span class="string">&#x27;BRAINTREE_PUBLIC_KEY&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;privateKey&#x27;</span> =&gt; env(<span class="string">&#x27;BRAINTREE_PRIVATE_KEY&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;CESKey&#x27;</span> =&gt; env(<span class="string">&#x27;BRAINTREE_CES_KEY&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;adyen&#x27;</span> =&gt; [</span><br><span class="line"></span><br><span class="line">        <span class="string">&#x27;app_name&#x27;</span> =&gt; env(<span class="string">&#x27;ADYEN_APP_NAME&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span> =&gt; env(<span class="string">&#x27;ADYEN_USERNAME&#x27;</span>,<span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;password&#x27;</span> =&gt; env(<span class="string">&#x27;ADYEN_PASSWORD&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;env&#x27;</span> =&gt; env(<span class="string">&#x27;ADYEN_ENV&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;merchant_account&#x27;</span> =&gt; env(<span class="string">&#x27;ADYEN_MERCHANT_ACCOUNT&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;shopper_interaction&#x27;</span> =&gt; env(<span class="string">&#x27;ADYEN_SHOPPER_INTERACTION&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;payPal&#x27;</span> =&gt; [</span><br><span class="line">        <span class="string">&#x27;user&#x27;</span> =&gt; env(<span class="string">&#x27;PAYPAL_USER&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;password&#x27;</span> =&gt; env( <span class="string">&#x27;PAYPAL_PASSWORD&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;signature&#x27;</span> =&gt; env( <span class="string">&#x27;PAYPAL_SIGNATURE&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;new_user&#x27;</span> =&gt; env(<span class="string">&#x27;NEW_PAYPAL_USER&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;new_password&#x27;</span> =&gt; env( <span class="string">&#x27;NEW_PAYPAL_PASSWORD&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;new_signature&#x27;</span> =&gt; env( <span class="string">&#x27;NEW_PAYPAL_SIGNATURE&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;stripe&#x27;</span> =&gt; [</span><br><span class="line">        <span class="string">&#x27;api_key&#x27;</span> =&gt; env(<span class="string">&#x27;STRIPE_API_KEY&#x27;</span>, <span class="string">&#x27;sk_test_***&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>新建XXStripe类 处理Stripe API类参数及返回结果异常处理。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Modules</span>\<span class="title">Checkout</span>\<span class="title">Payment</span>\<span class="title">Stripe</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Carbon</span>\<span class="title">Carbon</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Card</span>; <span class="comment">//👇这里可以看到可以引入Stripe各种API类，用来下面调用。</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Charge</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Customer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Dispute</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Error</span>\<span class="title">Base</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Refund</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Source</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Stripe</span>\<span class="title">Stripe</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XXStripe</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//这里取到上面👆config里面的配置的stripe的私钥配置，初始化到Stripe对象里面。</span></span><br><span class="line">        <span class="variable">$stripeConfig</span> = Config::get(<span class="string">&#x27;payment.stripe&#x27;</span>);</span><br><span class="line">        Stripe::setApiKey(<span class="variable">$stripeConfig</span>[<span class="string">&#x27;api_key&#x27;</span>]);</span><br><span class="line">        <span class="comment">//更多相关初始化配置阅读Stripe源码。</span></span><br><span class="line"><span class="comment">//        Stripe::setAccountId(&quot;&quot;); </span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">addCard</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//如果Customer已经create 则直接拿之前存customer_id,往这个customer下面添加卡。</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$customerPayment</span>) &#123; <span class="comment">//$customerPayment用$user_id去自己的业务库查是否创建过stripe customer的记录，没有则执行else逻辑</span></span><br><span class="line">            <span class="variable">$customer</span> = Customer::retrieve(<span class="variable">$customerPayment</span>-&gt;braintree_token);</span><br><span class="line">            <span class="variable">$card</span> = <span class="variable">$customer</span>-&gt;sources-&gt;create([<span class="string">&quot;source&quot;</span> =&gt; <span class="variable">$token</span>]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">//如何没有记录则在Stripe平台上Customer::create</span></span><br><span class="line">            <span class="variable">$customer</span> = Customer::create([</span><br><span class="line">                <span class="string">&#x27;source&#x27;</span> =&gt; <span class="variable">$token</span>,</span><br><span class="line">                <span class="string">&#x27;email&#x27;</span> =&gt; <span class="variable">$email</span>,</span><br><span class="line">                <span class="string">&#x27;metadata&#x27;</span> =&gt; [<span class="string">&#x27;patpat_customer_id&#x27;</span> =&gt; <span class="variable">$customerId</span>, <span class="string">&#x27;firstname&#x27;</span> =&gt; <span class="variable">$user</span>-&gt;customers_firstname, <span class="string">&#x27;lastname&#x27;</span> =&gt; <span class="variable">$user</span>-&gt;customers_lastname, <span class="string">&#x27;phone&#x27;</span> =&gt; <span class="variable">$phone</span>]</span><br><span class="line">            ]);</span><br><span class="line">            <span class="comment">//添加卡后台拿到返回的$card对象存到对应业务库</span></span><br><span class="line">            <span class="variable">$card</span> = current(<span class="variable">$customer</span>-&gt;sources-&gt;data);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//你的业务代码，把Stripe 返回$customer,$card的觉得有用的对象参数 存到对应的业务表里。</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setDefaultCard</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//$stripeCustomerId需要根据userId查到之前创建用户数存的stripeCustomerId </span></span><br><span class="line">        <span class="comment">//stripeCustomerId大概格式:cus_CvpoGuZa0BnJEz</span></span><br><span class="line">        <span class="variable">$customer</span> = Customer::retrieve(<span class="variable">$stripeCustomerId</span>);</span><br><span class="line">        <span class="variable">$customer</span>-&gt;default_source = <span class="variable">$cardId</span>; <span class="comment">//$cardId也是之前存的用户的$cards列表，用户可能选一张卡来做完默认卡，$cardId大概格式:card_1CWwT1G5LmXuczdEAZo0lB2E</span></span><br><span class="line">        <span class="variable">$customer</span>-&gt;save();</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$customer</span>-&gt;default_source;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">deleteCard</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//用$stripeCustomerId查找到Stripe支付的对应用户</span></span><br><span class="line">        <span class="variable">$customer</span> = Customer::retrieve(<span class="variable">$stripeCustomerId</span>);</span><br><span class="line">        <span class="comment">//删除用户下对应的银行卡</span></span><br><span class="line">        <span class="variable">$customer</span>-&gt;sources-&gt;retrieve(<span class="variable">$cardId</span>)-&gt;delete();</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">pay</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable">$charge</span> = Charge::create([</span><br><span class="line">                <span class="string">&#x27;amount&#x27;</span> =&gt; <span class="variable">$totalPay</span>*<span class="number">100</span>,</span><br><span class="line">                <span class="string">&#x27;currency&#x27;</span> =&gt; <span class="string">&#x27;usd&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;Example charge&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;capture&#x27;</span> =&gt; <span class="literal">false</span>,</span><br><span class="line">                <span class="string">&#x27;customer&#x27;</span> =&gt; <span class="variable">$stripeCustomerId</span>, <span class="comment">//$stripeCustomerId是之前添加卡的时候存的</span></span><br><span class="line">                <span class="string">&#x27;source&#x27;</span> =&gt; <span class="variable">$cardId</span>, <span class="comment">//这个参数可不传，传这个参数就会用这个指定的card付款，$cardId也是添加卡的时候存的，</span></span><br><span class="line">                <span class="string">&#x27;metadata&#x27;</span> =&gt;[<span class="string">&#x27;order_id&#x27;</span>=&gt;<span class="variable">$orderId</span>]</span><br><span class="line">            ]); </span><br><span class="line">        &#125; <span class="keyword">catch</span> (\Stripe\<span class="built_in">Error</span>\Base <span class="variable">$e</span>)&#123; <span class="comment">//catch Stripe的API基本异常</span></span><br><span class="line">            <span class="comment">// Display a very generic error to the user, and maybe send</span></span><br><span class="line">            <span class="comment">// yourself an email</span></span><br><span class="line">            Log::info(<span class="variable">$e</span>-&gt;getStripeCode());</span><br><span class="line">            Log::info(<span class="variable">$e</span>-&gt;getMessage());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>)&#123;</span><br><span class="line">            <span class="comment">// Something else happened, completely unrelated to Stripe</span></span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-使用前端传过来的token添加Stripe-Customers-或直接付款-Payments"><a href="#3-使用前端传过来的token添加Stripe-Customers-或直接付款-Payments" class="headerlink" title="3. 使用前端传过来的token添加Stripe Customers 或直接付款 Payments"></a><font size=4>3. 使用前端传过来的token添加Stripe Customers 或直接付款 Payments</font></h2><p>通过前端调用后端API传过来 user_id 和 token。<br>前端通过Stripe SDK生成的token可以用来调用任何需要token参数的 Stripe API, 可以用来在Stripe后台创建Customer, 用token创建Customer是会把token关联的银行卡信息自动添加到这个Customer下面。创建Customer会返回创建的customer_id,这个customer_id可以用来以后长期支付。<br>所以我这边的处理是拿到token后并不是去直接支付，因为这个token只能使用一次并且两个小时内有效。<br>用来创建Customer并自动在这个Customer下面添加一张银行卡，这样能拿到返回的Customer信息，Customer信息里面有customer_id card_id等信息，可以用来以后长期支付。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">addCard</span>(<span class="params"><span class="variable">$token</span>, <span class="variable">$email</span>, <span class="variable">$user_id</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//如果Customer已经create 则直接拿之前存customer_id,往这个customer下面添加卡。</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$customerPayment</span>) &#123; <span class="comment">//$customerPayment用$user_id去自己的业务库查是否创建过stripe customer的记录，没有则执行else逻辑</span></span><br><span class="line">        <span class="variable">$customer</span> = Customer::retrieve(<span class="variable">$customerPayment</span>-&gt;braintree_token);</span><br><span class="line">        <span class="variable">$card</span> = <span class="variable">$customer</span>-&gt;sources-&gt;create([<span class="string">&quot;source&quot;</span> =&gt; <span class="variable">$token</span>]);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">//如何没有记录则在Stripe平台上Customer::create</span></span><br><span class="line">        <span class="variable">$customer</span> = Customer::create([</span><br><span class="line">            <span class="string">&#x27;source&#x27;</span> =&gt; <span class="variable">$token</span>,</span><br><span class="line">            <span class="string">&#x27;email&#x27;</span> =&gt; <span class="variable">$email</span>,</span><br><span class="line">            <span class="string">&#x27;metadata&#x27;</span> =&gt; [<span class="string">&#x27;patpat_customer_id&#x27;</span> =&gt; <span class="variable">$customerId</span>, <span class="string">&#x27;firstname&#x27;</span> =&gt; <span class="variable">$user</span>-&gt;customers_firstname, <span class="string">&#x27;lastname&#x27;</span> =&gt; <span class="variable">$user</span>-&gt;customers_lastname, <span class="string">&#x27;phone&#x27;</span> =&gt; <span class="variable">$phone</span>]</span><br><span class="line">        ]);</span><br><span class="line">        <span class="comment">//添加卡后台拿到返回的$card对象存到对应业务库</span></span><br><span class="line">        <span class="variable">$card</span> = current(<span class="variable">$customer</span>-&gt;sources-&gt;data);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//你的业务代码，把Stripe 返回$customer,$card的觉得有用的对象参数 存到对应的业务表里。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Stripe默认卡设置，及删除卡"><a href="#4-Stripe默认卡设置，及删除卡" class="headerlink" title="4. Stripe默认卡设置，及删除卡"></a><font size=4>4. Stripe默认卡设置，及删除卡</font></h2><p>Strip跟<a class="link"   target="_blank" rel="noopener" href="https://docs.adyen.com/developers" >Adyen<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developers.braintreepayments.com/" >Braintree<i class="fas fa-external-link-alt"></i></a>支付平台有点不一样的地方</p>
+<ul>
+<li>Strip是创建Customer，创建的Customer对应你们的需要付款的用户，Strip的Customer下面可以添加Card或者是在Customer下面添加Sources，Sources是支付源，比如支付宝，微信，PayPal，微软支付等本地化支付。<br>然后Customer下面的这些多张Cards和多个Sources只有个一个被设置为默认支付方式，如下图<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/WechatIMG174.jpeg"
+                     
+                ></li>
+</ul>
+<p>所以业务方去调用付款API的时候可以只传一个customer_id的参数和付款相关金额货币code,就可以完成付款，因为在Stripe上的Customer已经设置了一个默认付款方式</p>
+<ul>
+<li>Braintree和Adyen平台是给card授权后生成一个长期有效的可用于付款的card对应的付款token。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setDefaultCard</span>(<span class="params"><span class="variable">$userId</span>, <span class="variable">$cardId</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//$stripeCustomerId需要根据userId查到之前创建用户数存的stripeCustomerId </span></span><br><span class="line">    <span class="comment">//stripeCustomerId大概格式:cus_CvpoGuZa0BnJEz</span></span><br><span class="line">    <span class="variable">$customer</span> = Customer::retrieve(<span class="variable">$stripeCustomerId</span>);</span><br><span class="line">    <span class="variable">$customer</span>-&gt;default_source = <span class="variable">$cardId</span>; <span class="comment">//$cardId也是之前存的用户的$cards列表，用户可能选一张卡来做完默认卡，$cardId大概格式:card_1CWwT1G5LmXuczdEAZo0lB2E</span></span><br><span class="line">    <span class="variable">$customer</span>-&gt;save();</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$customer</span>-&gt;default_source;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>删除卡</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">deleteCard</span>(<span class="params"><span class="variable">$stripeCustomerId</span>, <span class="variable">$cardId</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//用$stripeCustomerId查找到 对应用户</span></span><br><span class="line">    <span class="variable">$customer</span> = Customer::retrieve(<span class="variable">$stripeCustomerId</span>);</span><br><span class="line">    <span class="comment">//删除用户下对应的银行卡</span></span><br><span class="line">    <span class="variable">$customer</span>-&gt;sources-&gt;retrieve(<span class="variable">$cardId</span>)-&gt;delete();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-使用Stripe创建的Customers-ID支付或者指定Customers的某张卡支付"><a href="#5-使用Stripe创建的Customers-ID支付或者指定Customers的某张卡支付" class="headerlink" title="5. 使用Stripe创建的Customers ID支付或者指定Customers的某张卡支付"></a><font size=4>5. 使用Stripe创建的Customers ID支付或者指定Customers的某张卡支付</font></h2><p>Stripe的Charge类用于支付等API调用，下面我们看看使用 customer_id 付款代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">pay</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="variable">$charge</span> = Charge::create([</span><br><span class="line">            <span class="string">&#x27;amount&#x27;</span> =&gt; <span class="variable">$totalPay</span>*<span class="number">100</span>,</span><br><span class="line">            <span class="string">&#x27;currency&#x27;</span> =&gt; <span class="string">&#x27;usd&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;Example charge&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;capture&#x27;</span> =&gt; <span class="literal">false</span>,</span><br><span class="line">            <span class="string">&#x27;customer&#x27;</span> =&gt; <span class="variable">$stripeCustomerId</span>, <span class="comment">//$stripeCustomerId是之前添加卡的时候存的</span></span><br><span class="line">            <span class="string">&#x27;source&#x27;</span> =&gt; <span class="variable">$cardId</span>, <span class="comment">//这个参数可不传，传这个参数就会用这个指定的card付款，$cardId也是添加卡的时候存的，</span></span><br><span class="line">            <span class="string">&#x27;metadata&#x27;</span> =&gt;[<span class="string">&#x27;order_id&#x27;</span>=&gt;<span class="variable">$orderId</span>]</span><br><span class="line">        ]); </span><br><span class="line">    &#125; <span class="keyword">catch</span> (\Stripe\<span class="built_in">Error</span>\Base <span class="variable">$e</span>)&#123; <span class="comment">//catch Stripe的API基本异常</span></span><br><span class="line">        <span class="comment">// Display a very generic error to the user, and maybe send</span></span><br><span class="line">        <span class="comment">// yourself an email</span></span><br><span class="line">        Log::info(<span class="variable">$e</span>-&gt;getStripeCode());</span><br><span class="line">        Log::info(<span class="variable">$e</span>-&gt;getMessage());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>)&#123;</span><br><span class="line">        <span class="comment">// Something else happened, completely unrelated to Stripe</span></span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用Stripe每个API都建议 try catch以为Stripe的错误信息不会在api结果中放回，Stripe的api一般只返回成功后的对象，错误信息都是通过异常抛出，更多Error信息了解 进入<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/api/php#errors" >Stripe API Error<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="6-支付交易Capture-扣款-Released-放弃扣款-Refund-扣款后退款"><a href="#6-支付交易Capture-扣款-Released-放弃扣款-Refund-扣款后退款" class="headerlink" title="6. 支付交易Capture(扣款), Released(放弃扣款), Refund(扣款后退款)"></a><font size=4>6. 支付交易Capture(扣款), Released(放弃扣款), Refund(扣款后退款)</font></h2><p>从上面付款可以看到参数 ‘capture’ =&gt; false, 这个参数主要是支付只授权，不立马扣款，给一个时间段给用户取消订单，这个时间段交易未capture，交易取消是不扣手续的，如果直接Capture了，用户取消订单，对业务方会产生额外手续费用。所以我们选择支付动作时只授权，不Capture。一般是一天批量Capture一次交易。<br>Capture代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">capture</span>(<span class="params"><span class="variable">$transactionId</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//$transactionId 是在付款API Charge::create的时候返回的Charge的id,大概格式：ch_1CWgDWGmkmBuczdEnIVX1PXo</span></span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="variable">$charge</span> = Charge::retrieve(<span class="variable">$transactionId</span>);</span><br><span class="line">        <span class="variable">$charge</span> = <span class="variable">$charge</span>-&gt;capture();</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$charge</span>-&gt;status == <span class="string">&#x27;succeeded&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="string">&#x27;status&#x27;</span> =&gt; <span class="literal">true</span>, <span class="string">&#x27;payment_type&#x27;</span>=&gt;PaymentType::STRIPE, <span class="string">&#x27;content&#x27;</span>=&gt;[<span class="string">&#x27;braintree_transaction_id&#x27;</span>=&gt;<span class="variable">$charge</span>-&gt;id], <span class="string">&#x27;message&#x27;</span>=&gt;<span class="string">&quot;Settled Succeed!&quot;</span>];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="string">&#x27;status&#x27;</span> =&gt; <span class="literal">false</span>, <span class="string">&#x27;payment_type&#x27;</span>=&gt;PaymentType::STRIPE, <span class="string">&#x27;content&#x27;</span>=&gt;[<span class="string">&#x27;braintree_transaction_id&#x27;</span>=&gt;<span class="variable">$charge</span>-&gt;id], <span class="string">&#x27;message&#x27;</span>=&gt;<span class="string">&quot;Settled Failure!&quot;</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">&#x27;status&#x27;</span> =&gt; <span class="literal">false</span>, <span class="string">&#x27;payment_type&#x27;</span>=&gt;PaymentType::STRIPE, <span class="string">&#x27;content&#x27;</span>=&gt;[<span class="string">&#x27;braintree_transaction_id&#x27;</span>=&gt;<span class="variable">$transactionId</span>], <span class="string">&#x27;message&#x27;</span>=&gt;<span class="variable">$e</span>-&gt;getMessage()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Released、Refund 代码是一样的，这个也是Stripe跟我之前接触的<a class="link"   target="_blank" rel="noopener" href="https://docs.adyen.com/developers" >Adyen<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developers.braintreepayments.com/" >Braintree<i class="fas fa-external-link-alt"></i></a>支付平台不一样的地方。<br>Adyen平台未扣款交易 调用 cancel() API, 扣款后调用的是refund() API<br>Braintree平台未扣款交易 调用的是 void() API, 扣款后调用的是 refund()API<br>Stripe Released、Refund代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">refund</span>(<span class="params"><span class="variable">$transactionId</span>, <span class="variable">$amount</span>, <span class="variable">$refundId</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//$transactionId 是在付款API Charge::create的时候返回的Charge的id,大概格式：ch_1CWgDWGmkmBuczdEnIVX1PXo</span></span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="variable">$refund</span> = Refund::create([<span class="string">&#x27;charge&#x27;</span> =&gt; <span class="variable">$transactionId</span>, <span class="string">&#x27;amount&#x27;</span> =&gt; <span class="variable">$amount</span>, <span class="string">&#x27;metadata&#x27;</span>=&gt; [<span class="string">&#x27;refund_id&#x27;</span>=&gt;<span class="variable">$refundId</span>]]);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$refund</span>-&gt;status == <span class="string">&#x27;succeeded&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="string">&#x27;status&#x27;</span> =&gt; <span class="literal">true</span>, <span class="string">&#x27;payment_type&#x27;</span>=&gt;PaymentType::STRIPE, <span class="string">&#x27;content&#x27;</span>=&gt;[<span class="string">&#x27;stripe_refund_id&#x27;</span>=&gt;<span class="variable">$refund</span>-&gt;id], <span class="string">&#x27;message&#x27;</span>=&gt;<span class="string">&quot;Refund Succeed!&quot;</span>];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="string">&#x27;status&#x27;</span> =&gt; <span class="literal">false</span>, <span class="string">&#x27;payment_type&#x27;</span>=&gt;PaymentType::STRIPE, <span class="string">&#x27;content&#x27;</span>=&gt;[<span class="string">&#x27;stripe_refund_id&#x27;</span>=&gt;<span class="variable">$refund</span>-&gt;id], <span class="string">&#x27;message&#x27;</span>=&gt;<span class="string">&quot;Refund Failure!&quot;</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">&#x27;status&#x27;</span> =&gt; <span class="literal">false</span>, <span class="string">&#x27;payment_type&#x27;</span>=&gt;PaymentType::STRIPE, <span class="string">&#x27;content&#x27;</span>=&gt;[<span class="string">&#x27;braintree_transaction_id&#x27;</span>=&gt;<span class="variable">$transactionId</span>], <span class="string">&#x27;message&#x27;</span>=&gt;<span class="variable">$e</span>-&gt;getMessage()];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更多Stripe API对象详细请查阅 <a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/api/php" >Stripe API 文档<i class="fas fa-external-link-alt"></i></a>、<br><a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/api/php#customers" >对应Customers对象API文档<i class="fas fa-external-link-alt"></i></a>、<br><a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/api/php#charges" >对应Charges(付款)对象API文档<i class="fas fa-external-link-alt"></i></a>、<br><a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/api/php#cards" >对应Cards对象API文档<i class="fas fa-external-link-alt"></i></a>、<br><a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/api/php#refunds" >对应Refunds对象API文档<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="7-交易风控相关，Stripe各种状态变更通知接收并更新到数据库"><a href="#7-交易风控相关，Stripe各种状态变更通知接收并更新到数据库" class="headerlink" title="7. 交易风控相关，Stripe各种状态变更通知接收并更新到数据库"></a><font size=4>7. 交易风控相关，Stripe各种状态变更通知接收并更新到数据库</font></h2><p>最后介绍一下Stripe的 <a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/webhooks" >Webhooks<i class="fas fa-external-link-alt"></i></a> </p>
+<p>Webhooks 主要跟Adyen的通知类似，把用户及交易的所有事件状态变更通知到我们服务器，我们接受到通知时对不同情况做出相应处理。<br>比如Stripe检测到某笔交易是诈骗订单，会把订单状态及信息通知到我们，我们风控得知后可以对交易进行处理，已经后期风控规则的控制。</p>
+<p>Webhooks的配置需要在Stripe 的 <a class="link"   target="_blank" rel="noopener" href="https://dashboard.stripe.com/account/webhooks" >Dashboard<i class="fas fa-external-link-alt"></i></a> 中 的 Developers-&gt;Webhooks中添加业务服务器回调utl。</p>
+<p>然后在业务回调url中获取通知数据，把有用的数据存到业务库中。以及可以对相应特殊类型进行业务逻辑处理。</p>
+<p>这样有了通知数据后可以很方便的从通知数据中查询到任何的交易状态变更，以及Customer状态变更。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Stripe支付平台对接技术方案</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2018-05-28 16:01:49</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/后端/Stripe支付平台对接技术方案.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/VueJs%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8SEO%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">VueJs单页面应用SEO解决方案</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Sublime-Text-3-Package%E2%80%94Control.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Mac Sublime Text 3 插件管理工具安装-Package Control</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E6%8E%A5%E8%A7%A6%E8%BF%87%E7%9A%84%E5%87%A0%E4%B8%AA%E6%94%AF%E4%BB%98%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0-Adyen%E3%80%81Braintree%E3%80%81PayPal%E3%80%81Stripe%E3%80%82"><span class="nav-text">我接触过的几个支付管理平台 Adyen、Braintree、PayPal、Stripe。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AFSDK%E9%9B%86%E6%88%90-Android%E3%80%81IOS%E3%80%81JS"><span class="nav-text">前端SDK集成: Android、IOS、JS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS-SDK%E9%9B%86%E6%88%90-%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3%E8%BF%99%E9%87%8C%E5%8F%AA%E5%81%9A%E7%B2%97%E7%95%A5%E8%AE%B2%E8%A7%A3%EF%BC%8CPHP%E5%90%8E%E7%AB%AF%E5%86%8D%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E3%80%82"><span class="nav-text">IOS SDK集成(前端相关这里只做粗略讲解，PHP后端再详细讲解。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-SDK%E9%9B%86%E6%88%90%E4%B9%9F%E7%AE%80%E5%8D%95%E8%AE%B2%E4%B8%80%E4%B8%8B"><span class="nav-text">Android SDK集成也简单讲一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%AB%99-js-SDK%E9%9B%86%E6%88%90%E4%B9%9F%E7%AE%80%E5%8D%95%E8%AE%B2%E4%B8%80%E4%B8%8B"><span class="nav-text">网站 js SDK集成也简单讲一下</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stripe-PHP%E5%90%8E%E5%8F%B0%E9%9B%86%E6%88%90%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E%EF%BC%88%E7%BC%96%E8%BE%91%E4%B8%AD%EF%BC%89"><span class="nav-text">Stripe PHP后台集成详细说明（编辑中）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85Stripe-PHP-Composer%E5%8C%85"><span class="nav-text">1. 安装Stripe PHP Composer包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEStripe-API%E4%B8%9A%E5%8A%A1%E5%8F%8A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%B1%BB"><span class="nav-text">2. 配置Stripe API业务及异常处理类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8%E5%89%8D%E7%AB%AF%E4%BC%A0%E8%BF%87%E6%9D%A5%E7%9A%84token%E6%B7%BB%E5%8A%A0Stripe-Customers-%E6%88%96%E7%9B%B4%E6%8E%A5%E4%BB%98%E6%AC%BE-Payments"><span class="nav-text">3. 使用前端传过来的token添加Stripe Customers 或直接付款 Payments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Stripe%E9%BB%98%E8%AE%A4%E5%8D%A1%E8%AE%BE%E7%BD%AE%EF%BC%8C%E5%8F%8A%E5%88%A0%E9%99%A4%E5%8D%A1"><span class="nav-text">4. Stripe默认卡设置，及删除卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8Stripe%E5%88%9B%E5%BB%BA%E7%9A%84Customers-ID%E6%94%AF%E4%BB%98%E6%88%96%E8%80%85%E6%8C%87%E5%AE%9ACustomers%E7%9A%84%E6%9F%90%E5%BC%A0%E5%8D%A1%E6%94%AF%E4%BB%98"><span class="nav-text">5. 使用Stripe创建的Customers ID支付或者指定Customers的某张卡支付</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%94%AF%E4%BB%98%E4%BA%A4%E6%98%93Capture-%E6%89%A3%E6%AC%BE-Released-%E6%94%BE%E5%BC%83%E6%89%A3%E6%AC%BE-Refund-%E6%89%A3%E6%AC%BE%E5%90%8E%E9%80%80%E6%AC%BE"><span class="nav-text">6. 支付交易Capture(扣款), Released(放弃扣款), Refund(扣款后退款)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E4%BA%A4%E6%98%93%E9%A3%8E%E6%8E%A7%E7%9B%B8%E5%85%B3%EF%BC%8CStripe%E5%90%84%E7%A7%8D%E7%8A%B6%E6%80%81%E5%8F%98%E6%9B%B4%E9%80%9A%E7%9F%A5%E6%8E%A5%E6%94%B6%E5%B9%B6%E6%9B%B4%E6%96%B0%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">7. 交易风控相关，Stripe各种状态变更通知接收并更新到数据库</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

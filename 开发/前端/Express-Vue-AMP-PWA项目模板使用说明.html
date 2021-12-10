@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+            Express+Vue+AMP+PWA项目模板使用说明 |
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Express+Vue+AMP+PWA项目模板使用说明</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Madman</span>
+                        
+                            <span class="author-label">后端工程师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2019-11-18 11:03:18
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%BC%80%E5%8F%91/">开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ios/">ios</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.2k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>特点</p>
+<ul>
+<li>解决单页面应用(SPA)的SEO配置问题</li>
+<li>拥有可控的服务端中间件功能，服务端重定向，服务端打cookie等</li>
+<li>可在服务端根据前端需要组装数据供首屏渲染使用</li>
+<li>可方便开发AMP页面，并跟vue打包资源同时发布又区分明确的静态资源</li>
+<li>一键集成PWA功能，附带可用的pwa配置</li>
+<li>方便vue多页面入口配置，及打包资源分析等等<span id="more"></span>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/pwa-link.jpg"
+                      alt="pwa-link"
+                ><br>包含技术点<br><a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/guide/installation.html" >vue-cli3<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="http://expressjs.com/en/guide/routing.html" >Express<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://amp.dev/documentation/guides-and-tutorials/?format=websites" >AMP<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps" >PWA<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="http://nodejs.cn/api/process.html" >Node.js<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://redis.io/" >Redis<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<p>项目地址<br><a class="link"   target="_blank" rel="noopener" href="https://github.com/StriverF/express-vue-amp-template" >StriverF/express-vue-amp-template<i class="fas fa-external-link-alt"></i></a></p>
+<p>项目运行效果<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/gifhome_1920x1773_40s.gif"
+                      alt="gifhome_1920x1773_40s"
+                ></p>
+<h2 id="模板项目使用介绍"><a href="#模板项目使用介绍" class="headerlink" title="模板项目使用介绍"></a>模板项目使用介绍</h2><h3 id="项目环境配置"><a href="#项目环境配置" class="headerlink" title="项目环境配置"></a>项目环境配置</h3><p>下载代码后进入项目目录安装依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h4 id="vue环境配置"><a href="#vue环境配置" class="headerlink" title="vue环境配置"></a>vue环境配置</h4><p>vue环境变量配置，在项目跟目录根据自己需求新增 <code>.env.local</code>文件，参照.env配置自己想要自定义的环境变量。具体vue-cli 环境变量介绍请看<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/mode-and-env.html" >官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<p>新建page入口，在<code>src/pages</code>目录下面新建文件夹，在新增文件夹下面新增 App.vue,index.html,router.js等其他文件即可，<code>vue.config.js</code>里面的pages配置会自动识别新增page目录。<br>具体配置代码如下,vue.config.js详细配置参考<a class="link"   target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/" >官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pages = &#123;&#125;</span><br><span class="line">glob.sync(<span class="string">&#x27;./src/pages/**/index.js&#x27;</span>).forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> chunk = path.split(<span class="string">&#x27;./src/pages/&#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;/index.js&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">  pages[chunk] = &#123;</span><br><span class="line">    entry: path,</span><br><span class="line">    template: <span class="string">&#x27;./src/pages/&#x27;</span> + chunk + <span class="string">&#x27;/index.html&#x27;</span>,</span><br><span class="line">    filename: chunk + <span class="string">&#x27;/index.html&#x27;</span>,</span><br><span class="line">    chunks: [<span class="string">&#x27;chunk-vendors&#x27;</span>, <span class="string">&#x27;chunk-common&#x27;</span>, chunk]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>运行项目执行如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Node服务端环境配置"><a href="#Node服务端环境配置" class="headerlink" title="Node服务端环境配置"></a>Node服务端环境配置</h4><p>服务端环境变量配置，在<code>server</code>目录下面新建<code>.env</code>把<code>server/.env.example</code>文件里面的环境变量复制到<code>.env</code>文件，然后根据自己环境需要更改环境变量的值。</p>
+<p>本地https证书安全环境配置，更改<code>.env</code>的<code>SERVER_PROTOCOL</code>的值为<code>https</code>, （本地生成免费安全证书可以用<a class="link"   target="_blank" rel="noopener" href="https://github.com/FiloSottile/mkcert" >mkcert<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://github.com/FiloSottile/mkcert" >mkcert<i class="fas fa-external-link-alt"></i></a>是用<a class="link"   target="_blank" rel="noopener" href="https://golang.org/" >golang<i class="fas fa-external-link-alt"></i></a>编写的证书生成工具）<br>需要把生成的证书文件.pem文件放入到<code>server/cert</code>目录。<br>配置.env的<code>PRIVATE_KEY_NAME</code>和<code>CERTIFICATE_NAME</code>环境变量值为<code>server/cert</code>目录下的文件名。</p>
+<p>服务端代码Debugger, 我们知道前端代码可以方便的再浏览器的开发者面板中进行断电调试，但是服务端的代码调试不能，因为服务端的代码不在浏览器执行。那么我这里推荐大家使用VSCode来配置Debugger<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15744042522049.jpg"
+                     
+                ><br>用VSCode打开项目，操作如上图步骤。会在<code>.vscode</code>目录生成launch.json配置文件，在配置文件配置如下配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">  <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">  <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.2.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;configurations&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;node&quot;</span>,</span><br><span class="line">      <span class="string">&quot;request&quot;</span>: <span class="string">&quot;launch&quot;</span>,</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;启动Node服务&quot;</span>,</span><br><span class="line">      <span class="string">&quot;runtimeExecutable&quot;</span>: <span class="string">&quot;nodemon&quot;</span>,</span><br><span class="line">      <span class="string">&quot;cwd&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/server&quot;</span>,</span><br><span class="line">      <span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/server/app.js&quot;</span>,</span><br><span class="line">      <span class="string">&quot;restart&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">&quot;console&quot;</span>: <span class="string">&quot;integratedTerminal&quot;</span>,</span><br><span class="line">      <span class="string">&quot;internalConsoleOptions&quot;</span>: <span class="string">&quot;neverOpen&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完就可以按照下图步骤操作，就能启动服务并可以在服务端任意代码行号左侧点击打断点调试。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/mweb/15744047509592.jpg"
+                     
+                ></p>
+<h3 id="项目主要的脚本命令"><a href="#项目主要的脚本命令" class="headerlink" title="项目主要的脚本命令"></a>项目主要的脚本命令</h3><table>
+<thead>
+<tr>
+<th>脚本</th>
+<th>命令</th>
+<th>注意事项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>运行开发环境</td>
+<td>npm run dev</td>
+<td>只是启动vue的开发环境</td>
+</tr>
+<tr>
+<td>启动服务端环境</td>
+<td>npm run start</td>
+<td>启动node服务端环境</td>
+</tr>
+<tr>
+<td>打包测试环境</td>
+<td>npm run build:test</td>
+<td>打包</td>
+</tr>
+<tr>
+<td>打包预发布环境</td>
+<td>npm run build:alpha</td>
+<td>打包</td>
+</tr>
+<tr>
+<td>打包生产环境</td>
+<td>npm run build:prod</td>
+<td>打包</td>
+</tr>
+</tbody></table>
+<h3 id="Express配合Vue-amp-AMP的注意事项"><a href="#Express配合Vue-amp-AMP的注意事项" class="headerlink" title="Express配合Vue&amp;AMP的注意事项"></a>Express配合Vue&amp;AMP的注意事项</h3><p>AMP的路由 <code>ampRoute.js</code> 使用的<code>ampMiddleware</code>设置了view engine 为ejs的渲染模板</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">req.app.set(<span class="string">&#x27;views&#x27;</span>, <span class="string">&#x27;./amp/views&#x27;</span>)</span><br><span class="line"> req.app.set(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;ejs&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>而Vue的路由配置的是自定义渲染模板，根据在Vue打包模板里面配置的模板占位变量来从Node服务端注入相关自定义数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">req.app.engine(<span class="string">&#x27;html&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">filePath, options, callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(filePath, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(err)</span><br><span class="line">      <span class="keyword">var</span> rendered = content</span><br><span class="line">        .toString()</span><br><span class="line">        .replace(<span class="string">&#x27;##meta##&#x27;</span>, options.meta)</span><br><span class="line">        .replace(<span class="string">&#x27;##ampLink##&#x27;</span>, options.ampLink || <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        .replace(<span class="string">&#x27;&quot;##apiJonsContent##&quot;&#x27;</span>, options.apiJonsContent)</span><br><span class="line">      <span class="keyword">return</span> callback(<span class="literal">null</span>, rendered)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  req.app.set(<span class="string">&#x27;views&#x27;</span>, <span class="string">&#x27;./public&#x27;</span>)</span><br><span class="line">  req.app.set(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;html&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意配置 .env的 redis server （需要安装<a class="link"   target="_blank" rel="noopener" href="https://redis.io/" >Redis<i class="fas fa-external-link-alt"></i></a>并启动Redis）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">REDIS_HOST&#x3D;127.0.0.1</span><br><span class="line">REDIS_PORT&#x3D;6379</span><br><span class="line">REDIS_PREFIX&#x3D;website_mobile_alpha</span><br></pre></td></tr></table></figure>
+<p>为了提升性能及减少服务器资源开销，在node服务端请求到数据后，最后根据参数及数据类型利用Redis缓存。正常情况请求一个API需要1000mm左右, 从Redis取数据低于10mm。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Express+Vue+AMP+PWA项目模板使用说明</li>
+        <li>本文作者：Madman</li>
+        <li>创建时间：2019-11-18 11:03:18</li>
+        <li>
+            本文链接：https://www.patpat.site/开发/前端/Express-Vue-AMP-PWA项目模板使用说明.html
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E6%9C%8D%E5%8A%A1%E7%AB%AF/node-rsa-%E7%94%9F%E6%88%90%E7%A7%81%E9%92%A5-%E5%85%AC%E9%92%A5-%E5%8A%A0%E5%AF%86-%E8%A7%A3%E5%AF%86-%E7%AD%BE%E5%90%8D-%E9%AA%8C%E8%AF%81.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">node-rsa 生成私钥/公钥 加密/解密 签名/验证</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Express-Vue-AMP%E6%90%AD%E5%BB%BAnode%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B3%A8%E5%85%A5%E9%A6%96%E5%B1%8F%E6%B8%B2%E6%9F%93%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84.html"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Express+Vue+AMP+PWA的项目架构</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '7kPNibOXTfqkHbkOuLBirqnq-gzGzoHsz',
+                    appKey: 'mu1fB5tPL5UJ6D8VXTUCgVTa',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请说出你的故事',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = 'Madman';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="nav-text">模板项目使用介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">项目环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">vue环境配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">Node服务端环境配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%BB%E8%A6%81%E7%9A%84%E8%84%9A%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">项目主要的脚本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Express%E9%85%8D%E5%90%88Vue-amp-AMP%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">Express配合Vue&amp;AMP的注意事项</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

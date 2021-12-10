@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="home-content-container fade-in-down-animation">
+    <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-CLI3-%E4%BB%BFios-NavigationBar-TabBar%E5%B8%83%E5%B1%80.html">
+                        Vue CLI3 仿ios NavigationBar &amp; TabBar布局
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一个仿ios App的NavigationBar和TabBar布局,加自动轮播Banner。<br><strong>环境</strong></p>
+<ul>
+<li>node 8.13</li>
+<li>vue 2.6.9</li>
+<li>vue-cli3</li>
+<li>mac os 10.14.2</li>
+</ul>
+<p><strong>js依赖</strong></p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/surmon-china/vue-awesome-swiper" >vue-awesome-swiper<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.html.cn/doc/less/" >less-loader<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<p><strong>主要实现组件</strong></p>
+<ul>
+<li>NavigationBar.vue</li>
+<li>TabBar.vue</li>
+<li>Swiper.vue</li>
+</ul>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Mar 21 2019 19:55:46 GMT+0800">2019-03-21</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Layout/">Layout</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/TabBar/">TabBar</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/NavigationBar/">NavigationBar</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/swiper/">swiper</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-CLI3-%E4%BB%BFios-NavigationBar-TabBar%E5%B8%83%E5%B1%80.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Xcode10-1-iPhone-has-denied-the-launch-request.html">
+                        Xcode10.1 iPhone has denied the launch request
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>测试环境<br>Xcode10.1<br>iPhone8 ios12.1.4<br>真机调试的时出现下图报错<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/15525532058593.jpg"
+                     
+                ></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Mar 14 2019 16:37:21 GMT+0800">2019-03-14</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Xcode/">Xcode</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Xcode10-1-iPhone-has-denied-the-launch-request.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Node-js%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%88%87%E6%8D%A2%E5%B7%A5%E5%85%B7nvm.html">
+                        Node.js版本控制切换工具nvm
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>node版本号更新到最新后，有时候去run一些老项目会报错,大部分原因是node版本过高的原因。这个时候难道又卸载node去装老版本，要run新项目又去装新版本吗？<br>不！！！我用nvm工具来灵活切换node版本。<br>比如之前装的<a class="link"   target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/?_blank" >Hexo<i class="fas fa-external-link-alt"></i></a>,在更新node版本到8.13.0后 hexo 所有命令都无效了 报错：command not found: hexo<br>这个就是因为node版本过高导致<a class="link"   target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/?_blank" >Hexo<i class="fas fa-external-link-alt"></i></a> 命令失效，这个时候我们就可以在Hexo项目文件目录下<br>    <code>nvm use v7.1.0 </code></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Feb 20 2019 16:37:09 GMT+0800">2019-02-20</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/node/">node</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/nvm/">nvm</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Node-js%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%88%87%E6%8D%A2%E5%B7%A5%E5%85%B7nvm.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Js-Console%E6%8A%A5%E9%94%99%E6%8E%92%E6%9F%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0.html">
+                        Js Console报错排查及解决方案
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/201307241901111966.jpg"
+                      class="img-topic" /
+                >
+# 前言
+开发过程中有时经常看到一个报错，脑海中浮现出曾经遇到过这样的错误，并也经历过解决方案，但是突然就说想不起来之前是怎么解决的，所以这里记录日常开发中Chrome浏览器Console报错排查及解决方案&思路
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Feb 20 2019 14:51:49 GMT+0800">2019-02-20</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/js/">js</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Js-Console%E6%8A%A5%E9%94%99%E6%8E%92%E6%9F%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/VueJs%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8SEO%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html">
+                        VueJs单页面应用SEO解决方案
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="首先我们来科普一下几个概念："><a href="#首先我们来科普一下几个概念：" class="headerlink" title="首先我们来科普一下几个概念："></a>首先我们来科普一下几个概念：</h1><p>1）SPA：单页面应用，基于vue框架开发的项目很多都属于单页面应用；<br>2）SSR ：server side rendering, 服务端渲染，额，这个不是订阅那个SSR，我一开始就弄混了；<br>3）Prerender：预渲染，Prerender.io是基于Node.js的程序，它可以让你的JavaScript网站支持搜索引擎，社交媒体，并且它兼容所有的JavaScript框架和库。它采用PhantomJS渲染JavaScript的网页然后呈现为HTML。此外，我们可以实现的prerender服务层来缓存访问过的页面，这将大大提高性能；<br>4）SEO：搜索引擎优化，指通过对网站进行站内优化、修复和站外优化，从而提高网站的网站关键词排名以及公司产品的曝光度。<br>5）Nuxt：是一个基于 Vue.js 的通用应用框架，预设了利用Vue.js开发服务端渲染的应用所需要的各种配置，可以为基于 Vue.js 的应用提供生成对应的静态站点的功能。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Dec 10 2018 21:05:49 GMT+0800">2018-12-10</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/js/">js</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/SSR/">SSR</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/SEO/">SEO</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Nuxt/">Nuxt</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/VueJs%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8SEO%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Stripe%E6%94%AF%E4%BB%98%E5%B9%B3%E5%8F%B0%E5%AF%B9%E6%8E%A5%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88.html">
+                        Stripe支付平台对接技术方案
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="我接触过的几个支付管理平台-Adyen、Braintree、PayPal、Stripe。"><a href="#我接触过的几个支付管理平台-Adyen、Braintree、PayPal、Stripe。" class="headerlink" title="我接触过的几个支付管理平台 Adyen、Braintree、PayPal、Stripe。"></a>我接触过的几个支付管理平台 <a class="link"   target="_blank" rel="noopener" href="https://docs.adyen.com/developers" >Adyen<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developers.braintreepayments.com/" >Braintree<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://developer.paypal.com/" >PayPal<i class="fas fa-external-link-alt"></i></a>、<a class="link"   target="_blank" rel="noopener" href="https://stripe.com/docs/development" >Stripe<i class="fas fa-external-link-alt"></i></a>。</h1><p>最近新接触的Stripe支付平台，相比前几个我感觉Stripe更专业一些，后台管理功能清晰，操作方便，体验好。<br>开发文档也很清晰，相对前之前接触的支付平台开发文档,Stripe这个我觉得更容易快速了解其所有API,以及功能。API参数及参数说明很清晰，返回数据结构很合理，对应的API返回对应对象属性很容易理解。不像PayPal返回结果特别不好用，夹着各种键值对，结构凌乱。</p>
+<p>下面记录我集成Stripe支付平台过程。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon May 28 2018 16:01:49 GMT+0800">2018-05-28</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/js/">js</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/payment/">payment</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/php/">php</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/android/">android</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Stripe%E6%94%AF%E4%BB%98%E5%B9%B3%E5%8F%B0%E5%AF%B9%E6%8E%A5%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Sublime-Text-3-Package%E2%80%94Control.html">
+                        Mac Sublime Text 3 插件管理工具安装-Package Control
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h3 id="Sublime-Text这个工具不用多说，所有程序员基本都喜欢用。轻便，且功能强大，快捷。"><a href="#Sublime-Text这个工具不用多说，所有程序员基本都喜欢用。轻便，且功能强大，快捷。" class="headerlink" title="Sublime Text这个工具不用多说，所有程序员基本都喜欢用。轻便，且功能强大，快捷。"></a>Sublime Text这个工具不用多说，所有程序员基本都喜欢用。轻便，且功能强大，快捷。</h3><p>最近用Sublime text做批量编辑真的很方便。然后更新了最新版本。对于喜欢探索新东西的我，想把所有功能都试个遍，然后看到官方说的Package Control,插件管理工具的使用说明。<br>利用这个Package Control可以给Sublime Text扩展更多的实用功能。<br><em>比如Python code API</em></p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Nov 21 2017 15:29:07 GMT+0800">2017-11-21</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Tool/">Tool</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Text/">Text</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/Sublime-Text-3-Package%E2%80%94Control.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%82%E5%B8%B8%E7%94%B5%E8%AF%9D%E8%AD%A6%E6%8A%A5API-%E4%BA%91%E4%B9%8B%E8%AE%AF%E8%AF%AD%E9%9F%B3%E9%80%9A%E7%9F%A5API.html">
+                        服务器异常电话警报API-云之讯语音通知API
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近网站流量增大，又逢电商11月12月旺季,担心服务器宕机，找了个电话语音通知的API 云之讯。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Nov 09 2017 11:00:36 GMT+0800">2017-11-09</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/server/">server</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/notice/">notice</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%90%8E%E7%AB%AF/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%82%E5%B8%B8%E7%94%B5%E8%AF%9D%E8%AD%A6%E6%8A%A5API-%E4%BA%91%E4%B9%8B%E8%AE%AF%E8%AF%AD%E9%9F%B3%E9%80%9A%E7%9F%A5API.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E7%94%9F%E6%B4%BB/%E7%85%A7%E7%89%87/%E6%97%85%E8%A1%8C%E8%AE%B0%E5%BD%95.html">
+                        旅行记录
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/13.jpg"
+                     
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/16.jpg"
+                     
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/20.jpg"
+                     
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/26.jpg"
+                     
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.patpat.site/3.jpg"
+                     
+                ></p>
+<h2 id="选做桌面"><a href="#选做桌面" class="headerlink" title="选做桌面"></a>选做桌面</h2><p> 一个好看的可以给工作之余带来好心情<br> 一个有意义的可以让你回想起很多美好的事情</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Aug 20 2015 21:51:06 GMT+0800">2015-08-20</span></span>
+        
+        
+    </div>
+
+    <a href="/%E7%94%9F%E6%B4%BB/%E7%85%A7%E7%89%87/%E6%97%85%E8%A1%8C%E8%AE%B0%E5%BD%95.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/ios%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80Masonry.html">
+                        ios代码自动布局 Masonry
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MagicNumber -&gt; autoresizingMask -&gt; autolayout</span><br></pre></td></tr></table></figure>
+
+<p>以下是纯手写代码所经历的关于页面布局的三个时期</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Aug 19 2015 23:15:31 GMT+0800">2015-08-19</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/autolayout/">autolayout</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/OC/">OC</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/ios%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80Masonry.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+    </ul>
+
+    <div class="home-paginator">
+        <div class="paginator">
+    
+        <a class="prev btn"
+           href="/page/2/"
+        >上一页</a>
+    
+
+    
+</div>
+
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="ios | spa | c++ | php | mysql | nginx | vue | swift">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Madman">
+    
+    <title>
+        
+        Madman 疯子
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.patpat.site","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":false},"style":{"primary_color":"#00CCCC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"300px","content_max_width":"1080px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"用户压根不知道自己需要什么，直到你把它摆在他面前。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.1"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+        <div class="first-screen-container flex-center fade-in-down-animation">
+    <div class="content flex-center">
+        <div class="description">
+            用户压根不知道自己需要什么，直到你把它摆在他面前。
+        </div>
+        
+            <div class="s-icon-list">
+                
+                    
+                        
+                            <span class="s-icon-item github">
+                                <a target="_blank" href="https://github.com/StriverF">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </span>
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                            <span class="s-icon-item facebook">
+                                <a target="_blank" href="https://www.facebook.com/profile.php?id=100010898348293">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </span>
+                        
+                    
+                
+                    
+                        
+                            <span class="s-icon-item email">
+                                <a href="mailto:striverf@gmail.com">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </span>
+                        
+                    
+                
+            </div>
+        
+    </div>
+</div>
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content has-first-screen">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Madman 疯子
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                友链
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="home-content-container fade-in-down-animation">
+    <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+                    <i class="fas fa-thumbtack top-icon"></i>
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/Vue-l10n-%E8%B4%A7%E5%B8%81%E6%9C%AC%E5%9C%B0%E5%8C%96Vue%E6%8F%92%E4%BB%B6.html">
+                        Vue-l10n 货币本地化Vue插件
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前段时间看到项目里面的货币符号和金额转换的Vue 全局过滤器，感觉这样实现一点都不优雅，而且存在不完善，不统一的问题。比如每次都需要实时算，每次切换货币要强刷页面重新加载。然后就想到了<a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/guide/number.html" >vue-i18n<i class="fas fa-external-link-alt"></i></a>这个vue官方插件，多语言国际化，他是怎么做到不刷新页面切换语言的？于是就去观摩<a class="link"   target="_blank" rel="noopener" href="https://github.com/kazupon/vue-i18n" >vue-i18n的源码<i class="fas fa-external-link-alt"></i></a>，然后我就参考<a class="link"   target="_blank" rel="noopener" href="https://kazupon.github.io/vue-i18n/guide/number.html" >vue-i18n<i class="fas fa-external-link-alt"></i></a>写了一个<a class="link"   target="_blank" rel="noopener" href="https://docs.patpat.site/doc" >vue-l10n<i class="fas fa-external-link-alt"></i></a>的货币转换本地化的Vue插件。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jul 23 2019 11:03:53 GMT+0800">2019-07-23</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/js/">js</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/plugin/">plugin</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/Vue-l10n-%E8%B4%A7%E5%B8%81%E6%9C%AC%E5%9C%B0%E5%8C%96Vue%E6%8F%92%E4%BB%B6.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84.html">
+                        前端开发学习路径
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>循序渐进，深入浅出。给你专属定制的学习路线，不多不少刚刚好。<br>第一步：基础知识的学习<br>第二步：编程技巧的学习<br>第三步：熟练掌握学习基本框架<br>第四步：熟练掌握最基本的编程工具<br>第五步：各种工程化和效率类库的学习<br>第六步：性能优化&amp;编程设计的思考</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Dec 07 2021 19:24:27 GMT+0800">2021-12-07</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/js/">js</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/html/">html</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/web%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/">web学习路径</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B6%85%E7%BA%A7%E5%A4%A7%E5%9D%91-Vue%E5%AF%B9%E8%B1%A1%E5%9C%A8SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81.html">
+                        记一次超级大坑-Vue对象在SSR服务端为单例状态
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是一个让我一天两夜没安宁过的严重线上bug. 一开始测试跟我反馈说：”测试脚本有几率跑出H5页面无头部脚部左侧菜单栏组件的情况，并且页面无法点击部分图片资源无法加载。“我当时在忙其他的，随后去线上测试了一下，重现不了！我就继续忙其他的没在意。到了周六在家在家有空的时候想起测试反馈的这个问题。我想着重现不了，我就去分析一下转化数据吧，看看有没什么问题。一看数据吓我一跳，自测试跟我反馈问题的那天的时间节点起H5页面转化数据掉了近一半，整体平均浏览深度降了1/3。我立马召集小伙伴去公司加班排查，测试配合只能在线上环境测出问题，测试环境和alpha环境怎么都测不出来问题。重现不了的问题最难排查。耗费了我们前端团队一天的时间，最终终于在本地环境重现bug。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Aug 02 2021 10:34:01 GMT+0800">2021-08-02</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/ssr/">ssr</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B6%85%E7%BA%A7%E5%A4%A7%E5%9D%91-Vue%E5%AF%B9%E8%B1%A1%E5%9C%A8SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84-Swift%E8%AF%AD%E8%A8%80-%E4%BA%8C.html">
+                        IOS APP 电商平台项目架构重构-Swift语言(二)
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进几年新语言的浪潮都比较猛烈，服务端的的<a class="link"   target="_blank" rel="noopener" href="https://golang.org/doc/" >Golang<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://deno.land/" >Deno<i class="fas fa-external-link-alt"></i></a>。安卓的<a class="link"   target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/" >Kotlin<i class="fas fa-external-link-alt"></i></a>，IOS的<a class="link"   target="_blank" rel="noopener" href="https://swift.org/documentation/" >Swift<i class="fas fa-external-link-alt"></i></a>。<br>这些新语言共同的优势都是运算性能更高，代码更简洁。让人难以抗拒，弱点是新语言技术社区不成熟，开源库较少，但是经过这几年的沉淀，这些问题也渐渐不再明显。由 Apple 创建，Swift 是当今发展最快的编程语言。作为著名的 Objective-C 的替代品，Swift 拥有大量优势，使其在iOS 开发中处于领先地位。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Jul 21 2021 10:56:04 GMT+0800">2021-07-21</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/swift/">swift</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84-Swift%E8%AF%AD%E8%A8%80-%E4%BA%8C.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%B8%80.html">
+                        IOS APP 电商平台项目架构重构-架构演进(一)
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>过去两年对电商平台的web端项目进行了2次重大重构</p>
+<ol>
+<li>php-Laravel前后端混合开发项目架构改为前后端分离，后端php,前端vue框架单页面应用—解决前后端研发配合的高耦合度问题。</li>
+<li>vue框架升级，利用vue-cli3构建SSR服务端渲染项目，Node服务框架Express—解决了SEO优化局限性问题，以及移动端首屏渲染性能问题。</li>
+</ol>
+<p>以上两次重构都一定程度上提升了项目代码的可扩展性和可维护性，提升了研发团队的开发效率，提升了系统稳定性。<br>那接下来如果要对IOS APP做重构，我们先聊聊架构的演进的本质。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jul 20 2021 11:25:38 GMT+0800">2021-07-20</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/swift/">swift</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%B8%80.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/React-Native%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%8E%92%E6%9F%A5%E8%A7%A3%E5%86%B3.html">
+                        React Native项目初始化问题记录及排查解决
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a class="link"   target="_blank" rel="noopener" href="https://reactnative.dev/" >React Native<i class="fas fa-external-link-alt"></i></a> 是一种生态活跃且成熟的现代跨平台解决方案，目前已经有很多大公司（FB, Tesla 等）正在使用React Native构建ios和安卓原生应用。那我们就来看看按照官方文档构建一个React Native项目有多简单。<br>我的环境配置：</p>
+<ul>
+<li>MacOS Big sur v11.2</li>
+<li>Node v15.12.0</li>
+<li>Cocoapods v1.8.4</li>
+<li>Xcode v12.5</li>
+<li>vsCode v1.56.0</li>
+</ul>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon May 10 2021 14:58:38 GMT+0800">2021-05-10</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/react/">react</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/pod/">pod</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/React-Native%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%8E%92%E6%9F%A5%E8%A7%A3%E5%86%B3.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E5%BE%AE%E5%89%8D%E7%AB%AFqiankun-AntDesign%E7%BB%84%E4%BB%B6%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%BD%BB%E5%BA%95%E8%A7%A3%E8%80%A6.html">
+                        微前端qiankun+AntDesign组件库实现业务模块彻底解耦
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面一篇文章<a href="https://www.patpat.site/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html">Single-spa 成熟的微前端架构方案</a>介绍了要用微前端架构的背景和目的，简单对比了微前端架构方案的技术选型，以及分享了一些微前端的概念图和简单的架构图。</p>
+<p>这篇文章属于项目实战，利用<a class="link"   target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/guide" >qiankun<i class="fas fa-external-link-alt"></i></a>（一个基于 <a class="link"   target="_blank" rel="noopener" href="https://github.com/single-spa/single-spa" >single-spa<i class="fas fa-external-link-alt"></i></a> 的微前端实现库）加<a class="link"   target="_blank" rel="noopener" href="https://www.antdv.com/docs/vue/getting-started-cn/" >Ant Design<i class="fas fa-external-link-alt"></i></a>组件库实现微前端主应用和微应用的路由交互、状态通信等，并且微应用按需加载组件库，微应用支持独立运行模式。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Apr 22 2021 16:31:31 GMT+0800">2021-04-22</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/singleSPA/">singleSPA</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/qiankun/">qiankun</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E5%BE%AE%E5%89%8D%E7%AB%AFqiankun-AntDesign%E7%BB%84%E4%BB%B6%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%BD%BB%E5%BA%95%E8%A7%A3%E8%80%A6.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E7%A4%BE%E4%BC%9A/%E6%96%B0%E5%AA%92%E4%BD%93/%E5%85%B3%E4%BA%8E%E6%96%B0%E5%AA%92%E4%BD%93%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95.html">
+                        关于新媒体的一些个人看法
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新媒体发展这么迅速，每天我也会通过互联网获取很多信息，最近看了很多相关事件，我觉得信息爆炸的时代有点点是需要解决的，第一个是原创保护问题，第二个就是信息来源的真实性。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Apr 21 2021 15:01:19 GMT+0800">2021-04-21</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E7%83%AD%E7%82%B9%E6%B5%81%E9%87%8F/">热点流量</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E7%A4%BE%E4%BC%9A/%E6%96%B0%E5%AA%92%E4%BD%93/%E5%85%B3%E4%BA%8E%E6%96%B0%E5%AA%92%E4%BD%93%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html">
+                        Single-spa 成熟的微前端架构方案
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于多个中后台系统做前后端分离，各个业务模块集合在一个项目里面开发会造成后期不好维护且容易出问题，也不方便独立部署。<br>所以需要设计一套高度解耦又聚合在一个平台方便管理的系统架构。</p>
+<p>微前端是一种多个团队通过独立发布功能的方式来共同构建现代化 web 应用的技术手段及方法策略。</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Apr 12 2021 11:55:26 GMT+0800">2021-04-12</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/singleSPA/">singleSPA</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SRR%E6%8C%87%E5%8D%97%E6%9E%84%E5%BB%BA.html">
+                        Vue SSR服务端渲染-SRR指南构建
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>基于Vue-CLI v4版本构建的SPA项目改造成VueSSR服务端渲染项目。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>前段时间对网站项目进行了大的架构重构，上线已经半年了。一直想分享Vue-SSR项目架构，但是一直在忙SSR网站的架构优化迭代。<br>首先说一下做SSR项目重构的项目目的是什么</p>
+<ol>
+<li>更全面的SEO优化</li>
+<li>网站首屏渲染性能优化</li>
+<li>项目可维护性优化</li>
+<li>项目高可用性优化</li>
+</ol>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Mar 18 2021 11:31:27 GMT+0800">2021-03-18</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/SSR/">SSR</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/vue-cli/">vue-cli</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SRR%E6%8C%87%E5%8D%97%E6%9E%84%E5%BB%BA.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+    </ul>
+
+    <div class="home-paginator">
+        <div class="paginator">
+    
+
+    
+        <a class="next btn"
+           href="/page/2/"
+        >下一页</a>
+    
+</div>
+
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2015</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">粤ICP备18149602号</a></div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
