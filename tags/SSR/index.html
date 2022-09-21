@@ -9,7 +9,7 @@
     
     <title>
         
-            标签: ssr |
+            标签: SSR |
         
         Madman 疯子
     </title>
@@ -174,7 +174,7 @@
                 
                     <div class="fade-in-down-animation">
     <div class="tag-container">
-        <div class="tag-name"><i class="fas fa-tag"></i>&nbsp;ssr
+        <div class="tag-name"><i class="fas fa-tag"></i>&nbsp;SSR
         </div>
         <div class="tag-post-list">
             
@@ -189,9 +189,26 @@
                 
                     <li class="article-item">
                         <a class="article-title"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B6%85%E7%BA%A7%E5%A4%A7%E5%9D%91-Vue%E5%AF%B9%E8%B1%A1%E5%9C%A8SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81.html"
-                        >记一次超级大坑-Vue对象在SSR服务端为单例状态</a>
-                        <span class="article-date">08-02</span>
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SRR%E6%8C%87%E5%8D%97%E6%9E%84%E5%BB%BA.html"
+                        >Vue SSR服务端渲染-SRR指南构建</a>
+                        <span class="article-date">03-18</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2018</span>
+                <span class="archive-year-post-count">[1]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/VueJs%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8SEO%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html"
+                        >VueJs单页面应用SEO解决方案</a>
+                        <span class="article-date">12-10</span>
                     </li>
                 
             </ul>
@@ -226,7 +243,7 @@
             
               <span>2015</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -369,33 +386,6 @@
                 '.page-container',
                 '.pjax'
             ],
-            history: true,
-            debug: false,
-            cacheBust: false,
-            timeout: 0,
-            analytics: false,
-            currentUrlFullReload: false,
-            scrollRestoration: false,
-            // scrollTo: true,
-        });
-
-        document.addEventListener('pjax:send', () => {
-            KEEP.utils.pjaxProgressBarStart();
-        });
-
-        document.addEventListener('pjax:complete', () => {
-            KEEP.utils.pjaxProgressBarEnd();
-            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-            KEEP.refresh();
-        });
-    });
-</script>
-
-
-
-</body>
-</html>
-  ],
             history: true,
             debug: false,
             cacheBust: false,

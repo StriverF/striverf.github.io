@@ -284,6 +284,97 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/SSR%E9%A1%B9%E7%9B%AEoptimization-runtimeChunk%E8%BF%98%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8C%96%E7%9A%84%E5%8F%AF%E8%83%BD.html">
+                        SSR项目optimization.runtimeChunk还有哪些优化的可能
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>webpack之optimization.runtimeChunk有什么作用？<br>runtimeChunk，直观翻译是运行时的chunk文件，其作用是啥呢，通过调研了解了一波，在此记录下。<br><strong>何为运行时代码？</strong><br>形如import(‘abc’).then(res=&gt;{})这种异步加载的代码，在webpack中即为运行时代码。<br>在VueCli工程中常见的异步加载路由即为runtime代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    path: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">    name: <span class="string">&#x27;About&#x27;</span>,</span><br><span class="line">    <span class="comment">// route level code-splitting</span></span><br><span class="line">    <span class="comment">// this generates a separate chunk (about.[hash].js) for this route</span></span><br><span class="line">    <span class="comment">// which is lazy-loaded when the route is visited.</span></span><br><span class="line">    component: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: &quot;about&quot; */</span> <span class="string">&#x27;../views/About.vue&#x27;</span>)</span><br><span class="line">    <span class="comment">// component: About</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Sep 21 2022 11:45:17 GMT+0800">2022-09-21</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/vue/">vue</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/ssr/">ssr</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/webpack/">webpack</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/SSR%E9%A1%B9%E7%9B%AEoptimization-runtimeChunk%E8%BF%98%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8C%96%E7%9A%84%E5%8F%AF%E8%83%BD.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Swift%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E5%BA%93%E6%9C%89%E5%93%AA%E4%BA%9B.html">
+                        Swift状态管理库有哪些
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        <h1 id="Swift状态管理库有哪些"><a href="#Swift状态管理库有哪些" class="headerlink" title="Swift状态管理库有哪些"></a>Swift状态管理库有哪些</h1><p>接触过Vue和React前端框架的小伙伴应该都知道，Vue的状态管理有<a class="link"   target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/guide/state.html" >Vuex<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://pinia.vuejs.org/" >pinia<i class="fas fa-external-link-alt"></i></a>(vue3)，React的状态管理有 <a class="link"   target="_blank" rel="noopener" href="https://redux.js.org/" >Redux<i class="fas fa-external-link-alt"></i></a> <a class="link"   target="_blank" rel="noopener" href="https://cn.mobx.js.org/intro/overview.html" >mobx<i class="fas fa-external-link-alt"></i></a>。<br>那如果swift也用MVVM模式进行开发，按swift有实用的状态管理库供使用吗？</p>
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Aug 11 2022 15:19:31 GMT+0800">2022-08-11</span></span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/ios/">ios</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Swift%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E5%BA%93%E6%9C%89%E5%93%AA%E4%BA%9B.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84.html">
                         前端开发学习路径
                     </a>
@@ -622,114 +713,6 @@
 
             </li>
         
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html">
-                        Single-spa 成熟的微前端架构方案
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于多个中后台系统做前后端分离，各个业务模块集合在一个项目里面开发会造成后期不好维护且容易出问题，也不方便独立部署。<br>所以需要设计一套高度解耦又聚合在一个平台方便管理的系统架构。</p>
-<p>微前端是一种多个团队通过独立发布功能的方式来共同构建现代化 web 应用的技术手段及方法策略。</p>
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Apr 12 2021 11:55:26 GMT+0800">2021-04-12</span></span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/vue/">vue</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/singleSPA/">singleSPA</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Single-spa-%E6%88%90%E7%86%9F%E7%9A%84%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SRR%E6%8C%87%E5%8D%97%E6%9E%84%E5%BB%BA.html">
-                        Vue SSR服务端渲染-SRR指南构建
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>基于Vue-CLI v4版本构建的SPA项目改造成VueSSR服务端渲染项目。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>前段时间对网站项目进行了大的架构重构，上线已经半年了。一直想分享Vue-SSR项目架构，但是一直在忙SSR网站的架构优化迭代。<br>首先说一下做SSR项目重构的项目目的是什么</p>
-<ol>
-<li>更全面的SEO优化</li>
-<li>网站首屏渲染性能优化</li>
-<li>项目可维护性优化</li>
-<li>项目高可用性优化</li>
-</ol>
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Mar 18 2021 11:31:27 GMT+0800">2021-03-18</span></span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/vue/">vue</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/vue-cli/">vue-cli</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/SSR/">SSR</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Vue-SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SRR%E6%8C%87%E5%8D%97%E6%9E%84%E5%BB%BA.html">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
     </ul>
 
     <div class="home-paginator">
@@ -760,7 +743,7 @@
             
               <span>2015</span>&nbsp;-&nbsp;
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
