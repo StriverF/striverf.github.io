@@ -9,7 +9,7 @@
     
     <title>
         
-            IOS APP 电商平台项目架构重构-Swift语言(二) |
+            2023年IOS面试题整理 |
         
         Madman 疯子
     </title>
@@ -176,7 +176,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">IOS APP 电商平台项目架构重构-Swift语言(二)</span>
+            <span class="title-hover-animation">2023年IOS面试题整理</span>
         </div>
 
         
@@ -194,7 +194,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-07-21 10:56:04
+        <i class="fas fa-edit"></i>&nbsp;2023-01-11 15:27:59
     </span>
     
         <span class="article-categories article-meta-item">
@@ -207,10 +207,6 @@
                 
                     <li>
                         &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        &gt; <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/">App</a>&nbsp;
                     </li>
                 
             </ul>
@@ -226,11 +222,7 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/swift/">swift</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/ios%E6%9E%B6%E6%9E%84/">ios架构</a>&nbsp;
+                        | <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>&nbsp;
                     </li>
                 
             </ul>
@@ -240,12 +232,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>1.8k 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.4k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>6 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>8 分钟</span>
         </span>
     
     
@@ -261,63 +253,96 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进几年新语言的浪潮都比较猛烈，服务端的的<a class="link"   target="_blank" rel="noopener" href="https://golang.org/doc/" >Golang<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://deno.land/" >Deno<i class="fas fa-external-link-alt"></i></a>。安卓的<a class="link"   target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/" >Kotlin<i class="fas fa-external-link-alt"></i></a>，IOS的<a class="link"   target="_blank" rel="noopener" href="https://swift.org/documentation/" >Swift<i class="fas fa-external-link-alt"></i></a>。<br>这些新语言共同的优势都是运算性能更高，代码更简洁。让人难以抗拒，弱点是新语言技术社区不成熟，开源库较少，但是经过这几年的沉淀，这些问题也渐渐不再明显。由 Apple 创建，Swift 是当今发展最快的编程语言。作为著名的 Objective-C 的替代品，Swift 拥有大量优势，使其在iOS 开发中处于领先地位。</p>
+            <h1 id="基础面试题"><a href="#基础面试题" class="headerlink" title="基础面试题"></a>基础面试题</h1><h2 id="swift的基础类型有哪些"><a href="#swift的基础类型有哪些" class="headerlink" title="swift的基础类型有哪些"></a>swift的基础类型有哪些</h2><p>Swift是一种强类型语言，支持多种基础类型，这些基础类型包括:</p>
+<ol>
+<li>整型 (Integers): <code>Int、UInt</code> 等。</li>
+<li>浮点型 (Floating-Point Numbers): <code>Double、Float</code> 等</li>
+<li>布尔型 (Boolean): <code>Bool</code></li>
+<li>字符串 (String)</li>
+<li>字符 (Character)</li>
+<li>符号字面量 (Literal) : <code>true、false、nil、0、1.23</code>等</li>
+<li>元组 (Tuple) : 一组不同类型的数据的组合</li>
+<li>可选型 (Optional) : 用于表示一个变量有值或者没有值<br>Swift还支持类和结构体等复杂的数据类型，这些数据类型是由基础数据类型组合而成。</li>
+</ol>
+<p>除了基本类型, swift 也支持collection类型，例如 Array,Set,Dictionary。Swift中的集合类型也是基本数据类型, 并且与其他语言比较类似。</p>
 <span id="more"></span>
 
-
-<h1 id="App项目重构语言选择"><a href="#App项目重构语言选择" class="headerlink" title="App项目重构语言选择"></a>App项目重构语言选择</h1><ul>
-<li><input disabled="" type="checkbox"> Objective-C</li>
-<li><input checked="" disabled="" type="checkbox"> Swift<br>先说我的结论，我选Swift。<br>为什么？下面是我的理由。</li>
-</ul>
-<h2 id="Swift和Objective-C的联系"><a href="#Swift和Objective-C的联系" class="headerlink" title="Swift和Objective-C的联系"></a>Swift和Objective-C的联系</h2><p>Swift和Objective-C共用一套运行时环境，Swift的类型可以桥接到Objective-C</p>
-<h2 id="Swift比Objective-C有什么优势？"><a href="#Swift比Objective-C有什么优势？" class="headerlink" title="Swift比Objective-C有什么优势？"></a>Swift比Objective-C有什么优势？</h2><ol>
-<li>Swift容易阅读和编写，语法和文件结构简易化。</li>
-<li>Swift更易于维护，文件分离后结构更清晰。</li>
-<li>Swift更加安全，它是类型安全的语言。</li>
-<li>Swift代码更少，简洁的语法，可以省去大量冗余代码。</li>
-<li>Swift速度更快，运算性能更高。</li>
-<li>Swift构建速度更快，且打包资源大小更小。</li>
-<li>Swift是一个开源项目，拥有庞大的开发社区。</li>
-<li>Swift有更好的内存管理。</li>
-<li>Swift支持动态库。</li>
+<h2 id="在-Swift-中问号-的作用是什么？"><a href="#在-Swift-中问号-的作用是什么？" class="headerlink" title="在 Swift 中问号(?)的作用是什么？"></a>在 Swift 中问号(?)的作用是什么？</h2><p>在 Swift 中，问号 “?” 用于表示可选值 (Optionals)。可选值是一种特殊的类型，表示一个变量可能有值也可能没有值。</p>
+<p>使用可选值类型可以有效地避免 null 引用异常 (null reference exception) 。当一个变量是可选值类型时，你必须在使用它之前进行检查。如果它有值，才能使用它，而不会引起程序崩溃。</p>
+<p>当赋值给可选值时,如果不加”?” 那么编译器会将这个值包装为可选值类型。</p>
+<p>在使用可选值类型之前需要进行取值操作，以确保其有值并且可用.<br>常用的取值操作如下:</p>
+<ol>
+<li><code>if-let</code> 或 <code>guard-let</code>, 可以检查可选值是否有值并将其分配给一个临时常量或变量。</li>
+<li>强制解析 (force unwrap)，使用感叹号 ! 可以直接访问可选值中的值，但如果这个可选值是 <code>nil</code> 则会发生运行时错误。</li>
+<li>隐式解析可选值，使用可选值类型的变量名来访问可选值中的值，如果这个可选值是 <code>nil</code> 则会发生运行时错误。</li>
 </ol>
-<h3 id="Swift更快"><a href="#Swift更快" class="headerlink" title="Swift更快"></a>Swift更快</h3><p>现代技术需要高速的性能，而Swift完全满足了这种需求。根据大量测试，它在 FFT 和 Mandelbrot 算法方面显示出与 C++ 几乎相同的性能。早在 2015 年就发现 Xcode 6.3 beta 提高了 GEMM 算法的性能。</p>
-<p>考虑到 Swift 仍然是一门年轻的编程语言，越来越多的增强功能即将推出。每个人都在谈论这个工具的未来的原因很简单，因为 Swift 正在快速开发语言。它的潜力是不可否认的，而 Objective-C 显示出更糟糕的结果。</p>
-<p>根据 Apple 的研究，Objective-C 与 Swift 的速度比较：<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://cdn.patpat.site/mweb/16268399371021.png"
-                      alt="根据 Apple 的研究，Objective-C 与 Swift 的速度比较"
-                ></p>
-<h3 id="Swift更安全"><a href="#Swift更安全" class="headerlink" title="Swift更安全"></a>Swift更安全</h3><p>还记得 Objective-C 中的 nil 指针变量（未初始化）将表达式变为无操作并导致应用程序崩溃吗？使用 Swift 时您可以忘记这个问题。它的设计考虑了安全性，并且每次编写错误代码时都会产生编译器错误。这意味着可以在开发阶段修复所有错误，而无需随后查看整个代码。不会给客户带来不好的惊喜。</p>
-<h3 id="Swift更易于阅读和编写"><a href="#Swift更易于阅读和编写" class="headerlink" title="Swift更易于阅读和编写"></a>Swift更易于阅读和编写</h3><p>Swift 变得如此流行的原因之一是这种编程语言的简单语法。这一事实使代码更易于阅读和编写。另一方面，Objective-C 需要大量符号、分号来结束行、“if”或“else”语句中的条件表达式周围的括号等。Swift 没有这些。相反，它在括号内使用逗号分隔的参数列表。</p>
-<p>此外，实现任何选项是 Swift 需要编写比 Objective-C 语言更少的代码字符串，从而避免额外的错误，从而使代码更简洁。因此，与 Objective-C 相比，开发人员完成任务所需的时间更少。 </p>
-<p>Swift 类似于自然英语，对于使用 Java、JavaScript、Python、C# 和 C++ 的编码人员来说更容易理解。他们可以轻松地将用 Swift 编写的代码片段应用到您拥有的现有工具链中。  </p>
-<h3 id="Swift-有更好的内存管理"><a href="#Swift-有更好的内存管理" class="headerlink" title="Swift 有更好的内存管理"></a>Swift 有更好的内存管理</h3><p>Objective-C 的问题之一是 ARC（自动引用计数），它在 Cocoa API 和面向对象的代码中得到支持。但是，该代码不适用于过程 C 代码和诸如 Core Graphics 之类的 API。这导致了巨大的内存泄漏。</p>
-<p>Swift 通过使用过程和面向对象的代码路径使 ARK 完整，从而解决了这个问题。现在编码人员可以专注于应用程序逻辑及其功能，而不是管理应用程序内的内存。</p>
-<h3 id="Swift-支持动态库"><a href="#Swift-支持动态库" class="headerlink" title="Swift 支持动态库"></a>Swift 支持动态库</h3><p>正如我们上面提到的，Swift 是一种开发速度非常快的语言，但它也允许您在新的 Swift 版本到来时立即更新您的应用程序。这是可能的，因为使用了与 iOS 8 一起提供的动态库。以前，静态库更新是与新 iOS 版本等重大更新一起进行的。</p>
-<p>就其而言，动态库允许将代码段直接连接到应用程序。此功能有助于使您的项目保持最新状态，减少应用程序的初始大小，加快外部库的加载速度并最大限度地减少加载新内容所需的时间。</p>
-<p>在 Swift 中实现动态库是 Apple 如何专注于使 iOS 生态系统响应更快并为其用户提供扩展性能的另一个例子。  </p>
-<h3 id="Swift-是一个开源项目"><a href="#Swift-是一个开源项目" class="headerlink" title="Swift 是一个开源项目"></a>Swift 是一个开源项目</h3><p>作为一个开源项目，Swift 为其用户提供了额外的优势，其中之一是减少了 Objective-C 中常见的名称冲突。</p>
-<p>Swift 的另一个制胜点是庞大的开发社区，随时准备增强 iOS 开发语言。Apple 成功地为使用 Swift 作为iOS 开发主要语言的开发人员带来了最佳的客户体验，并提供了影响其未来的可能性。</p>
-<h2 id="Swift目前存在的缺点"><a href="#Swift目前存在的缺点" class="headerlink" title="Swift目前存在的缺点"></a>Swift目前存在的缺点</h2><p>社区的开源项目比OC相对偏少，但是经过这几年的沉淀也绝对不算少。<br>对ios低于ios11以下版本不兼容，对于还有兼容4年前的ios系统的项目就不建议使用。</p>
-<h2 id="那么Objective-C呢？"><a href="#那么Objective-C呢？" class="headerlink" title="那么Objective-C呢？"></a>那么Objective-C呢？</h2><p>在 2014 年 Swift 发布之前，Objective-C 是一种广泛使用的编程语言。可悲但真实，现在它无处可去，专家预测它不会收到任何重大更新。原因很简单：Swift 语言已经包含了 Objective-C 的所有解决方案。此外，还有许多 Objective-C 缺乏的进步。尽管 Objective-C 可能会借用 Swifts 的一些新特性，但它永远不会那么前沿。</p>
-<p>Objective-C 的另一个弱点是它的安全级别。如前所述，Swift 被认为更安全。由于数据保护是大多数用户最关心的问题，开发人员也不能忽视这一点。</p>
-<p>最重要的是，与 Swift 不同，不可能使用 Objective-C 以交互方式开发应用程序。这对每个软件工程师来说都是一个很大的缺点，它会对开发过程产生相当负面的影响。</p>
-<p>自从 Apple 发布 Xcode 6.3 以来，修复了 Apple Bug Report 实用程序中的许多恼人的错误，Objective-C 没有机会追赶 Swift。</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>虽然大多数现有的 iOS 应用程序都是用 Objective-C 编写的，但现在是时候考虑将它们转移到 Swift 上了。在更新方面，Swift 允许 iOS 开发人员在短时间内处理任何更改。这一切都归功于它更平易近人和负责任的性质。</p>
-
+<p>所以 “?” 是可选类型的标识符，在使用可选值类型时需要根据场景来选择合适的取值操作。</p>
+<h2 id="在IOS开发中AppDelegate和SceneDelegate的区别？"><a href="#在IOS开发中AppDelegate和SceneDelegate的区别？" class="headerlink" title="在IOS开发中AppDelegate和SceneDelegate的区别？"></a>在IOS开发中AppDelegate和SceneDelegate的区别？</h2><p>在 iOS 13 之前的版本中， AppDelegate 是应用程序的入口点，它处理应用程序的生命周期事件，如启动、挂起、进入后台等。它还负责应用程序级别的任务，如处理远程推送、设置根视图控制器等。</p>
+<p>在 iOS 13 及以上版本中， Apple 推出了 SceneDelegate 类来处理应用程序的场景级别事件，如屏幕上的某一场景启动、屏幕上的某一场景挂起等。</p>
+<p>主要的差别在于 AppDelegate 主要处理整个应用的生命周期和应用级别的事件，而 SceneDelegate 则主要处理场景（window）级别的事件。<br>在使用场景的应用中,多场景可以同时存在，每个场景对应一个SceneDelegate,而只有一个AppDelegate,它对应着整个应用程序</p>
+<p>因此,在iOS13 及以上系统中,SceneDelegate 是用来管理场景，AppDelegate 继续管理整个应用程序的一些生命周期事件及应用级别的任务，两者各自都起着不同的作用。</p>
+<h2 id="在Swift中class和struct的共同点和区别？"><a href="#在Swift中class和struct的共同点和区别？" class="headerlink" title="在Swift中class和struct的共同点和区别？"></a>在Swift中class和struct的共同点和区别？</h2><p>Class 和 Struct 是 Swift 中两种基本的数据类型，它们之间有一些共同点和区别。</p>
+<p>共同点:</p>
+<ol>
+<li><p>都可以定义属性 (properties) 和方法 (methods)。</p>
+</li>
+<li><p>都可以遵循协议 (protocols)。</p>
+</li>
+<li><p>都可以使用类型转换 (type casting)。</p>
+</li>
+<li><p>都可以使用扩展 (extensions) 添加新的功能。<br>区别：</p>
+</li>
+<li><p>不同的创建方式: 结构体是由 struct 关键字创建，类是由 class 关键字创建。</p>
+</li>
+<li><p>值类型和引用类型: 结构体是值类型，类是引用类型。结构体在进行赋值和传递时会进行值拷贝，类会进行引用传递。</p>
+</li>
+<li><p>继承: 类支持继承，结构体不支持。</p>
+</li>
+<li><p>deinit: 类有 deinit 方法可以进行清理操作,结构体没有</p>
+</li>
+<li><p>通过mutating关键字来修改结构体中的属性，而类可以直接修改。</p>
+</li>
+<li><p>根据使用场景来决定是使用类还是结构体，如果需要继承或者在赋值或传递时需要进行引用传递，则使用类；如果需要一个简单的数据类型并且需要在赋值或传递时进行值拷贝，则使用结构体。需要注意的是,结构体和类都是可以使用协议和扩展,协议继承以及类型转换来扩展功能的,而不仅仅限于类.</p>
+</li>
+</ol>
+<p>选择结构体还是类取决于你的项目需求和预期行为。如果不需要继承或者在赋值和传递时需要进行值拷贝，则选择结构体；如果需要继承或者在赋值和传递时需要进行引用传递，则选择类。</p>
+<h1 id="架构面试题"><a href="#架构面试题" class="headerlink" title="架构面试题"></a>架构面试题</h1><h2 id="什么是依赖注入，依赖注入主要解决什么问题？"><a href="#什么是依赖注入，依赖注入主要解决什么问题？" class="headerlink" title="什么是依赖注入，依赖注入主要解决什么问题？"></a>什么是依赖注入，依赖注入主要解决什么问题？</h2><p>依赖注入 (Dependency Injection, DI) 是一种编程范式，通过将依赖关系通过构造函数或其他方式显式地传递给对象来实现，而不是在对象内部通过 new 或者其他方式来创建依赖对象。<br>使用依赖注入可以有效地降低类之间的耦合度，使得类的实现更加松散，更易于测试和维护。<br>可以使用依赖注入框架来简化依赖注入的过程，比如Swift-DI,Cleanse,Dip,Injector,Swinject等。</p>
+<h2 id="对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？"><a href="#对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？" class="headerlink" title="对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？"></a>对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？</h2><p>响应式编程 (Reactive Programming) 是一种编程范式，它聚焦于对于数据流和变化的响应。在响应式编程中，开发者声明了数据流和转换，而不是编写控制流程来控制数据流。使用响应式编程可以让代码变得更简洁，易于维护和扩展。此外，还可以帮助减少常见的线程问题，如线程安全和高级同步问题。</p>
+<p>Swift 中有一些响应式编程框架可供使用，如:</p>
+<ol>
+<li>RxSwift: 这是一个用于 Swift 的响应式编程框架，它基于 ReactiveX（Rx）规范实现，提供了一组用于操作数据流和异步操作的操作符。</li>
+<li>ReactiveSwift: 一个用于 Swift 的响应式编程框架，提供了一组用于操作数据流和异步操作的函数，并且具有较好的性能。</li>
+<li>Bond: 一个轻量级的响应式编程框架，它提供了简单的数据绑定和响应式操作。</li>
+</ol>
+<h2 id="Swift中常见的架构模式有哪些，他们的区别是什么"><a href="#Swift中常见的架构模式有哪些，他们的区别是什么" class="headerlink" title="Swift中常见的架构模式有哪些，他们的区别是什么"></a>Swift中常见的架构模式有哪些，他们的区别是什么</h2><p>在Swift中MVC、MVVM、MVP是三种常见的软件架构模式。</p>
+<ol>
+<li>MVC (Model-View-Controller) 是一种将应用程序的逻辑分成三个部分的设计模式。 Model 代表数据和业务逻辑，View 是用户界面，Controller 则是用来控制 Model 和 View 之间的交互的部分。</li>
+<li>MVVM (Model-View-ViewModel) 是一种将应用程序的逻辑分成三个部分的设计模式。Model 代表数据和业务逻辑，View 是用户界面，ViewModel 则是用来控制 Model 和 View 之间的交互的部分。</li>
+<li>MVP (Model-View-Presenter) 是一种将应用程序的逻辑分成三个部分的设计模式。 Model 代表数据和业务逻辑，View 是用户界面，Presenter 则是用来控制 Model 和 View 之间的交互的部分。</li>
+</ol>
+<p>三种模式基本上相似，但是有一些细微差别，MVC中，controller 作为了view 和 model之间的中间层。而MVP 和 MVVM中 ViewModel和 Presenter 则只是起到中间层和View绑定作用。</p>
+<p>Controller 通常负责处理用户交互，解析用户输入并将其转换为操作。它还负责更新用户界面。通常，它会直接更新视图或者调用视图的更新方法。而 ViewModel 主要负责将数据模型转换为可供视图使用的格式，并且处理视图和数据模型之间的交互，进而维护View 状态。简单来说,Controller 主要处理业务逻辑和视图之间的关系，ViewModel 主要处理数据模型和视图之间的关系。</p>
+<h2 id="对组件化的理解，Swift中常见的组件化框架有哪些？"><a href="#对组件化的理解，Swift中常见的组件化框架有哪些？" class="headerlink" title="对组件化的理解，Swift中常见的组件化框架有哪些？"></a>对组件化的理解，Swift中常见的组件化框架有哪些？</h2><p>组件化框架都可以帮助开发者实现组件化开发，让应用程序的代码更好维护和管理，提高开发效率。不同框架之间可能会有一些区别，比如支持的语言、实现思想、功能特性等，需要根据项目需求和个人喜好进行选择。</p>
+<p>除了 BeeHive，还有很多其他类似的组件化框架可供选择，如:</p>
+<ol>
+<li>Typhoon: 一个基于 Objective-C 的组件化框架，提供了依赖注入、组件生命周期管理等功能，可以帮助开发者简化应用程序的组件化开发。</li>
+<li>YapTaskQueue: 一个用于 Swift 的组件化框架，提供了一组工具，帮助开发者组织和管理应用程序的组件。</li>
+<li>JLRoutes: 一个路由框架，可以帮助开发者在组件之间传递数据和调用组件的方法。</li>
+<li>Pippin : 一个基于 protocol 的轻量级的组件化框架，提供了路由、组件化、服务等功能。</li>
+<li>Router: 一个路由框架，支持解析链接并且根据链接打开相应的组件</li>
+</ol>
+<h1 id="算法面试题"><a href="#算法面试题" class="headerlink" title="算法面试题"></a>算法面试题</h1><h1 id="逻辑面试题"><a href="#逻辑面试题" class="headerlink" title="逻辑面试题"></a>逻辑面试题</h1><h1 id="项目业务能力"><a href="#项目业务能力" class="headerlink" title="项目业务能力"></a>项目业务能力</h1><h1 id="效率工具能力"><a href="#效率工具能力" class="headerlink" title="效率工具能力"></a>效率工具能力</h1>
         </div>
 
         
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：IOS APP 电商平台项目架构重构-Swift语言(二)</li>
+        <li>本文标题：2023年IOS面试题整理</li>
         <li>本文作者：Madman</li>
-        <li>创建时间：2021-07-21 10:56:04</li>
+        <li>创建时间：2023-01-11 15:27:59</li>
         <li>
-            本文链接：https://www.patpat.site/开发/前端/App/IOS-APP-电商平台项目架构重构-Swift语言-二.html
+            本文链接：https://www.patpat.site/开发/前端/2023年IOS面试题整理.html
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -331,29 +356,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%B6%85%E7%BA%A7%E5%A4%A7%E5%9D%91-Vue%E5%AF%B9%E8%B1%A1%E5%9C%A8SSR%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E5%8D%95%E4%BE%8B%E7%8A%B6%E6%80%81.html"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">记一次超级大坑-Vue对象在SSR服务端为单例状态</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/App/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84-%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B%E7%9A%84%E6%9C%AC%E8%B4%A8-%E4%B8%80.html"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/IOS-APP-%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84-%E5%B7%A5%E7%A8%8B%E5%8C%96-%E4%B8%89.html"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-架构演进(一)</span>
+                                <span class="post-nav-title-item">IOS APP 电商平台项目架构重构-工程化(三)</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -560,7 +570,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#App%E9%A1%B9%E7%9B%AE%E9%87%8D%E6%9E%84%E8%AF%AD%E8%A8%80%E9%80%89%E6%8B%A9"><span class="nav-text">App项目重构语言选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E5%92%8CObjective-C%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-text">Swift和Objective-C的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E6%AF%94Objective-C%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%BF%EF%BC%9F"><span class="nav-text">Swift比Objective-C有什么优势？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%BF%AB"><span class="nav-text">Swift更快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E5%AE%89%E5%85%A8"><span class="nav-text">Swift更安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift%E6%9B%B4%E6%98%93%E4%BA%8E%E9%98%85%E8%AF%BB%E5%92%8C%E7%BC%96%E5%86%99"><span class="nav-text">Swift更易于阅读和编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%9C%89%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-text">Swift 有更好的内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%94%AF%E6%8C%81%E5%8A%A8%E6%80%81%E5%BA%93"><span class="nav-text">Swift 支持动态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-text">Swift 是一个开源项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E7%9B%AE%E5%89%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-text">Swift目前存在的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3%E4%B9%88Objective-C%E5%91%A2%EF%BC%9F"><span class="nav-text">那么Objective-C呢？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">基础面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#swift%E7%9A%84%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-text">swift的基础类型有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Swift-%E4%B8%AD%E9%97%AE%E5%8F%B7-%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">在 Swift 中问号(?)的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8IOS%E5%BC%80%E5%8F%91%E4%B8%ADAppDelegate%E5%92%8CSceneDelegate%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">在IOS开发中AppDelegate和SceneDelegate的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Swift%E4%B8%ADclass%E5%92%8Cstruct%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9%E5%92%8C%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">在Swift中class和struct的共同点和区别？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">架构面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E4%B8%BB%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">什么是依赖注入，依赖注入主要解决什么问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9swift%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%8C%E5%B9%B6%E4%B8%BE%E4%BE%8BSwift%E4%B8%AD%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E4%BB%96%E4%BB%AC%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">Swift中常见的架构模式有哪些，他们的区别是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%BB%84%E4%BB%B6%E5%8C%96%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%8CSwift%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E4%BB%B6%E5%8C%96%E6%A1%86%E6%9E%B6%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">对组件化的理解，Swift中常见的组件化框架有哪些？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">算法面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">逻辑面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%9A%E5%8A%A1%E8%83%BD%E5%8A%9B"><span class="nav-text">项目业务能力</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7%E8%83%BD%E5%8A%9B"><span class="nav-text">效率工具能力</span></a></li></ol>
     </div>
 </div>
         </aside>
