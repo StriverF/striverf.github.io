@@ -232,12 +232,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>828 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>529 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>3 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>2 分钟</span>
         </span>
     
     
@@ -262,7 +262,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add -D unocss</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
-<ol>
+<ol start="2">
 <li>配置 Unocss<br>在 Vue 项目中，通常在 vite.config.js 或类似的配置文件中设置 Unocss。这里是如何配置 Unocss，并定义一些基本的主题变量：</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> Unocss <span class="keyword">from</span> <span class="string">&#x27;unocss/vite&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    Vue(),</span><br><span class="line">    Unocss(&#123;</span><br><span class="line">      theme: &#123;</span><br><span class="line">        colors: &#123;</span><br><span class="line">          brand: <span class="string">&#x27;#5e81ac&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;brand-light&#x27;</span>: <span class="string">&#x27;#81a1c1&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;brand-dark&#x27;</span>: <span class="string">&#x27;#4c566a&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        fontFamily: &#123;</span><br><span class="line">          sans: <span class="string">&#x27;Roboto, sans-serif&#x27;</span>,</span><br><span class="line">          serif: <span class="string">&#x27;Merriweather, serif&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 更多 Unocss 配置项</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -272,18 +272,11 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;font-sans bg-brand text-brand-dark p-4&quot;&gt;</span><br><span class="line">    Welcome to our website styled with Unocss!</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
 
-<p>GPT<br>Unocss 是一个原子 CSS 引擎，它可以高度定制并优化您的 CSS 输出。使用 Unocss 时，您可以通过主题功能来定义和应用一致的样式变量，例如颜色、字体、间距等，从而保持整个项目的设计一致性。</p>
-<p>如何在 Unocss 中设置和使用主题</p>
-<ol>
-<li>安装 Unocss<br>首先，确保您已经将 Unocss 添加到您的项目中。如果尚未添加，可以通过以下命令使用 npm 或 yarn 安装它：</li>
-</ol>
-<p>bash<br>Copy code<br>npm install -D unocss<br>或者</p>
-<p>bash<br>Copy code<br>yarn add -D unocss<br>2. 配置 Unocss<br>在 Vue 项目中，通常在 vite.config.js 或类似的配置文件中设置 Unocss。这里是如何配置 Unocss，并定义一些基本的主题变量：</p>
-<p>javascript<br>Copy code<br>// vite.config.js<br>import { defineConfig } from ‘vite’;<br>import Vue from ‘@vitejs/plugin-vue’;<br>import Unocss from ‘unocss/vite’;</p>
-<p>export default defineConfig({<br>  plugins: [<br>    Vue(),<br>    Unocss({<br>      theme: {<br>        colors: {<br>          brand: ‘#5e81ac’,<br>          ‘brand-light’: ‘#81a1c1’,<br>          ‘brand-dark’: ‘#4c566a’,<br>        },<br>        fontFamily: {<br>          sans: ‘Roboto, sans-serif’,<br>          serif: ‘Merriweather, serif’,<br>        },<br>      },<br>      // 更多 Unocss 配置项<br>    })<br>  ]<br>});<br>3. 使用主题变量<br>在项目中，您现在可以使用定义好的主题变量。例如，要在组件中应用这些颜色和字体，您可以直接引用您的配置名称：</p>
-<p>vue<br>Copy code<br><template><br>  <div class="font-sans bg-brand text-brand-dark p-4"><br>    Welcome to our website styled with Unocss!<br>  </div><br></template><br>4. 生成主题的实用工具类<br>Unocss 会根据您的配置自动生成相关的实用工具类。这意味着您可以直接在 HTML 或 Vue 模板中使用例如 bg-brand, text-brand-dark 等类名。</p>
-<ol start="5">
-<li>动态主题切换<br>如果您想在运行时切换主题，您可能需要动态修改 CSS 变量。这通常涉及到在一个更高的层级（如 :root 或 body）上动态设置 CSS 变量，并让 Unocss 使用这些变量：</li>
+<ol start="4">
+<li><p>生成主题的实用工具类<br>Unocss 会根据您的配置自动生成相关的实用工具类。这意味着您可以直接在 HTML 或 Vue 模板中使用例如 bg-brand, text-brand-dark 等类名。</p>
+</li>
+<li><p>动态主题切换<br>如果您想在运行时切换主题，您可能需要动态修改 CSS 变量。这通常涉及到在一个更高的层级（如 :root 或 body）上动态设置 CSS 变量，并让 Unocss 使用这些变量：</p>
+</li>
 </ol>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 全局样式文件 */</span></span><br><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  --<span class="attribute">color</span>-brand: <span class="number">#5e81ac</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-attr">[data-theme=<span class="string">&quot;dark&quot;</span>]</span> &#123;</span><br><span class="line">  --<span class="attribute">color</span>-brand: <span class="number">#4c566a</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>然后在 Unocss 配置中使用这些 CSS 变量：</p>
