@@ -232,12 +232,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>2.4k 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>5.9k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>8 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>20 分钟</span>
         </span>
     
     
@@ -277,6 +277,13 @@
 <li>隐式解析可选值，使用可选值类型的变量名来访问可选值中的值，如果这个可选值是 <code>nil</code> 则会发生运行时错误。</li>
 </ol>
 <p>所以 “?” 是可选类型的标识符，在使用可选值类型时需要根据场景来选择合适的取值操作。</p>
+<h2 id="在IOS开发中KVO是什么？"><a href="#在IOS开发中KVO是什么？" class="headerlink" title="在IOS开发中KVO是什么？"></a>在IOS开发中KVO是什么？</h2><p>KVO (Key-Value Observing) 是 iOS 开发中一种机制，用于监听对象的属性值的变化。它允许开发者在不修改对象本身的情况下，监听对象的属性值的变化，并在发生变化时进行响应。KVO 是一种观察者模式，它可以让你在不破坏封装性的前提下观察对象的状态变化，而不用去手动地实现通知机制。KVO 能够让你轻松地监听和响应对象的属性变化，并且它是线程安全的，可以在多线程环境中使用。<br>需要注意的是,KVO在观察的属性必须是NSObject的子类且必须使用@objc dynamic修饰，才能被观察, 否则会报错。<br>另外,KVO常常被用来实现数据绑定，这种情况下，你需要在对象的属性变化时自动更新 UI。但是过度使用 KVO 会导致性能问题，因此在使用 KVO 时应该尽量避免不必要的监听，并在不再需要时及时移除监听。</p>
+<p>KVO 使用方法：</p>
+<ol>
+<li>在需要监听的对象上调用 addObserver(_:forKeyPath:options:context:) 方法，并指定要监听的属性的 keyPath。</li>
+<li>实现 observeValue(forKeyPath:of:change:context:) 方法，并在其中处理属性值变化的逻辑。</li>
+<li>当监听不再需要时，调用 removeObserver(_:forKeyPath:) 方法来移除监听。</li>
+</ol>
 <h2 id="在IOS开发中AppDelegate和SceneDelegate的区别？"><a href="#在IOS开发中AppDelegate和SceneDelegate的区别？" class="headerlink" title="在IOS开发中AppDelegate和SceneDelegate的区别？"></a>在IOS开发中AppDelegate和SceneDelegate的区别？</h2><p>在 iOS 13 之前的版本中， AppDelegate 是应用程序的入口点，它处理应用程序的生命周期事件，如启动、挂起、进入后台等。它还负责应用程序级别的任务，如处理远程推送、设置根视图控制器等。</p>
 <p>在 iOS 13 及以上版本中， Apple 推出了 SceneDelegate 类来处理应用程序的场景级别事件，如屏幕上的某一场景启动、屏幕上的某一场景挂起等。</p>
 <p>主要的差别在于 AppDelegate 主要处理整个应用的生命周期和应用级别的事件，而 SceneDelegate 则主要处理场景（window）级别的事件。<br>在使用场景的应用中,多场景可以同时存在，每个场景对应一个SceneDelegate,而只有一个AppDelegate,它对应着整个应用程序</p>
@@ -306,6 +313,32 @@
 </li>
 </ol>
 <p>选择结构体还是类取决于你的项目需求和预期行为。如果不需要继承或者在赋值和传递时需要进行值拷贝，则选择结构体；如果需要继承或者在赋值和传递时需要进行引用传递，则选择类。</p>
+<h2 id="ios开发中有哪些常用的设计模式？"><a href="#ios开发中有哪些常用的设计模式？" class="headerlink" title="ios开发中有哪些常用的设计模式？"></a>ios开发中有哪些常用的设计模式？</h2><ol>
+<li>责任链（Chain Of Responsibility）责任链模式在面向对象程式设计里是一种软件设计模式，它包含了一些命令对象和一系列的处理对象。每一个处理对象决定它能处理哪些命令对象，它也知道如何将它不能处理的命令对象传递给该链中的下一个处理对象。</li>
+<li>命令（Command）命令模式是一种设计模式，它尝试以对象来代表实际行动。命令对象可以把行动(action) 及其参数封装起来，于是这些行动可以被：重复多次、取消（如果该对象有实现的话）、取消后又再重做</li>
+<li>解释器（Interpreter）给定一种语言，定义他的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中句子。</li>
+<li>迭代器（Iterator）迭代器模式可以让用户通过特定的接口巡访容器中的每一个元素而不用了解底层的实现。</li>
+<li>中介者（Mediator）用一个中介者对象封装一系列的对象交互，中介者使各对象不需要显示地相互作用，从而使耦合松散，而且可以独立地改变它们之间的交互。</li>
+<li>备忘录（Memento）在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样就可以将该对象恢复到原先保存的状态。</li>
+<li>观察者（Observer）一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知</li>
+<li>状态（State）在状态模式中，对象的行为是基于它的内部状态而改变的。 这个模式允许某个类对象在运行时发生改变。</li>
+<li>策略（Strategy）对象有某个行为，但是在不同的场景中，该行为有不同的实现算法。策略模式：定义了一族算法（业务规则）、封装了每个算法、这族的算法可互换代替（interchangeable）。</li>
+<li>模板方法（Template method） 模板方法模式是一种行为设计模式， 它通过父类/协议中定义了一个算法的框架， 允许子类/具体实现对象在不修改结构的情况下重写算法的特定步骤。</li>
+<li>访问者（Visitor）封装某些作用于某种数据结构中各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</li>
+<li>抽象工厂（Abstract Factory）抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。</li>
+<li>生成器（Builder）一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。</li>
+<li>工厂方法（Factory Method）定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。</li>
+<li>单态（Monostate）单态模式是实现单一共享的另一种方法。不同于单例模式，它通过完全不同的机制，在不限制构造方法的情况下实现单一共享特性。 因此，在这种情况下，单态会将状态保存为静态，而不是将整个实例保存为单例。</li>
+<li>单例（Singleton）单例对象的类必须保证只有一个实例存在。许多时候整个系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为。</li>
+<li>适配器（Adapter）适配器模式有时候也称包装样式或者包装(wrapper)。将一个类的接口转接成用户所期待的。一个适配使得因接口不兼容而不能在一起工作的类工作在一起，做法是将类自己的接口包裹在一个已存在的类中。</li>
+<li>桥接（Bridge）桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。</li>
+<li>组合（Composite）将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。</li>
+<li>修饰（Decorator）修饰模式，是面向对象编程领域中，一种动态地往一个类中添加新的行为的设计模式。 就功能而言，修饰模式相比生成子类更为灵活，这样可以给某个对象而不是整个类添加一些功能。</li>
+<li>外观（Facade）外观模式为子系统中的一组接口提供一个统一的高层接口，使得子系统更容易使用。</li>
+<li>享元（Flyweight）使用共享物件，用来尽可能减少内存使用量以及分享资讯给尽可能多的相似物件；它适合用于当大量物件只是重复因而导致无法令人接受的使用大量内存。</li>
+<li>保护代理模式（Protection Proxy）在代理模式中，创建一个类代表另一个底层类的功能。 保护代理用于限制访问。</li>
+<li>虚拟代理（Virtual Proxy）在代理模式中，创建一个类代表另一个底层类的功能。 虚拟代理用于对象的需时加载。</li>
+</ol>
 <h1 id="架构面试题"><a href="#架构面试题" class="headerlink" title="架构面试题"></a>架构面试题</h1><h2 id="什么是依赖注入，依赖注入主要解决什么问题？"><a href="#什么是依赖注入，依赖注入主要解决什么问题？" class="headerlink" title="什么是依赖注入，依赖注入主要解决什么问题？"></a>什么是依赖注入，依赖注入主要解决什么问题？</h2><p>依赖注入 (Dependency Injection, DI) 是一种编程范式，通过将依赖关系通过构造函数或其他方式显式地传递给对象来实现，而不是在对象内部通过 new 或者其他方式来创建依赖对象。<br>使用依赖注入可以有效地降低类之间的耦合度，使得类的实现更加松散，更易于测试和维护。<br>可以使用依赖注入框架来简化依赖注入的过程，比如Swift-DI,Cleanse,Dip,Injector,Swinject等。</p>
 <h2 id="对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？"><a href="#对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？" class="headerlink" title="对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？"></a>对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？</h2><p>响应式编程 (Reactive Programming) 是一种编程范式，它聚焦于对于数据流和变化的响应。在响应式编程中，开发者声明了数据流和转换，而不是编写控制流程来控制数据流。使用响应式编程可以让代码变得更简洁，易于维护和扩展。此外，还可以帮助减少常见的线程问题，如线程安全和高级同步问题。</p>
 <p>Swift 中有一些响应式编程框架可供使用，如:</p>
@@ -331,7 +364,66 @@
 <li>Pippin : 一个基于 protocol 的轻量级的组件化框架，提供了路由、组件化、服务等功能。</li>
 <li>Router: 一个路由框架，支持解析链接并且根据链接打开相应的组件</li>
 </ol>
-<h1 id="算法面试题"><a href="#算法面试题" class="headerlink" title="算法面试题"></a>算法面试题</h1><h1 id="逻辑面试题"><a href="#逻辑面试题" class="headerlink" title="逻辑面试题"></a>逻辑面试题</h1><h1 id="项目业务能力"><a href="#项目业务能力" class="headerlink" title="项目业务能力"></a>项目业务能力</h1><h1 id="效率工具能力"><a href="#效率工具能力" class="headerlink" title="效率工具能力"></a>效率工具能力</h1>
+<h1 id="算法面试题"><a href="#算法面试题" class="headerlink" title="算法面试题"></a>算法面试题</h1><h3 id="常见的排序算法有哪些，并讲解其原理"><a href="#常见的排序算法有哪些，并讲解其原理" class="headerlink" title="常见的排序算法有哪些，并讲解其原理"></a>常见的排序算法有哪些，并讲解其原理</h3><p>快速排序、归并排序、冒泡排序、插入排序等<br>快速排序是一种分治算法，是对冒泡排序的一种改进。它的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</p>
+<p>具体的操作流程如下：</p>
+<ol>
+<li>选取一个关键数，将数组分为两部分：比关键数小的数放到左边，大的数放到右边</li>
+<li>递归地对左右两部分数组分别进行快速排序</li>
+<li>整个排序过程结束，数组将变成有序序列</li>
+<li>快速排序是一种非常高效的排序算法，其平均时间复杂度为 O(nlogn)。因此，在实际的开发中，快速排序是一种非常常用的排序算法</li>
+</ol>
+<h3 id="常见的搜索算法有哪些"><a href="#常见的搜索算法有哪些" class="headerlink" title="常见的搜索算法有哪些"></a>常见的搜索算法有哪些</h3><p>二分查找：二分查找（Binary Search）是一种在有序数组中查找某一特定元素的查找算法。二分查找依赖于数组有序，在每次查找中，二分查找都可以将查找区间减半，直到找到要查找的元素，或者区间为空为止。</p>
+<p>DFS（深度优先搜索）：DFS 是一种图论中的搜索算法，它从一个节点开始沿着边的方向，深入图中直到所有的节点都已经被访问过为止。DFS 是一种递归算法，它沿着树或图的深度进行搜索。</p>
+<p>BFS（广度优先搜索）：BFS 是一种图论中的搜索算法，它从图的根节点开始，以层为单位进行搜索，在一层层地拓展图的节点，直到所有的节点都已经被访问过为止。BFS 是一种队列算法，它沿着树或图的宽度进行搜索。</p>
+<h3 id="讲一下对图算法的理解"><a href="#讲一下对图算法的理解" class="headerlink" title="讲一下对图算法的理解"></a>讲一下对图算法的理解</h3><p>图算法主要用于处理图形问题，是图论中的一个重要分支。下面是一些常见的图算法：</p>
+<ol>
+<li>最短路径算法：在图中找到两点间的最短路径，例如 Dijkstra 算法和 Floyd 算法。</li>
+<li>最小生成树算法：在图中找到一个生成树，并且生成树的权值和最小，例如 Prim 算法和 Kruskal 算法。</li>
+<li>图的遍历算法：在图中遍历每一个结点，例如 DFS 和 BFS。</li>
+<li>关键路径算法：在图中找到关键路径，例如 AOE 网络。</li>
+</ol>
+<p>这些算法在解决图形问题时都有各自的优势，在面试中可以做一些简单的题目来评估对这些算法的理解程度。</p>
+<h3 id="讲一下对动态规划算法的理解"><a href="#讲一下对动态规划算法的理解" class="headerlink" title="讲一下对动态规划算法的理解"></a>讲一下对动态规划算法的理解</h3><p>动态规划算法常见以下几种：</p>
+<ol>
+<li><p>背包问题：背包问题是一种经典的动态规划问题，它涉及到一个背包容积有限的问题，你需要在容积有限的情况下，选择最优的物品，使得总价值最大。</p>
+</li>
+<li><p>最长公共子序列：最长公共子序列是一种动态规划问题，它涉及到两个序列，你需要求出这两个序列的最长公共子序列。</p>
+</li>
+<li><p>编辑距离：编辑距离是一种动态规划问题，它涉及到两个字符串，你需要通过插入、删除、替换操作将一个字符串变换成另一个字符串，计算出所需要的最少操作数。</p>
+</li>
+</ol>
+<h1 id="逻辑面试题"><a href="#逻辑面试题" class="headerlink" title="逻辑面试题"></a>逻辑面试题</h1><h2 id="Swift的if-else-guard语句的使用和区别"><a href="#Swift的if-else-guard语句的使用和区别" class="headerlink" title="Swift的if else guard语句的使用和区别"></a>Swift的if else guard语句的使用和区别</h2><p>if语句是Swift中的条件语句，它按照一个特定的逻辑判断条件，如果该条件为真，则执行相关语句块。</p>
+<p>guard语句也是一种条件语句，主要用于在方法或函数开始时对参数进行验证。如果参数不符合要求，则直接从该方法或函数返回，而不需要继续执行方法体。</p>
+<p>else语句是if语句的附属语句，当if语句的条件不成立时，会执行else语句。</p>
+<h1 id="项目业务能力"><a href="#项目业务能力" class="headerlink" title="项目业务能力"></a>项目业务能力</h1><h2 id="开发中50人左右研发团队一般是怎么管理项目需求进度的，产品研发流程？"><a href="#开发中50人左右研发团队一般是怎么管理项目需求进度的，产品研发流程？" class="headerlink" title="开发中50人左右研发团队一般是怎么管理项目需求进度的，产品研发流程？"></a>开发中50人左右研发团队一般是怎么管理项目需求进度的，产品研发流程？</h2><h2 id="如何尽量准确的评估研发时长和交付时间节点"><a href="#如何尽量准确的评估研发时长和交付时间节点" class="headerlink" title="如何尽量准确的评估研发时长和交付时间节点"></a>如何尽量准确的评估研发时长和交付时间节点</h2><h1 id="效率工具能力"><a href="#效率工具能力" class="headerlink" title="效率工具能力"></a>效率工具能力</h1><h2 id="xcode的scheme是干嘛用的？把scheme删除项目还能编译打包吗？"><a href="#xcode的scheme是干嘛用的？把scheme删除项目还能编译打包吗？" class="headerlink" title="xcode的scheme是干嘛用的？把scheme删除项目还能编译打包吗？"></a>xcode的scheme是干嘛用的？把scheme删除项目还能编译打包吗？</h2><p>Xcode的scheme是用来管理和配置工程的编译、运行和调试环境的。每个工程都有一个或多个scheme，用来指定编译和运行时使用哪个target。Scheme可以帮助你配置调试环境，例如设置断点、设置环境变量、设置启动参数等。<br>删除scheme并不会对项目造成影响，但如果你删除了默认的scheme，在编译打包时就不会指定使用哪个target了，所以会导致编译或运行出错。<br>如果你使用Xcode的图形界面来编译和运行你的项目，那么删除scheme后是无法编译和运行的，因为Xcode需要一个scheme来确定编译和运行的目标。<br>但是，如果你使用Xcode的命令行工具来编译和运行你的项目，那么删除scheme后仍然可以编译和运行。<br>比如 使用 xcodebuild 命令可以在没有scheme的情况下编译和打包项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild -target &lt;targetName&gt; -configuration &lt;configuration&gt; -sdk &lt;sdk&gt;</span><br></pre></td></tr></table></figure>
+<p>同样的, 使用xcodebuild 命令也可以直接运行项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild -target &lt;targetName&gt; -configuration &lt;configuration&gt; -sdk &lt;sdk&gt; run</span><br></pre></td></tr></table></figure>
+
+<h2 id="xcode中常用的快捷键有哪些？"><a href="#xcode中常用的快捷键有哪些？" class="headerlink" title="xcode中常用的快捷键有哪些？"></a>xcode中常用的快捷键有哪些？</h2><p>Xcode是IOS开发的主要集成开发环境(IDE)，它提供了许多常用的快捷键来帮助开发人员提高开发效率。<br>以下是一些常用的Xcode快捷键:</p>
+<ul>
+<li>Command + Shift + O: 快速打开文件</li>
+<li>Command + Shift + J: 快速打开跳转条</li>
+<li>Command + Shift + L: 快速打开查找对话框</li>
+<li>Command + R: 运行应用程序</li>
+<li>Command + .: 停止运行</li>
+<li>Command + B: 编译工程</li>
+<li>Command + Shift + K: 清除并编译工程</li>
+<li>Command + /: 注释/取消注释代码</li>
+<li>Command + Control + ↑/↓: 切换代码块</li>
+<li>Command + Option + ↑/↓: 向上/向下移动代码块</li>
+<li>Command + Option + Left/Right arrow : 在编辑器之间跳转</li>
+<li>Command + Shift + [ : 折叠代码</li>
+<li>Command + Shift + ] : 展开代码</li>
+<li>Command + Control + Click : 跳转到定义处</li>
+<li>Command + Option + Click : 在导航器中显示文件</li>
+<li>Command + Control + E : 显示/隐藏导航器</li>
+<li>Command + Control + Y : 显示/隐藏调试区</li>
+<li>Command + Control + Shift + Y : 显示/隐藏控制台</li>
+<li>Command + Shift + C : 显示代码覆盖率</li>
+</ul>
+<p>总之，在Xcode中熟练使用快捷键可以帮助开发人员提高开发效率和降低维护成本。建议您每天使用这些快捷键来练习，直到它们变得熟练自然。</p>
+
         </div>
 
         
@@ -355,6 +447,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/Unocss%E7%9A%84%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E6%8A%80%E5%B7%A7.html"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Unocss的主题设置和基本应用技巧</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -472,7 +579,7 @@
             
               <span>2015</span>&nbsp;-&nbsp;
             
-            2023&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
+            2024&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Madman</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -570,7 +677,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">基础面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#swift%E7%9A%84%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-text">swift的基础类型有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Swift-%E4%B8%AD%E9%97%AE%E5%8F%B7-%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">在 Swift 中问号(?)的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8IOS%E5%BC%80%E5%8F%91%E4%B8%ADAppDelegate%E5%92%8CSceneDelegate%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">在IOS开发中AppDelegate和SceneDelegate的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Swift%E4%B8%ADclass%E5%92%8Cstruct%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9%E5%92%8C%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">在Swift中class和struct的共同点和区别？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">架构面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E4%B8%BB%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">什么是依赖注入，依赖注入主要解决什么问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9swift%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%8C%E5%B9%B6%E4%B8%BE%E4%BE%8BSwift%E4%B8%AD%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E4%BB%96%E4%BB%AC%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">Swift中常见的架构模式有哪些，他们的区别是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%BB%84%E4%BB%B6%E5%8C%96%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%8CSwift%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E4%BB%B6%E5%8C%96%E6%A1%86%E6%9E%B6%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">对组件化的理解，Swift中常见的组件化框架有哪些？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">算法面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">逻辑面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%9A%E5%8A%A1%E8%83%BD%E5%8A%9B"><span class="nav-text">项目业务能力</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7%E8%83%BD%E5%8A%9B"><span class="nav-text">效率工具能力</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">基础面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#swift%E7%9A%84%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-text">swift的基础类型有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Swift-%E4%B8%AD%E9%97%AE%E5%8F%B7-%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">在 Swift 中问号(?)的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8IOS%E5%BC%80%E5%8F%91%E4%B8%ADKVO%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">在IOS开发中KVO是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8IOS%E5%BC%80%E5%8F%91%E4%B8%ADAppDelegate%E5%92%8CSceneDelegate%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">在IOS开发中AppDelegate和SceneDelegate的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Swift%E4%B8%ADclass%E5%92%8Cstruct%E7%9A%84%E5%85%B1%E5%90%8C%E7%82%B9%E5%92%8C%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">在Swift中class和struct的共同点和区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ios%E5%BC%80%E5%8F%91%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-text">ios开发中有哪些常用的设计模式？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">架构面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E4%B8%BB%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">什么是依赖注入，依赖注入主要解决什么问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9swift%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%8C%E5%B9%B6%E4%B8%BE%E4%BE%8BSwift%E4%B8%AD%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">对swift响应式编程的理解，并举例Swift中响应式编程框架有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E4%BB%96%E4%BB%AC%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">Swift中常见的架构模式有哪些，他们的区别是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%BB%84%E4%BB%B6%E5%8C%96%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%8CSwift%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E4%BB%B6%E5%8C%96%E6%A1%86%E6%9E%B6%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">对组件化的理解，Swift中常见的组件化框架有哪些？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">算法面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E5%B9%B6%E8%AE%B2%E8%A7%A3%E5%85%B6%E5%8E%9F%E7%90%86"><span class="nav-text">常见的排序算法有哪些，并讲解其原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-text">常见的搜索算法有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B2%E4%B8%80%E4%B8%8B%E5%AF%B9%E5%9B%BE%E7%AE%97%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-text">讲一下对图算法的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B2%E4%B8%80%E4%B8%8B%E5%AF%B9%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-text">讲一下对动态规划算法的理解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">逻辑面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift%E7%9A%84if-else-guard%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8C%BA%E5%88%AB"><span class="nav-text">Swift的if else guard语句的使用和区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%9A%E5%8A%A1%E8%83%BD%E5%8A%9B"><span class="nav-text">项目业务能力</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E4%B8%AD50%E4%BA%BA%E5%B7%A6%E5%8F%B3%E7%A0%94%E5%8F%91%E5%9B%A2%E9%98%9F%E4%B8%80%E8%88%AC%E6%98%AF%E6%80%8E%E4%B9%88%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE%E9%9C%80%E6%B1%82%E8%BF%9B%E5%BA%A6%E7%9A%84%EF%BC%8C%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B%EF%BC%9F"><span class="nav-text">开发中50人左右研发团队一般是怎么管理项目需求进度的，产品研发流程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%B0%BD%E9%87%8F%E5%87%86%E7%A1%AE%E7%9A%84%E8%AF%84%E4%BC%B0%E7%A0%94%E5%8F%91%E6%97%B6%E9%95%BF%E5%92%8C%E4%BA%A4%E4%BB%98%E6%97%B6%E9%97%B4%E8%8A%82%E7%82%B9"><span class="nav-text">如何尽量准确的评估研发时长和交付时间节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7%E8%83%BD%E5%8A%9B"><span class="nav-text">效率工具能力</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xcode%E7%9A%84scheme%E6%98%AF%E5%B9%B2%E5%98%9B%E7%94%A8%E7%9A%84%EF%BC%9F%E6%8A%8Ascheme%E5%88%A0%E9%99%A4%E9%A1%B9%E7%9B%AE%E8%BF%98%E8%83%BD%E7%BC%96%E8%AF%91%E6%89%93%E5%8C%85%E5%90%97%EF%BC%9F"><span class="nav-text">xcode的scheme是干嘛用的？把scheme删除项目还能编译打包吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xcode%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">xcode中常用的快捷键有哪些？</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
